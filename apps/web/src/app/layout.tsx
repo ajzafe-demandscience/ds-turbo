@@ -1,7 +1,7 @@
 import "@workspace/ui/globals.css";
 
 import { SanityLive } from "@workspace/sanity/live";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Inter, Poppins } from "next/font/google";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { Suspense } from "react";
@@ -14,9 +14,15 @@ import { PreviewBar } from "@/components/preview-bar";
 import { Providers } from "@/components/providers";
 import { getNavigationData } from "@/lib/navigation";
 
-const fontSans = Geist({
+const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const fontHeading = Poppins({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  weight: ["400", "500", "600", "700"],
 });
 
 const fontMono = Geist_Mono({
@@ -33,10 +39,12 @@ export default async function RootLayout({
   prefetchDNS("https://cdn.sanity.io");
   const nav = await getNavigationData();
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased`}
-      >
+    <html
+      className={`${fontSans.variable} ${fontHeading.variable} ${fontMono.variable}`}
+      lang="en"
+      suppressHydrationWarning
+    >
+      <body className="antialiased">
         <Providers>
           <Navbar navbarData={nav.navbarData} settingsData={nav.settingsData} />
           {children}

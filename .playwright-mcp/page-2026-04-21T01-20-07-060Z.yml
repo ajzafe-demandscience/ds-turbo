@@ -1,0 +1,535 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "HG Insights + GTM Fabric power our new Winnable Account System | Learn More" [ref=e4] [cursor=pointer]:
+      - /url: https://demandscience.com/press-releases/demandscience-partners-with-hg-insights-and-gtm-fabric/
+      - generic [ref=e6]: HG Insights + GTM Fabric power our new Winnable Account System | Learn More
+    - button "x" [ref=e7] [cursor=pointer]
+  - generic [ref=e8]:
+    - banner [ref=e9]:
+      - generic [ref=e12]:
+        - link "DemandScience logo" [ref=e15] [cursor=pointer]:
+          - /url: https://demandscience.com/
+          - img "DemandScience logo" [ref=e17]
+        - generic [ref=e18]:
+          - button "Search" [ref=e21] [cursor=pointer]:
+            - img "Search" [ref=e23]
+          - button "Toggle Menu" [ref=e26] [cursor=pointer]:
+            - img
+    - main [ref=e27]:
+      - generic [ref=e29]:
+        - generic [ref=e31]:
+          - link "Marketing Data Mirage" [ref=e33] [cursor=pointer]:
+            - /url: https://demandscience.com/resources/blog/?category=marketing-data-mirage
+          - heading "Why B2B Marketing’s Pipeline Confidence Gap Demands a New Approach" [level=1] [ref=e34]
+          - generic [ref=e35]:
+            - generic [ref=e36]:
+              - img "card logo" [ref=e38]
+              - paragraph [ref=e39]: Bill Hobbib
+            - paragraph [ref=e40]: September 16, 2025
+            - paragraph [ref=e41]: 6 minute read
+        - img "A mirage of data presented on dashboard illusion in the middle of a desert." [ref=e43]
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - paragraph [ref=e49]:
+            - emphasis [ref=e50]:
+              - text: B2B marketers are bombarded with a flood of data, signals, platforms, and AI-powered tools. Yet confidence in pipeline has rarely been lower. Intent that goes nowhere. Content that doesn’t connect or convert. Disconnected execution. It all creates an illusion we call the
+              - link "Marketing Data Mirage" [ref=e51] [cursor=pointer]:
+                - /url: https://demandscience.com/press-releases/demandscience-launches-ionic-and-labs
+              - text: ", where everything looks like it is working…until it doesn’t."
+          - paragraph [ref=e52]: "Picture this: Your sales team just told you that 500 ‘hot leads’ from last month’s campaign yielded zero qualified meetings or pipeline. The intent scores looked promising, the content performed well, but none of it translated to pipeline. Sound familiar?"
+          - separator [ref=e55]
+          - 'heading "The Data Mirage: Three Compounding Problems" [level=2] [ref=e56]'
+          - paragraph [ref=e57]: "When marketing loses its predictive power, three symptoms emerge that feed on each other:"
+          - list [ref=e58]:
+            - listitem [ref=e59]: Phantom “Buyer” Intent – Teams chase phantom clicks and “intent scores” built on anonymous sources, unverified AI-generated data, and padded databases – the most acute form of wasted spend.
+            - listitem [ref=e60]: Content without Context – Without clear buyer insights, content gets created in a vacuum and fails to connect when it matters most.
+            - listitem [ref=e61]: Martech Sprawl – Marketers pay a “platform tax” by piling on overlapping tools that increase spend and create integration nightmares while signals go stale.
+          - paragraph [ref=e62]: "The result: marketing becomes expensive hope instead of predictable growth. Budgets get scattered, targets get missed, and careers get derailed."
+          - figure [ref=e63]:
+            - img "Causes of marketing data mirage." [ref=e64]
+          - separator [ref=e67]
+          - heading "Why Current Approaches Fall Short" [level=2] [ref=e68]
+          - paragraph [ref=e69]: B2B marketers have plenty of options – content syndication networks, intent data providers, paid media platforms, ABM tools, demand gen agencies, and account intelligence systems. Each delivers value individually, but running them in silos creates fragmented campaigns, wasted spend, and unpredictable results.
+          - paragraph [ref=e70]: Without integrated execution of all of the approaches that are a match for your business, you’re leaving performance on the table while paying the cost of complexity.
+          - separator [ref=e73]
+          - 'heading "The Perfect World: Four Universal Criteria" [level=2] [ref=e74]'
+          - paragraph [ref=e75]: "If you could design the ideal marketing system that completely eliminates wasted spend and drives predictable outcomes, it would deliver four essential capabilities working together:"
+          - list [ref=e76]:
+            - listitem [ref=e77]:
+              - strong [ref=e78]: Transparent Buyer Signals
+              - text: –
+              - link "Every signal should be fully sourced" [ref=e79] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/how-to-spot-buying-signals/
+              - text: and auditable, with clear provenance showing where it comes from, how it was captured, and why it matters. Not black-box intent scores or unverified AI clicks, but verified behavioral signals from real buyers you can trust.
+            - listitem [ref=e80]:
+              - strong [ref=e81]: Precision Reach that Resonates
+              - text: – An ideal system doesn’t just let you reach buyers everywhere they are -it ensures the right message resonates when you do. That means accurate, compliant access across email, web, paid media, syndication, and social, paired with data-driven content intelligence that aligns messaging, formats, and topics to what truly engages your audience.
+            - listitem [ref=e82]:
+              - strong [ref=e83]: Effortless Orchestration
+              - text: – Campaigns should activate instantly across channels, without requiring additional platforms, integrations, or heavy lift from your team. Orchestration should be invisible, adaptive to real-time signal changes, and always-on so you never lose momentum.
+            - listitem [ref=e84]:
+              - strong [ref=e85]: Continuous Optimization
+              - text: – The system should learn from every engagement, combining human and AI intelligence to show what’s resonating, what’s not, and what to do next. Each cycle compounds performance, reduces risk, and increases confidence that marketing drives predictable outcomes.
+          - paragraph [ref=e86]: These aren’t nice-to-haves or just platform features. They’re fundamental requirements for any marketing system that claims to eliminate the Marketing Data Mirage and deliver pipeline confidence. Anything less means taking chances with your budget.
+          - paragraph [ref=e87]:
+            - text: This is what we call
+            - link "precision performance marketing" [ref=e88] [cursor=pointer]:
+              - /url: https://demandscience.com/solutions/ionic
+            - text: – a systematic approach that replaces guesswork with verified data, generic content with content intelligence, fragmentation with seamless execution, and hope with predictable outcomes.
+          - separator [ref=e91]
+          - heading "How DemandScience Delivers All Four" [level=2] [ref=e92]
+          - paragraph [ref=e93]: "DemandScience solves this with our GROW system: Gather verified signals, Resonate with precision content, Orchestrate seamlessly, Win through optimization."
+          - heading "Gather" [level=3] [ref=e94]
+          - paragraph [ref=e95]: Unlike providers that sell raw counts or black-box intent scores, DemandScience delivers verified, transparent, AI-enhanced data that drives predictable outcomes.
+          - list [ref=e96]:
+            - listitem [ref=e97]:
+              - strong [ref=e98]: Global Scale & Accuracy
+              - text: – 247M+ verified contacts and 25M+ companies enriched with firmographics and technographics. Every record is continuously checked (email, phone, job title) to combat the 25% annual data decay.
+            - listitem [ref=e99]:
+              - strong [ref=e100]: Identity & Transparency
+              - text: "– DSID Identity Graph links accounts and buyers across CRM, web, and ad interactions. Every signal shows full provenance: source, capture method, and verification date, always GDPR/CCPA compliant."
+            - listitem [ref=e101]:
+              - strong [ref=e102]: AI-Powered Fidelity
+              - text: – Proprietary AI filters out noise, validates job titles and skills, and classifies only high-quality, brand-safe content.
+            - listitem [ref=e103]:
+              - strong [ref=e104]: Multi-Source Depth
+              - text: – A blend of 1st, 2nd, and 3rd-party data enhanced with intent, technographics, hiring, and engagement signals, all tied to real accounts and contacts.
+          - paragraph [ref=e105]:
+            - emphasis [ref=e106]: "The result: stronger campaign lift, less wasted spend, and signals Sales can act on immediately."
+          - heading "Resonate" [level=3] [ref=e107]
+          - paragraph [ref=e108]: Buyers don’t want more generic content, they want relevance and context. DemandScience ensures your content connects and moves deals forward.
+          - list [ref=e109]:
+            - listitem [ref=e110]:
+              - strong [ref=e111]: Contextual Engagement
+              - text: – Serve buyers
+              - link "content aligned to their actual intent" [ref=e112] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/elements-of-good-and-valuable-content/
+              - text: and stage.
+            - listitem [ref=e113]:
+              - strong [ref=e114]: Verified Environments
+              - text: – Patented keyword and publication intelligence ensures brand-safe, relevant placements.
+            - listitem [ref=e115]:
+              - strong [ref=e116]: Actionable Insights
+              - text: – Content performance data shows what resonates, helping refine campaigns in real time.
+          - paragraph [ref=e117]:
+            - emphasis [ref=e118]: "The result: content that connects, builds trust, and accelerates engagement."
+          - heading "Orchestrate" [level=3] [ref=e119]
+          - paragraph [ref=e120]: Disconnected tools and siloed execution slow campaigns down. DemandScience unifies orchestration across channels.
+          - list [ref=e121]:
+            - listitem [ref=e122]:
+              - strong [ref=e123]: Multi-Channel Campaigns
+              - text: – Run integrated programs across display, email, social, and more from one place.
+            - listitem [ref=e124]:
+              - strong [ref=e125]: Single Source of Truth
+              - text: – Strategy, execution, and measurement connected in one system.
+            - listitem [ref=e126]:
+              - strong [ref=e127]: No Platform Tax
+              - text: – Reduce cost and complexity by eliminating redundant martech overhead.
+          - figure [ref=e128]
+          - paragraph [ref=e129]:
+            - emphasis [ref=e130]: "The result: faster campaigns, consistent messaging, and higher ROI."
+          - heading "Win" [level=3] [ref=e131]
+          - paragraph [ref=e132]: Marketing’s job isn’t leads, it’s revenue. DemandScience makes it easier to prove impact and earn trust from Sales and Finance.
+          - list [ref=e133]:
+            - listitem [ref=e134]:
+              - strong [ref=e135]: Pipeline You Can Prove
+              - text: – Every signal and campaign tied directly to revenue.
+            - listitem [ref=e136]:
+              - strong [ref=e137]: Sales Alignment
+              - text: – Deliver leads and insights that Sales can act on immediately.
+            - listitem [ref=e138]:
+              - strong [ref=e139]: Finance Confidence
+              - text: – Every dollar accountable to measurable outcomes.
+          - paragraph [ref=e140]:
+            - emphasis [ref=e141]: "The result: marketing as a predictable growth engine, not a gamble."
+          - paragraph [ref=e142]: No wonder 66% of B2B marketers say they lack confidence in hitting revenue goals. It is time to end the Mirage.
+          - separator [ref=e145]
+          - heading "The Movement Beyond the Marketing Data Mirage" [level=2] [ref=e146]
+          - paragraph [ref=e147]: Rising costs, GenAI, and the mandate to do more with less have brought B2B marketing to an inflection point. The old world of spending more, buying more platforms, chasing phantom intent, and hoping campaigns resonate is giving way to something fundamentally better.
+          - paragraph [ref=e148]: Forward-thinking marketing leaders are making the shift from tolerating the Marketing Data Mirage to precision performance marketing – choosing verified signals over phantom clicks, seamless orchestration over platform complexity, and content intelligence over generic blasts. They’re choosing precision over volume, transparency over black boxes, and systems that compound results over tools that compound complexity.
+          - paragraph [ref=e149]: This isn’t just about better campaigns or cleaner data. It’s about moving beyond the status quo where marketers gamble with budgets and cross their fingers for results.
+          - paragraph [ref=e150]: The shift is already happening. The question isn’t whether precision performance marketing will become the standard, it’s whether you’ll lead the transition or get left behind scrambling to catch up.
+          - generic [ref=e162]:
+            - heading "Ready to end the marketing data mirage?" [level=2] [ref=e163]
+            - paragraph [ref=e164]: The future of marketing clarity is here.
+            - link "Talk to Us" [ref=e167] [cursor=pointer]:
+              - /url: http://demandscience.com/demand/ionic-demo
+          - paragraph
+        - navigation [ref=e169]:
+          - heading "Chapters" [level=2] [ref=e170]
+          - list [ref=e171]:
+            - listitem [ref=e172]:
+              - 'link "The Data Mirage: Three Compounding Problems" [ref=e173] [cursor=pointer]':
+                - /url: "#h-the-data-mirage-three-compounding-problems"
+            - listitem [ref=e174]:
+              - link "Why Current Approaches Fall Short" [ref=e175] [cursor=pointer]:
+                - /url: "#h-why-current-approaches-fall-short"
+            - listitem [ref=e176]:
+              - 'link "The Perfect World: Four Universal Criteria" [ref=e177] [cursor=pointer]':
+                - /url: "#h-the-perfect-world-four-universal-criteria"
+            - listitem [ref=e178]:
+              - link "How DemandScience Delivers All Four" [ref=e179] [cursor=pointer]:
+                - /url: "#h-how-demandscience-delivers-all-four"
+            - listitem [ref=e180]:
+              - link "Gather" [ref=e181] [cursor=pointer]:
+                - /url: "#h-gather"
+            - listitem [ref=e182]:
+              - link "Resonate" [ref=e183] [cursor=pointer]:
+                - /url: "#h-resonate"
+            - listitem [ref=e184]:
+              - link "Orchestrate" [ref=e185] [cursor=pointer]:
+                - /url: "#h-orchestrate"
+            - listitem [ref=e186]:
+              - link "Win" [ref=e187] [cursor=pointer]:
+                - /url: "#h-win"
+            - listitem [ref=e188]:
+              - link "The Movement Beyond the Marketing Data Mirage" [ref=e189] [cursor=pointer]:
+                - /url: "#h-the-movement-beyond-the-marketing-data-mirage"
+            - listitem [ref=e190]:
+              - link "Ready to end the marketing data mirage?" [ref=e191] [cursor=pointer]:
+                - /url: "#h-ready-to-end-the-marketing-data-mirage"
+      - generic [ref=e193]:
+        - heading "Related Blogs" [level=2] [ref=e195]
+        - generic [ref=e196]:
+          - generic [ref=e197]:
+            - group "1 / 11" [ref=e198]:
+              - link "What is Content Syndication" [ref=e199] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/everything-to-know-content-syndication/
+                - img "What is Content Syndication" [ref=e201]
+              - generic [ref=e202]:
+                - link "Content Syndication" [ref=e204] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-content-syndication/
+                - heading "What is Content Syndication? The Key to Generating Leads and Increasing Conversions" [level=3] [ref=e205]:
+                  - link "What is Content Syndication? The Key to Generating Leads and Increasing Conversions" [ref=e206] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/everything-to-know-content-syndication/
+                - paragraph [ref=e207]: Content syndication is the act of republishing your content to other websites, introducing it to new audiences and…
+                - link "Read More" [ref=e208] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/everything-to-know-content-syndication/
+            - group "2 / 11" [ref=e209]:
+              - 'link "Mastering Campaign Measurement: A Guide for B2B Marketers" [ref=e210] [cursor=pointer]':
+                - /url: https://demandscience.com/resources/blog/ways-to-measure-campaign-success/
+                - img [ref=e212]
+              - generic [ref=e213]:
+                - link "Marketing" [ref=e215] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/marketing/
+                - 'heading "Mastering Campaign Measurement: A Guide for B2B Marketers" [level=3] [ref=e216]':
+                  - 'link "Mastering Campaign Measurement: A Guide for B2B Marketers" [ref=e217] [cursor=pointer]':
+                    - /url: https://demandscience.com/resources/blog/ways-to-measure-campaign-success/
+                - paragraph [ref=e218]: Measurement is crucial for any marketing or advertising campaign to assess whether your investment paid off. Here are…
+                - link "Read More" [ref=e219] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/ways-to-measure-campaign-success/
+            - group "3 / 11" [ref=e220]:
+              - link "Addressing Data Deprecation in B2B Marketing" [ref=e221] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/b2b-data-deprecation-marketers-guide/
+                - img "Addressing Data Deprecation in B2B Marketing" [ref=e223]
+              - generic [ref=e224]:
+                - generic [ref=e225]:
+                  - link "AI" [ref=e226] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/ai/
+                  - link "Marketing" [ref=e227] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/marketing/
+                  - link "Tools and Tech" [ref=e228] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-tech/
+                - 'heading "The Hidden Perils of B2B Data Deprecation: A Marketer’s Guide" [level=3] [ref=e229]':
+                  - 'link "The Hidden Perils of B2B Data Deprecation: A Marketer’s Guide" [ref=e230] [cursor=pointer]':
+                    - /url: https://demandscience.com/resources/blog/b2b-data-deprecation-marketers-guide/
+                - paragraph [ref=e231]: In B2B marketing, accurate data is essential for success. However, data quality can decline over time due to…
+                - link "Read More" [ref=e232] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/b2b-data-deprecation-marketers-guide/
+            - group "4 / 11" [ref=e233]:
+              - link "male professional looking at tablet and smiling with airpods in" [ref=e234] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/10-b2b-growth-hacking-tactics-for-lead-generation/
+                - img "male professional looking at tablet and smiling with airpods in" [ref=e236]
+              - generic [ref=e237]:
+                - link "Lead Generation" [ref=e239] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-lead-generation/
+                - heading "10 B2B Growth-Hacking Tactics for Lead Generation" [level=3] [ref=e240]:
+                  - link "10 B2B Growth-Hacking Tactics for Lead Generation" [ref=e241] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/10-b2b-growth-hacking-tactics-for-lead-generation/
+                - paragraph [ref=e242]: Growth hacking is one of the most wide-spread “secrets” of small business start-ups. Its meaning can sometimes get…
+                - link "Read More" [ref=e243] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/10-b2b-growth-hacking-tactics-for-lead-generation/
+            - group "5 / 11" [ref=e244]:
+              - link "lead vs inquiry" [ref=e245] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/an-inquiry-vs-a-lead-whats-the-difference-and-which-is-more-important/
+                - img "lead vs inquiry" [ref=e247]
+              - generic [ref=e248]:
+                - link "Lead Generation" [ref=e250] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-lead-generation/
+                - 'heading "An Inquiry vs. a Lead: What’s the Difference?" [level=3] [ref=e251]':
+                  - 'link "An Inquiry vs. a Lead: What’s the Difference?" [ref=e252] [cursor=pointer]':
+                    - /url: https://demandscience.com/resources/blog/an-inquiry-vs-a-lead-whats-the-difference-and-which-is-more-important/
+                - paragraph [ref=e253]: Many marketers and sales people assume that inquiries and leads are one and the same, but in fact,…
+                - link "Read More" [ref=e254] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/an-inquiry-vs-a-lead-whats-the-difference-and-which-is-more-important/
+            - group "6 / 11" [ref=e255]:
+              - link "female lounging, scrolling on tablet" [ref=e256] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/10-examples-awesome-landing-pages-convert/
+                - img "female lounging, scrolling on tablet" [ref=e258]
+              - generic [ref=e259]:
+                - link "Lead Generation" [ref=e261] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-lead-generation/
+                - heading "10 Examples of Awesome Landing Pages that Convert" [level=3] [ref=e262]:
+                  - link "10 Examples of Awesome Landing Pages that Convert" [ref=e263] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/10-examples-awesome-landing-pages-convert/
+                - paragraph [ref=e264]: To lead more users to your products, you need to create a showstopping landing page. To do this,…
+                - link "Read More" [ref=e265] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/10-examples-awesome-landing-pages-convert/
+            - group "7 / 11" [ref=e266]:
+              - link "female professional working from home and taking notes on the difference between lead quality and lead quantity" [ref=e267] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/lead-quantity-vs-lead-quality-achieving-balance/
+                - img "female professional working from home and taking notes on the difference between lead quality and lead quantity" [ref=e269]
+              - generic [ref=e270]:
+                - link "Lead Generation" [ref=e272] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-lead-generation/
+                - 'heading "Lead Quantity vs Lead Quality: Achieving a Balance" [level=3] [ref=e273]':
+                  - 'link "Lead Quantity vs Lead Quality: Achieving a Balance" [ref=e274] [cursor=pointer]':
+                    - /url: https://demandscience.com/resources/blog/lead-quantity-vs-lead-quality-achieving-balance/
+                - paragraph [ref=e275]: Traditional sales and marketing strategies have long focused on lead quantity by casting a wide net to capture…
+                - link "Read More" [ref=e276] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/lead-quantity-vs-lead-quality-achieving-balance/
+            - group "8 / 11" [ref=e277]:
+              - link "Marketing Data Solutions" [ref=e278] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/data-solutions-mean-marketing-technology/
+                - img "Marketing Data Solutions" [ref=e280]
+              - generic [ref=e281]:
+                - link "Lead Generation" [ref=e283] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-lead-generation/
+                - heading "What Data Solutions Mean for Marketing Technology?" [level=3] [ref=e284]:
+                  - link "What Data Solutions Mean for Marketing Technology?" [ref=e285] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/data-solutions-mean-marketing-technology/
+                - paragraph [ref=e286]: In recent years, marketing has come to rely on the input of big data in order to create…
+                - link "Read More" [ref=e287] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/data-solutions-mean-marketing-technology/
+            - group "9 / 11" [ref=e288]:
+              - link "female professional working on laptop and taking notes" [ref=e289] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/purebits-lessons-life-sales/
+                - img "female professional working on laptop and taking notes" [ref=e291]
+              - generic [ref=e292]:
+                - link "Sales" [ref=e294] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/sales/
+                - 'heading "PureBits: Lessons on Life & Sales" [level=3] [ref=e295]':
+                  - 'link "PureBits: Lessons on Life & Sales" [ref=e296] [cursor=pointer]':
+                    - /url: https://demandscience.com/resources/blog/purebits-lessons-life-sales/
+                - paragraph [ref=e297]: Selling is tough. There are many buying signals that a salesperson should watch out for to help them…
+                - link "Read More" [ref=e298] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/purebits-lessons-life-sales/
+            - group "10 / 11" [ref=e299]:
+              - link "How To Create A Super Engaged Audience For Your Brand" [ref=e300] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/effective-hashtags-audience-engagement/
+                - img [ref=e302]
+              - generic [ref=e303]:
+                - link "Content Marketing" [ref=e305] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-content-marketing/
+                - heading "How To Create A Super Engaged Audience For Your Brand" [level=3] [ref=e306]:
+                  - link "How To Create A Super Engaged Audience For Your Brand" [ref=e307] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/effective-hashtags-audience-engagement/
+                - paragraph [ref=e308]: The use of hashtags has become so prominent in content, particularly on social media, that it has penetrated…
+                - link "Read More" [ref=e309] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/effective-hashtags-audience-engagement/
+            - group "11 / 11" [ref=e310]:
+              - link "female professional looking at computer wondering if these quality leads are worth the price" [ref=e311] [cursor=pointer]:
+                - /url: https://demandscience.com/resources/blog/quality-leads-expensive/
+                - img "female professional looking at computer wondering if these quality leads are worth the price" [ref=e313]
+              - generic [ref=e314]:
+                - link "Lead Generation" [ref=e316] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/?category=https://demandscience.com/resources/blog/category/b2b-lead-generation/
+                - heading "Why Quality Leads are Expensive" [level=3] [ref=e317]:
+                  - link "Why Quality Leads are Expensive" [ref=e318] [cursor=pointer]:
+                    - /url: https://demandscience.com/resources/blog/quality-leads-expensive/
+                - paragraph [ref=e319]: Getting more leads at a lower cost is always at the top of lead generation objectives, especially for…
+                - link "Read More" [ref=e320] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/quality-leads-expensive/
+          - generic [ref=e321]:
+            - button "Go to slide 1" [ref=e322] [cursor=pointer]
+            - button "Go to slide 2" [ref=e323] [cursor=pointer]
+            - button "Go to slide 3" [ref=e324] [cursor=pointer]
+            - button "Go to slide 4" [ref=e325] [cursor=pointer]
+            - button "Go to slide 5" [ref=e326] [cursor=pointer]
+            - button "Go to slide 6" [ref=e327] [cursor=pointer]
+            - button "Go to slide 7" [ref=e328] [cursor=pointer]
+            - button "Go to slide 8" [ref=e329] [cursor=pointer]
+            - button "Go to slide 9" [ref=e330] [cursor=pointer]
+            - button "Go to slide 10" [ref=e331] [cursor=pointer]
+        - text: next prev
+    - contentinfo [ref=e332]:
+      - contentinfo [ref=e333]:
+        - generic [ref=e336]:
+          - generic [ref=e337]: We use cookies on our website to give you the most relevant experience by remembering your preferences and repeat visits. By clicking “Accept All”, you consent to the use of ALL the cookies. However, you may visit "Cookie Settings" to provide a controlled consent.
+          - generic [ref=e338]:
+            - button "Cookie Settings" [ref=e339] [cursor=pointer]
+            - button "Accept All" [ref=e340] [cursor=pointer]
+        - generic [ref=e342]:
+          - generic [ref=e343]:
+            - generic [ref=e344]:
+              - figure [ref=e345]
+              - paragraph [ref=e346]: Sign me up for updates and resources from DemandScience
+              - generic [ref=e347]:
+                - generic [ref=e348]:
+                  - generic [ref=e350]:
+                    - generic [ref=e351]: Email *
+                    - textbox "Enter business email" [ref=e352]
+                    - button "Sign Up" [ref=e353] [cursor=pointer]
+                  - generic [ref=e354]:
+                    - checkbox "I agree to receive updates on B2B marketing solutions and tech trends from Demand Science Group, LLC, its subsidiaries, and affiliates (collectively, “DemandScience”) via email and phone. I can opt out anytime, as outlined in the Privacy Policy, which also explains business contact information (BCI) practices." [ref=e355]
+                    - generic [ref=e356]:
+                      - text: I agree to receive updates on B2B marketing solutions and tech trends from Demand Science Group, LLC, its subsidiaries, and affiliates (collectively, “DemandScience”) via email and phone. I can opt out anytime, as outlined in the
+                      - link "Privacy Policy" [ref=e357] [cursor=pointer]:
+                        - /url: https://demandscience.com/privacy-policy/
+                      - text: ", which also explains business contact information (BCI) practices."
+                - generic: Thank you for subscribing.
+              - generic [ref=e358]:
+                - figure [ref=e359]:
+                  - link [ref=e360] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/company/demandscience-com
+                - figure [ref=e361]:
+                  - link [ref=e362] [cursor=pointer]:
+                    - /url: https://twitter.com/demandscience
+                - figure [ref=e363]:
+                  - link [ref=e364] [cursor=pointer]:
+                    - /url: https://www.facebook.com/DemandScience/
+            - generic [ref=e366]:
+              - generic [ref=e367]:
+                - paragraph [ref=e368]:
+                  - strong [ref=e369]: SOLUTIONS
+                - navigation "Navigation 4" [ref=e370]:
+                  - list [ref=e371]:
+                    - listitem [ref=e372]:
+                      - link "Ionic" [ref=e373] [cursor=pointer]:
+                        - /url: /solutions/ionic/
+                    - listitem [ref=e374]:
+                      - link "Labs" [ref=e375] [cursor=pointer]:
+                        - /url: /solutions/labs/
+                    - listitem [ref=e376]:
+                      - link "Demand" [ref=e377] [cursor=pointer]:
+                        - /url: /solutions/demand/
+                    - listitem [ref=e378]:
+                      - link "Advertising" [ref=e379] [cursor=pointer]:
+                        - /url: /solutions/advertising/
+                    - listitem [ref=e380]:
+                      - link "Data" [ref=e381] [cursor=pointer]:
+                        - /url: /solutions/data/
+                    - listitem [ref=e382]:
+                      - link "Web" [ref=e383] [cursor=pointer]:
+                        - /url: /solutions/web/
+                    - listitem [ref=e384]:
+                      - link "Outreach" [ref=e385] [cursor=pointer]:
+                        - /url: /solutions/outreach/
+                    - listitem [ref=e386]:
+                      - link "Events" [ref=e387] [cursor=pointer]:
+                        - /url: /solutions/events/
+                    - listitem [ref=e388]:
+                      - link "Studio" [ref=e389] [cursor=pointer]:
+                        - /url: /solutions/studio/
+              - generic [ref=e390]:
+                - paragraph [ref=e391]:
+                  - strong [ref=e392]:
+                    - mark [ref=e393]: WHAT WE ENABLE
+                - navigation "Navigation 5" [ref=e394]:
+                  - list [ref=e395]:
+                    - listitem [ref=e396]:
+                      - link "Account-Based Marketing (ABM)" [ref=e397] [cursor=pointer]:
+                        - /url: /we-enable/abm
+                    - listitem [ref=e398]:
+                      - link "Intent-Driven Campaigns" [ref=e399] [cursor=pointer]:
+                        - /url: /we-enable/intent-driven-campaigns
+                    - listitem [ref=e400]:
+                      - link "High-Quality Leads" [ref=e401] [cursor=pointer]:
+                        - /url: /we-enable/high-quality-leads
+                    - listitem [ref=e402]:
+                      - link "Reach the Right Buyers" [ref=e403] [cursor=pointer]:
+                        - /url: /we-enable/reach-right-buyers
+                    - listitem [ref=e404]:
+                      - link "Campaign Scale Without Complexity" [ref=e405] [cursor=pointer]:
+                        - /url: /we-enable/campaign-scale-without-complexity
+                    - listitem [ref=e406]:
+                      - link "Turn Data Into Insights" [ref=e407] [cursor=pointer]:
+                        - /url: /we-enable/turn-data-into-insights
+              - generic [ref=e408]:
+                - paragraph [ref=e409]:
+                  - strong [ref=e410]: COMPANY
+                - navigation "Navigation 6" [ref=e411]:
+                  - list [ref=e412]:
+                    - listitem [ref=e413]:
+                      - link "About Us" [ref=e414] [cursor=pointer]:
+                        - /url: /about/
+                    - listitem [ref=e415]:
+                      - link "Our Data" [ref=e416] [cursor=pointer]:
+                        - /url: /data/
+                    - listitem [ref=e417]:
+                      - link "Leadership" [ref=e418] [cursor=pointer]:
+                        - /url: /about/leadership
+                    - listitem [ref=e419]:
+                      - link "Careers" [ref=e420] [cursor=pointer]:
+                        - /url: /careers/
+                    - listitem [ref=e421]:
+                      - link "Newsroom" [ref=e422] [cursor=pointer]:
+                        - /url: /press-releases
+                    - listitem [ref=e423]:
+                      - link "Contact Us" [ref=e424] [cursor=pointer]:
+                        - /url: /contact
+                    - listitem [ref=e425]:
+                      - link "Trust Center" [ref=e426] [cursor=pointer]:
+                        - /url: https://trust.demandscience.com/
+              - generic [ref=e427]:
+                - paragraph [ref=e428]:
+                  - strong [ref=e429]: RESOURCES
+                - navigation "Navigation 7" [ref=e430]:
+                  - list [ref=e431]:
+                    - listitem [ref=e432]:
+                      - link "Blog" [ref=e433] [cursor=pointer]:
+                        - /url: /resources/blog/
+                    - listitem [ref=e434]:
+                      - link "Webinars" [ref=e435] [cursor=pointer]:
+                        - /url: /resources/webinars/
+                    - listitem [ref=e436]:
+                      - link "Case Studies" [ref=e437] [cursor=pointer]:
+                        - /url: /resources/case-studies/
+                    - listitem [ref=e438]:
+                      - link "Reports & Benchmarks" [ref=e439] [cursor=pointer]:
+                        - /url: /resources/research-and-benchmarks/
+                    - listitem [ref=e440]:
+                      - link "Help Center" [ref=e441] [cursor=pointer]:
+                        - /url: https://support.demandscience.com/
+                    - listitem [ref=e442]:
+                      - link "How We Compare" [ref=e443] [cursor=pointer]:
+                        - /url: https://demandscience.com/resources/comparisons/demandscience-vs-all-competitors/
+          - generic [ref=e447]:
+            - generic [ref=e448]: Also of Interest
+            - list [ref=e449]:
+              - listitem [ref=e450]:
+                - link "10 Examples of Awesome Landing Pages that Convert" [ref=e451] [cursor=pointer]:
+                  - /url: https://demandscience.com/resources/blog/10-examples-awesome-landing-pages-convert/
+              - listitem [ref=e452]:
+                - link "Lead Generation Solutions" [ref=e453] [cursor=pointer]:
+                  - /url: https://demandscience.com/solutions/demand/
+              - listitem [ref=e454]:
+                - link "Strategic Marketing Solutions" [ref=e455] [cursor=pointer]:
+                  - /url: https://demandscience.com/solutions/labs/
+          - generic [ref=e456]:
+            - paragraph [ref=e458]: ©2026 DemandScience US, LLC All Rights Reserved
+            - paragraph [ref=e460]:
+              - link "Privacy Rights & Do Not Sell My Information" [ref=e461] [cursor=pointer]:
+                - /url: /privacy-rights/
+              - text: "|"
+              - link "Privacy Policy" [ref=e462] [cursor=pointer]:
+                - /url: https://demandscience.com/privacy-policy/
+              - text: "|"
+              - link "Terms & Conditions" [ref=e463] [cursor=pointer]:
+                - /url: https://demandscience.com/terms-of-use/
+              - text: "|"
+              - link "IAB Addendum" [ref=e464] [cursor=pointer]:
+                - /url: /iabaddendum
+              - text: "|"
+              - link "DTA" [ref=e465] [cursor=pointer]:
+                - /url: /dta/
+              - text: "|"
+              - link "DPA" [ref=e466] [cursor=pointer]:
+                - /url: /dpa/
+              - text: "|"
+              - link "Cookie Preferences" [ref=e467] [cursor=pointer]:
+                - /url: javascript:void(0)
+  - text: ❌
+  - img [ref=e468]
+  - img [ref=e469]
+  - iframe

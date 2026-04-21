@@ -30,6 +30,14 @@ export const blog = defineType({
       validation: (Rule) => Rule.required().error("A blog title is required"),
     }),
     defineField({
+      name: "sectionLabel",
+      type: "string",
+      title: "Section label",
+      description:
+        "Short label shown above the title (for example a series, topic, or pillar name). Used in the article header and structured data.",
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
       title: "Description",
       name: "description",
       type: "text",
@@ -117,6 +125,7 @@ export const blog = defineType({
       slug: "slug.current",
       author: "authors.0.name",
       publishDate: "publishedAt",
+      sectionLabel: "sectionLabel",
     },
     prepare: ({
       title,
@@ -126,6 +135,7 @@ export const blog = defineType({
       author,
       slug,
       publishDate,
+      sectionLabel,
     }) => {
       // Status indicators
       let visibility = "🌎 Public";
@@ -140,11 +150,14 @@ export const blog = defineType({
       const dateInfo = publishDate
         ? `📅 ${new Date(publishDate).toLocaleDateString()}`
         : "⏳ Draft";
+      const sectionInfo = sectionLabel?.trim()
+        ? `🏷️ ${sectionLabel.trim()}`
+        : "🏷️ No section label";
 
       return {
         title: title || "Untitled Blog",
         media,
-        subtitle: `🔗 ${slug} | ${visibility} | ${authorInfo} | ${dateInfo}`,
+        subtitle: `🔗 ${slug} | ${visibility} | ${sectionInfo} | ${authorInfo} | ${dateInfo}`,
       };
     },
   },

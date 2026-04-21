@@ -624,6 +624,7 @@ export type Blog = {
   _rev: string;
   orderRank?: string;
   title: string;
+  sectionLabel?: string;
   description?: string;
   slug?: Slug;
   authors: Array<
@@ -2325,6 +2326,7 @@ export type QueryBlogSlugPageDataResult = {
   _rev: string;
   orderRank?: string;
   title: string;
+  sectionLabel?: string;
   description?: string;
   slug: string | null;
   authors: {

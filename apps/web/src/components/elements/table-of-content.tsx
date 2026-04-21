@@ -1,26 +1,46 @@
 "use client";
 import { cn } from "@workspace/ui/lib/utils";
-import { ChevronDown, Circle } from "lucide-react";
-import Link from "next/link";
-import { type FC, useCallback, useMemo } from "react";
+import { ChevronDown } from "lucide-react";
+import type { PortableTextBlock } from "next-sanity";
+import {
+  createContext,
+  type FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import slugify from "slugify";
 
 import type { SanityRichTextBlock, SanityRichTextProps } from "@/types";
+import { parseChildrenToSlug } from "@/utils";
 
 // ============================================================================
 // TYPES & INTERFACES
 // ============================================================================
 
+type TocVariant = "default" | "article";
+
 type TableOfContentProps = {
   richText?: SanityRichTextProps;
   className?: string;
   maxDepth?: number;
+  /** Visible heading for the block (default: Table of Contents). */
+  title?: string;
+  /** When false, the list is always shown (no disclosure). */
+  collapsible?: boolean;
+  /** `article`: light editorial sidebar; `default`: existing panel style. */
+  variant?: TocVariant;
+  /** Hide internal heading when rendered externally. */
+  showTitle?: boolean;
 };
 
 type ProcessedHeading = {
   readonly id: string;
   readonly text: string;
-  readonly href: string;
+  /** Matches `id` on rendered heading elements in article content. */
+  readonly sectionId: string;
   readonly level: number;
   readonly style: HeadingStyle;
   readonly children: ProcessedHeading[];
@@ -193,14 +213,20 @@ function createProcessedHeading(
       return null;
     }
 
+    const sectionId = parseChildrenToSlug(
+      block.children as PortableTextBlock["children"]
+    );
+    if (!sectionId?.trim()) {
+      return null;
+    }
+
     const level = HEADING_LEVELS[block.style];
-    const href = `#${createSlug(text)}`;
     const id = generateUniqueId(text, index, block._key);
 
     return {
       id,
       text,
-      href,
+      sectionId,
       level,
       style: block.style,
       children: [],
@@ -361,12 +387,43 @@ function useTableOfContentState(
 // COMPONENTS
 // ============================================================================
 
+type TocNavContextValue = {
+  activeSectionId: string | null;
+  scrollToSection: (sectionId: string) => void;
+};
+
+const TocNavContext = createContext<TocNavContextValue | null>(null);
+
+function useTocNav(): TocNavContextValue {
+  const ctx = useContext(TocNavContext);
+  if (!ctx) {
+    throw new Error("TOC navigation context is missing");
+  }
+  return ctx;
+}
+
+function collectSectionIds(headings: ProcessedHeading[]): string[] {
+  const ids: string[] = [];
+  const walk = (items: ProcessedHeading[]) => {
+    for (const h of items) {
+      ids.push(h.sectionId);
+      if (h.children.length > 0) {
+        walk(h.children);
+      }
+    }
+  };
+  walk(headings);
+  return ids;
+}
+
 const TableOfContentAnchor: FC<AnchorProps> = ({
   heading,
   maxDepth = DEFAULT_MAX_DEPTH,
   currentDepth = 1,
 }) => {
-  const { href, text, children, isChild, id } = heading;
+  const { sectionId, text, children, isChild, id } = heading;
+  const { activeSectionId, scrollToSection } = useTocNav();
+  const isActive = activeSectionId === sectionId;
 
   const shouldRenderChildren = useCallback(
     () =>
@@ -379,49 +436,42 @@ const TableOfContentAnchor: FC<AnchorProps> = ({
     return null;
   }
 
-  // Don't render if text or href is invalid
-  if (!(text?.trim() && href?.trim())) {
+  // Don't render if text or target id is invalid
+  if (!(text?.trim() && sectionId?.trim())) {
     return null;
   }
 
   const hasChildren = shouldRenderChildren();
 
   return (
-    <li
-      className={cn(
-        "my-2 list-inside transition-all duration-200",
-        // paddingClass,
-        isChild && "ml-1.5"
-      )}
-    >
-      <div className="flex items-center gap-2">
-        <Circle
-          aria-hidden="true"
-          className={cn(
-            "size-1.5 min-h-1.5 min-w-1.5 transition-colors duration-200",
-            isChild
-              ? "fill-zinc-600 dark:fill-zinc-400"
-              : "fill-zinc-900 dark:fill-zinc-100"
-          )}
-        />
-        <Link
-          aria-describedby={`${id}-level`}
-          className={cn(
-            "line-clamp-1 hover:text-blue-500 hover:underline",
-            "transition-colors duration-200 focus:outline-none",
-            "rounded-sm px-1 py-0.5"
-          )}
-          href={href}
-        >
-          {text}
-        </Link>
+    <li className="m-0 list-none text-[18px]">
+      <button
+        aria-current={isActive ? "location" : undefined}
+        aria-describedby={`${id}-level`}
+        className={cn(
+          "w-full cursor-pointer border-0 bg-transparent text-left break-words whitespace-normal py-[15px] text-[18px] leading-[32px] text-[#707070] transition-[border-color] duration-300 focus:outline-none",
+          isChild &&
+            cn(
+              "border-l-[5px] border-l-[#eee] pl-[40px] pr-5 hover:border-l-[#0166fc] active:border-l-[#0166fc] focus-visible:border-l-[#0166fc]",
+              isActive && "!border-l-[#0166fc]"
+            ),
+          !isChild &&
+            cn(
+              "border-l-[5px] border-l-[#eeeeee] px-5 hover:border-l-[#0166fc] active:border-l-[#0166fc] focus-visible:border-l-[#0166fc]",
+              isActive && "!border-l-[#0166fc]"
+            )
+        )}
+        type="button"
+        onClick={() => scrollToSection(sectionId)}
+      >
+        {text}
         <span className="sr-only" id={`${id}-level`}>
           Heading level {heading.level}
         </span>
-      </div>
+      </button>
 
       {hasChildren && (
-        <ul className="mt-1">
+        <ul className="m-0 list-none p-0">
           {children.map((child, index) => (
             <TableOfContentAnchor
               currentDepth={currentDepth + 1}
@@ -440,10 +490,87 @@ export const TableOfContent: FC<TableOfContentProps> = ({
   richText,
   className,
   maxDepth = DEFAULT_MAX_DEPTH,
+  title = "Table of Contents",
+  collapsible = true,
+  variant = "default",
+  showTitle = true,
 }) => {
   const { shouldShow, headings, error } = useTableOfContentState(
     richText,
     maxDepth
+  );
+
+  const sectionIdList = useMemo(
+    () => collectSectionIds(headings),
+    [headings]
+  );
+
+  const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
+
+  const scrollToSection = useCallback((sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    setActiveSectionId(sectionId);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  useEffect(() => {
+    if (!shouldShow || sectionIdList.length === 0) {
+      return;
+    }
+
+    const elements = sectionIdList
+      .map((sid) => document.getElementById(sid))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (elements.length === 0) {
+      return;
+    }
+
+    let raf = 0;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          const intersecting = entries.filter((e) => e.isIntersecting);
+          const first = intersecting[0];
+          if (!first) {
+            return;
+          }
+          let best = first;
+          let bestScore = Number.POSITIVE_INFINITY;
+          for (const entry of intersecting) {
+            const top = entry.boundingClientRect.top;
+            const score = Math.abs(top - 96);
+            if (score < bestScore) {
+              bestScore = score;
+              best = entry;
+            }
+          }
+          const nextId = (best.target as HTMLElement).id;
+          if (nextId) {
+            setActiveSectionId(nextId);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-80px 0px -55% 0px",
+        threshold: [0, 0.01, 0.25, 0.5, 1],
+      }
+    );
+
+    for (const el of elements) {
+      observer.observe(el);
+    }
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+    };
+  }, [shouldShow, sectionIdList]);
+
+  const tocNavValue = useMemo(
+    () => ({ activeSectionId, scrollToSection }),
+    [activeSectionId, scrollToSection]
   );
 
   // Early return for error state
@@ -456,53 +583,80 @@ export const TableOfContent: FC<TableOfContentProps> = ({
     return null;
   }
 
-  return (
-    <aside
-      aria-labelledby="toc-heading"
-      className={cn(
-        "sticky top-8 flex w-full max-w-xs flex-col p-4",
-        "bg-gradient-to-b from-zinc-50 to-zinc-100",
-        "dark:from-zinc-800 dark:to-zinc-900",
-        "rounded-lg border border-zinc-300 shadow-sm dark:border-zinc-700",
-        "transition-all duration-200",
-        className
-      )}
-      //   role="complementary"
-    >
-      <details className="group" open>
-        <summary
-          className={cn(
-            "flex cursor-pointer items-center justify-between",
-            "font-semibold text-lg text-zinc-800 dark:text-zinc-200",
-            "hover:text-blue-600 dark:hover:text-blue-400",
-            "transition-colors duration-200 focus:outline-none",
-            "rounded-sm p-1"
-          )}
-          id="toc-heading"
-        >
-          <span>Table of Contents</span>
-          <ChevronDown
-            aria-hidden="true"
-            className={cn(
-              "h-5 w-5 transform transition-transform duration-200",
-              "group-open:rotate-180"
-            )}
+  const navList = (
+    <nav aria-label={title}>
+      <ul
+        className={cn(
+          "list-none m-0 p-0 space-y-1 text-sm"
+        )}
+      >
+        {headings.map((heading, index) => (
+          <TableOfContentAnchor
+            currentDepth={1}
+            heading={heading}
+            key={heading.id || `${heading.text}-${index}`}
+            maxDepth={maxDepth}
           />
-        </summary>
+        ))}
+      </ul>
+    </nav>
+  );
 
-        <nav aria-labelledby="toc-heading">
-          <ul className="mt-4 ml-3 space-y-1 text-sm">
-            {headings.map((heading, index) => (
-              <TableOfContentAnchor
-                currentDepth={1}
-                heading={heading}
-                key={heading.id || `${heading.text}-${index}`}
-                maxDepth={maxDepth}
-              />
-            ))}
-          </ul>
-        </nav>
-      </details>
-    </aside>
+  return (
+    <TocNavContext.Provider value={tocNavValue}>
+      <aside
+        aria-labelledby="toc-heading"
+        className={cn(
+          "flex w-full max-w-xs flex-col transition-all duration-200",
+          variant === "article"
+            ? "bg-transparent"
+            : "sticky top-20 rounded-lg border border-zinc-300 bg-gradient-to-b from-zinc-50 to-zinc-100 shadow-sm dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-900",
+          className
+        )}
+      >
+        {collapsible ? (
+          <details className="group" open>
+            {showTitle && (
+              <summary
+                className={cn(
+                  "flex cursor-pointer items-center justify-between rounded-sm p-1 font-semibold text-lg transition-colors duration-200 focus:outline-none",
+                  variant === "article"
+                    ? "text-[var(--article-ink)] hover:text-[var(--article-accent)] dark:text-zinc-100"
+                    : "text-zinc-800 hover:text-blue-600 dark:text-zinc-200 dark:hover:text-blue-400"
+                )}
+                id="toc-heading"
+              >
+                <span>{title}</span>
+                <ChevronDown
+                  aria-hidden="true"
+                  className={cn(
+                    "h-5 w-5 transform transition-transform duration-200",
+                    "group-open:rotate-180"
+                  )}
+                />
+              </summary>
+            )}
+            {navList}
+          </details>
+        ) : (
+          <>
+            {showTitle && (
+              <h2
+                className={cn(
+                  "font-semibold text-lg tracking-tight",
+                  variant === "article"
+                    ? "text-[var(--article-ink)] dark:text-zinc-100"
+                    : "text-zinc-800 dark:text-zinc-200"
+                )}
+                id="toc-heading"
+              >
+                {title}
+              </h2>
+            )}
+            {navList}
+          </>
+        )}
+      </aside>
+    </TocNavContext.Provider>
   );
 };

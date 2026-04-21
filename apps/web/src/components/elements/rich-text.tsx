@@ -95,11 +95,6 @@ const components: Partial<PortableTextReactComponents> = {
             image={value}
             width={1600}
           />
-          {value?.caption && (
-            <figcaption className="mt-2 text-center text-sm text-zinc-500 dark:text-zinc-400">
-              {value.caption}
-            </figcaption>
-          )}
         </figure>
       );
     },
