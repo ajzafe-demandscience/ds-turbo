@@ -4258,7 +4258,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": true
+        "optional": false
       },
       "authors": {
         "type": "objectAttribute",

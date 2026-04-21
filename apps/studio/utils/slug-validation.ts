@@ -57,9 +57,8 @@ export const SLUG_WARNING_MESSAGES = {
 const CONFIGS: Record<string, SlugValidationOptions> = {
   blog: {
     documentType: "Blog post",
-    requiredPrefix: "/blog/",
-    requireSlash: true,
-    segmentCount: 2,
+    requireSlash: false,
+    segmentCount: 1,
     sanityDocumentType: "blog",
   },
   blogIndex: {
@@ -67,7 +66,10 @@ const CONFIGS: Record<string, SlugValidationOptions> = {
     requireSlash: true,
     sanityDocumentType: "blogIndex",
     customValidators: [
-      (s) => (s !== "/blog" ? ["Blog index must be exactly '/blog'"] : []),
+      (s) =>
+        s !== "/resources/blog"
+          ? ["Blog index must be exactly '/resources/blog'"]
+          : [],
     ],
   },
   homePage: {
@@ -86,6 +88,7 @@ const CONFIGS: Record<string, SlugValidationOptions> = {
       (slug) => {
         const reserved = [
           ["/blog", "blog content"],
+          ["/resources/blog", "blog content"],
           ["/author", "authors"],
           ["/admin", "admin"],
           ["/api", "API routes"],
@@ -270,11 +273,11 @@ export function generateSlugFromTitle(
     case "homePage":
       return "/";
     case "blogIndex":
-      return "/blog";
+      return "/resources/blog";
     case "author":
       return `/author/${clean}`;
     case "blog":
-      return `/blog/${clean}`;
+      return clean;
     case "page": {
       if (currentSlug?.includes("/")) {
         const segments = currentSlug.split("/").filter(Boolean);

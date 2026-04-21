@@ -5,7 +5,7 @@ import {
 import { FileTextIcon } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
-import { documentSlugField, imageWithAltField } from "@/schemaTypes/common";
+import { blogPostSlugField, imageWithAltField } from "@/schemaTypes/common";
 import { GROUP, GROUPS } from "@/utils/constant";
 import { ogFields } from "@/utils/og-fields";
 import { seoFields } from "@/utils/seo-fields";
@@ -58,7 +58,7 @@ export const blog = defineType({
           ),
       ],
     }),
-    documentSlugField("blog", {
+    blogPostSlugField({
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({
@@ -154,10 +154,12 @@ export const blog = defineType({
         ? `🏷️ ${sectionLabel.trim()}`
         : "🏷️ No section label";
 
+      const slugPath = slug ? `/resources/blog/${slug}` : "no slug";
+
       return {
         title: title || "Untitled Blog",
         media,
-        subtitle: `🔗 ${slug} | ${visibility} | ${sectionInfo} | ${authorInfo} | ${dateInfo}`,
+        subtitle: `🔗 ${slugPath} | ${visibility} | ${sectionInfo} | ${authorInfo} | ${dateInfo}`,
       };
     },
   },

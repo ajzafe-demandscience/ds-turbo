@@ -9,7 +9,7 @@ test.describe("Smoke: static routes", { tag: "@smoke" }, () => {
   });
 
   test("blog index loads", async ({ page }) => {
-    const response = await page.goto("/blog");
+    const response = await page.goto("/resources/blog");
 
     expect(response?.status()).toBe(200);
     await expect(page.locator("body")).not.toBeEmpty();

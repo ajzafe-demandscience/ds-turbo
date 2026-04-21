@@ -43,7 +43,7 @@ export async function generateMetadata() {
   return getSEOMetadata({
     title: result?.title ?? result?.seoTitle,
     description: result?.description ?? result?.seoDescription,
-    slug: "/blog",
+    slug: "/resources/blog",
     contentId: result?._id,
     contentType: result?._type,
   });
@@ -59,7 +59,6 @@ export default async function BlogIndexPage({ searchParams }: BlogPageProps) {
   const { page } = await searchParams;
   const currentPage = page ? Number(page) : 1;
 
-  // Fetch page data and total count in parallel
   const [[indexPageData, errIndexPageData], [totalCount, errTotalCount]] =
     await Promise.all([
       handleErrors(fetchBlogIndexPageData()),

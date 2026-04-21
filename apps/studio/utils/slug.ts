@@ -10,6 +10,7 @@ import slugify from "slugify";
 
 import { API_VERSION } from "@/utils/constant";
 import type { PathnameParams } from "@/utils/types";
+import { cleanSlug } from "@/utils/slug-validation";
 
 export function defineSlug(
   schema: PathnameParams = { name: "slug" }
@@ -59,13 +60,17 @@ export const getDocTypePrefix = (type: string) => {
 
 const slugMapper = {
   homePage: "/",
-  blogIndex: "/blog",
+  blogIndex: "/resources/blog",
 } as Record<string, string>;
 
 export const createSlug: SlugifierFn = (input, _, { parent }) => {
   const { _type } = parent as {
     _type: string;
   };
+
+  if (_type === "blog") {
+    return cleanSlug(input);
+  }
 
   if (slugMapper[_type]) {
     return slugMapper[_type];

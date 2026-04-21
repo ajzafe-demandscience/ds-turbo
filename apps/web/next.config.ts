@@ -27,11 +27,19 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     const redirects = await client.fetch(queryRedirects);
-    return redirects.map((redirect) => ({
-      source: redirect.source,
-      destination: redirect.destination,
-      permanent: redirect.permanent ?? false,
-    }));
+    return [
+      { source: "/blog", destination: "/resources/blog", permanent: true },
+      {
+        source: "/blog/:slug",
+        destination: "/resources/blog/:slug",
+        permanent: true,
+      },
+      ...redirects.map((redirect) => ({
+        source: redirect.source,
+        destination: redirect.destination,
+        permanent: redirect.permanent ?? false,
+      })),
+    ];
   },
 };
 

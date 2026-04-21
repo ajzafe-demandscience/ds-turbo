@@ -5,13 +5,25 @@ import {
   type ValidationBuilder,
 } from "sanity";
 
-import { PathnameFieldComponent } from "@/components/slug-field-component";
-import { GROUP } from "@/utils/constant";
 import {
+  BlogSlugFieldComponent,
+  PathnameFieldComponent,
+} from "@/components/slug-field-component";
+import { GROUP } from "@/utils/constant";
+import { isUnique } from "@/utils/slug";
+import {
+  cleanSlug,
   createSlugErrorValidator,
   createSlugWarningValidator,
   getDocumentTypeConfig,
 } from "@/utils/slug-validation";
+
+const blogPostSlugValidation = {
+  documentType: "Blog post",
+  requireSlash: false,
+  segmentCount: 1,
+  sanityDocumentType: "blog",
+} as const;
 
 export const richTextField = defineField({
   name: "richText",
@@ -43,6 +55,29 @@ export const iconField = defineField({
   description:
     "Choose a small picture symbol to represent this item, like a home icon or shopping cart",
 });
+
+export const blogPostSlugField = (options: { group?: string } = {}) =>
+  defineField({
+    name: "slug",
+    type: "slug",
+    title: "Slug",
+    description:
+      "URL segment for this post (shown at /resources/blog/{slug} on the site).",
+    group: options.group,
+    components: {
+      field: BlogSlugFieldComponent,
+    },
+    options: {
+      source: "title",
+      slugify: (input: string) => cleanSlug(input),
+      isUnique,
+    },
+    validation: (Rule) => [
+      Rule.required().error("A slug is required"),
+      Rule.custom(createSlugErrorValidator(blogPostSlugValidation)),
+      Rule.custom(createSlugWarningValidator(blogPostSlugValidation)).warning(),
+    ],
+  });
 
 export const documentSlugField = (
   documentType: string,

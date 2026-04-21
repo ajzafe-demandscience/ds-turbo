@@ -75,7 +75,7 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
                 {eyebrowIsBlogLink ? (
                   <Link
                     className="article-hero-eyebrow"
-                    href="/blog"
+                    href="/resources/blog"
                     prefetch={false}
                   >
                     {eyebrowText}

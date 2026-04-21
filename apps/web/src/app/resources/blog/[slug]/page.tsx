@@ -21,7 +21,6 @@ async function fetchBlogPaths() {
   try {
     const slugs = await client.fetch(queryBlogPaths);
 
-    // If no slugs found, return empty array to prevent build errors
     if (!Array.isArray(slugs) || slugs.length === 0) {
       return [];
     }
@@ -31,15 +30,17 @@ async function fetchBlogPaths() {
       if (!slug) {
         continue;
       }
-      const [, , path] = slug.split("/");
-      if (path) {
-        paths.push({ slug: path });
+      const raw = String(slug);
+      const segment = raw.includes("/")
+        ? (raw.split("/").filter(Boolean).at(-1) ?? raw)
+        : raw;
+      if (segment) {
+        paths.push({ slug: segment });
       }
     }
     return paths;
   } catch (error) {
     logger.error("Error fetching blog paths", error);
-    // Return empty array to allow build to continue
     return [];
   }
 }
@@ -50,8 +51,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const slugString = `/blog/${slug}`;
-  const { data } = await fetchBlogSlugPageData(slugString);
+  const slugString = `/resources/blog/${slug}`;
+  const { data } = await fetchBlogSlugPageData(slug);
   return getSEOMetadata({
     title: data?.title ?? data?.seoTitle,
     description: data?.description ?? data?.seoDescription,
@@ -67,7 +68,6 @@ export async function generateStaticParams() {
   return paths;
 }
 
-// Allow dynamic params for paths not generated at build time
 export const dynamicParams = true;
 
 export default async function BlogSlugPage({
@@ -76,8 +76,7 @@ export default async function BlogSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const slugString = `/blog/${slug}`;
-  const { data } = await fetchBlogSlugPageData(slugString);
+  const { data } = await fetchBlogSlugPageData(slug);
   if (!data) {
     return notFound();
   }

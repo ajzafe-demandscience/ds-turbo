@@ -66,7 +66,7 @@ export function BlogPagination({
   totalPages,
   hasNextPage,
   hasPreviousPage,
-  basePath = "/blog",
+  basePath = "/resources/blog",
   className,
 }: BlogPaginationProps) {
   const paginationItems = generatePaginationItems(currentPage, totalPages);

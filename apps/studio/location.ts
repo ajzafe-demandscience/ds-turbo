@@ -10,11 +10,14 @@ export const locations = {
       locations: [
         {
           title: doc?.title || "Untitled",
-          href: `${doc?.slug}`,
+          href:
+            doc?.slug != null && doc.slug !== ""
+              ? `/resources/blog/${doc.slug}`
+              : "/resources/blog",
         },
         {
           title: "Blog",
-          href: "/blog",
+          href: "/resources/blog",
         },
       ],
     }),

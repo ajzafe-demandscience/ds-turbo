@@ -74,7 +74,12 @@ const blogCardFragment = /* groq */ `
   _id,
   title,
   description,
-  "slug":slug.current,
+  "slug": select(
+    !defined(slug.current) => null,
+    slug.current match "/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],
+    slug.current match "/resources/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],
+    "/resources/blog/" + slug.current
+  ),
   orderRank,
   ${imageFragment},
   publishedAt,
@@ -267,9 +272,18 @@ export const queryBlogIndexPageBlogsCount = defineQuery(`
   count(*[_type == "blog" && (seoHideFromLists != true)])
 `);
 export const queryBlogSlugPageData = defineQuery(`
-  *[_type == "blog" && slug.current == $slug][0]{
+  *[_type == "blog" && (
+    slug.current == $slug ||
+    slug.current == "/blog/" + $slug ||
+    slug.current == "/resources/blog/" + $slug
+  )][0]{
     ...,
-    "slug": slug.current,
+    "slug": select(
+      !defined(slug.current) => "",
+      slug.current match "/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],
+      slug.current match "/resources/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],
+      "/resources/blog/" + slug.current
+    ),
     ${blogAuthorFragment},
     ${imageFragment},
     ${richTextFragment},
@@ -388,8 +402,16 @@ export const querySitemapData = defineQuery(`{
     "slug": slug.current,
     "lastModified": _updatedAt
   },
-  "blogPages": *[_type == "blog" && defined(slug.current)]{
+  "blogIndexPages": *[_type == "blogIndex" && defined(slug.current)]{
     "slug": slug.current,
+    "lastModified": _updatedAt
+  },
+  "blogPages": *[_type == "blog" && defined(slug.current)]{
+    "slug": select(
+      slug.current match "/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],
+      slug.current match "/resources/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],
+      "/resources/blog/" + slug.current
+    ),
     "lastModified": _updatedAt
   }
 }`);
