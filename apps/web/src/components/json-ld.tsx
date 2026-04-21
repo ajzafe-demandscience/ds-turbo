@@ -147,7 +147,6 @@ export function ArticleJsonLd({
     "@type": "Article",
     headline: article.title,
     description: article.description || undefined,
-    articleSection: article.sectionLabel?.trim() || undefined,
     image: imageUrl ? [imageUrl] : undefined,
     author: article.authors
       ? [

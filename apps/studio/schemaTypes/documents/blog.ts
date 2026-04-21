@@ -5,6 +5,7 @@ import {
 import { FileTextIcon } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+import { PrimaryCategoryItem } from "@/components/primary-category-item";
 import { blogPostSlugField, imageWithAltField } from "@/schemaTypes/common";
 import { GROUP, GROUPS } from "@/utils/constant";
 import { ogFields } from "@/utils/og-fields";
@@ -30,14 +31,6 @@ export const blog = defineType({
       validation: (Rule) => Rule.required().error("A blog title is required"),
     }),
     defineField({
-      name: "sectionLabel",
-      type: "string",
-      title: "Section label",
-      description:
-        "Short label shown above the title (for example a series, topic, or pillar name). Used in the article header and structured data.",
-      group: GROUP.MAIN_CONTENT,
-    }),
-    defineField({
       title: "Description",
       name: "description",
       type: "text",
@@ -59,6 +52,30 @@ export const blog = defineType({
       ],
     }),
     blogPostSlugField({
+      group: GROUP.MAIN_CONTENT,
+    }),
+    defineField({
+      name: "categories",
+      type: "array",
+      title: "Categories",
+      description:
+        "",
+      options: {
+        sortable: true,
+      },
+      components: {
+        item: PrimaryCategoryItem,
+      },
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "category" }],
+          options: {
+            disableNew: false,
+          },
+        }),
+      ],
+      validation: (Rule) => Rule.unique(),
       group: GROUP.MAIN_CONTENT,
     }),
     defineField({
@@ -124,8 +141,8 @@ export const blog = defineType({
       isHidden: "seoHideFromLists",
       slug: "slug.current",
       author: "authors.0.name",
+      primaryCategory: "categories.0.title",
       publishDate: "publishedAt",
-      sectionLabel: "sectionLabel",
     },
     prepare: ({
       title,
@@ -134,8 +151,8 @@ export const blog = defineType({
       isHidden,
       author,
       slug,
+      primaryCategory,
       publishDate,
-      sectionLabel,
     }) => {
       // Status indicators
       let visibility = "🌎 Public";
@@ -150,16 +167,16 @@ export const blog = defineType({
       const dateInfo = publishDate
         ? `📅 ${new Date(publishDate).toLocaleDateString()}`
         : "⏳ Draft";
-      const sectionInfo = sectionLabel?.trim()
-        ? `🏷️ ${sectionLabel.trim()}`
-        : "🏷️ No section label";
+      const categoryInfo = primaryCategory?.trim()
+        ? `📂 ${primaryCategory.trim()}`
+        : "📂 No category";
 
       const slugPath = slug ? `/resources/blog/${slug}` : "no slug";
 
       return {
         title: title || "Untitled Blog",
         media,
-        subtitle: `🔗 ${slugPath} | ${visibility} | ${sectionInfo} | ${authorInfo} | ${dateInfo}`,
+        subtitle: `🔗 ${slugPath} | ${visibility} | ${categoryInfo} | ${authorInfo} | ${dateInfo}`,
       };
     },
   },

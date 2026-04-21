@@ -53,17 +53,19 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
     description,
     image,
     richText,
+    categories,
     authors,
     publishedAt,
-    sectionLabel,
   } = article;
 
   const dateLine = formatPublishedDate(publishedAt);
   const authorName = authors?.name;
-  const trimmedSection = sectionLabel?.trim();
-  const eyebrowText = trimmedSection ?? "Blog";
-  const eyebrowIsBlogLink = !trimmedSection;
   const readTime = estimateReadTime(richText);
+  const categoryLabels =
+    categories
+      ?.map((category) => category?.title?.trim())
+      .filter((label): label is string => Boolean(label)) ?? [];
+  const primaryCategoryLabel = categoryLabels[0] ?? null;
 
   return (
     <>
@@ -72,16 +74,18 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
           <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:gap-10">
             <div className="text-white">
               <div className="mb-6 inline-flex">
-                {eyebrowIsBlogLink ? (
+                {primaryCategoryLabel ? (
+                  <span className="article-hero-eyebrow">
+                    {primaryCategoryLabel}
+                  </span>
+                ) : (
                   <Link
                     className="article-hero-eyebrow"
                     href="/resources/blog"
                     prefetch={false}
                   >
-                    {eyebrowText}
+                    Blog
                   </Link>
-                ) : (
-                  <span className="article-hero-eyebrow">{eyebrowText}</span>
                 )}
               </div>
 
@@ -121,6 +125,19 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
                       </span>
                     </>
                   )}
+                </div>
+              ) : null}
+
+              {categoryLabels.length > 0 ? (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {categoryLabels.map((category) => (
+                    <span
+                      className="inline-flex items-center rounded-full border border-white/35 bg-white/12 px-2.5 py-1 font-medium text-[13px] text-white/95"
+                      key={category}
+                    >
+                      {category}
+                    </span>
+                  ))}
                 </div>
               ) : null}
             </div>

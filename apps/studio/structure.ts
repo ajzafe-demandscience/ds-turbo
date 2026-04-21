@@ -10,6 +10,7 @@ import {
   PanelBottom,
   PanelBottomIcon,
   Settings2,
+  Tag,
   TrendingUpDown,
   User,
 } from "lucide-react";
@@ -97,6 +98,10 @@ const createIndexListWithOrderableItems = ({
             icon: list.icon ?? File,
             title: `${listTitle}`,
           }),
+          S.documentTypeListItem("category")
+            .id("category")
+            .title("Categories")
+            .icon(Tag),
         ])
     );
 };

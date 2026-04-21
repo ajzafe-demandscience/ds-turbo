@@ -65,6 +65,35 @@ type BlogCardProps = {
   blog: Blog;
 };
 
+function BlogCategories({
+  categories,
+}: {
+  categories: NonNullable<Blog["categories"]> | null | undefined;
+}) {
+  if (!categories?.length) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {categories.map((category) => {
+        const label = category?.title?.trim();
+        if (!label) {
+          return null;
+        }
+        return (
+          <span
+            className="inline-flex items-center rounded-full border border-blue-200/70 bg-blue-50 px-2.5 py-1 font-medium text-blue-800 text-xs"
+            key={category._id}
+          >
+            {label}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 function BlogMeta({ publishedAt }: { publishedAt: string | null }) {
   return (
     <div className="my-4 flex items-center gap-x-4 text-xs">
@@ -85,11 +114,13 @@ function BlogContent({
   title,
   slug,
   description,
+  categories,
   isFeatured,
 }: {
   title: string | null;
   slug: string | null;
   description: string | null;
+  categories: Blog["categories"];
   isFeatured?: boolean;
 }) {
   const HeadingTag = isFeatured ? "h2" : "h3";
@@ -99,6 +130,7 @@ function BlogContent({
 
   return (
     <div className="group relative">
+      <BlogCategories categories={categories} />
       <HeadingTag className={headingClasses}>
         <Link href={slug ?? "#"}>
           <span className="absolute inset-0" />
@@ -113,7 +145,7 @@ function BlogContent({
 }
 
 export function FeaturedBlogCard({ blog }: BlogCardProps) {
-  const { title, publishedAt, slug, description, image } = blog ?? {};
+  const { title, publishedAt, slug, description, categories, image } = blog ?? {};
 
   return (
     <article className="grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
@@ -121,6 +153,7 @@ export function FeaturedBlogCard({ blog }: BlogCardProps) {
       <div className="space-y-6">
         <BlogMeta publishedAt={publishedAt} />
         <BlogContent
+          categories={categories}
           description={description}
           isFeatured
           slug={slug}
@@ -145,7 +178,7 @@ export function BlogCard({ blog }: BlogCardProps) {
     );
   }
 
-  const { title, publishedAt, slug, description, image } = blog;
+  const { title, publishedAt, slug, description, categories, image } = blog;
 
   return (
     <article className="grid w-full grid-cols-1 gap-4">
@@ -155,7 +188,12 @@ export function BlogCard({ blog }: BlogCardProps) {
       </div>
       <div className="w-full space-y-4">
         <BlogMeta publishedAt={publishedAt} />
-        <BlogContent description={description} slug={slug} title={title} />
+        <BlogContent
+          categories={categories}
+          description={description}
+          slug={slug}
+          title={title}
+        />
       </div>
     </article>
   );

@@ -69,6 +69,13 @@ const blogAuthorFragment = /* groq */ `
   }
 `;
 
+const blogCategoriesFragment = /* groq */ `
+  "categories": array::compact(categories[]->{
+    _id,
+    title
+  })
+`;
+
 const blogCardFragment = /* groq */ `
   _type,
   _id,
@@ -81,6 +88,7 @@ const blogCardFragment = /* groq */ `
     "/resources/blog/" + slug.current
   ),
   orderRank,
+  ${blogCategoriesFragment},
   ${imageFragment},
   publishedAt,
   ${blogAuthorFragment}
@@ -284,6 +292,7 @@ export const queryBlogSlugPageData = defineQuery(`
       slug.current match "/resources/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],
       "/resources/blog/" + slug.current
     ),
+    ${blogCategoriesFragment},
     ${blogAuthorFragment},
     ${imageFragment},
     ${richTextFragment},

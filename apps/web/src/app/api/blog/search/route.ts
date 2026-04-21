@@ -23,7 +23,7 @@ export async function GET(request: Request) {
   }
 
   const fuse = new Fuse(data, {
-    keys: ["title", "description", "slug", "authors.name"],
+    keys: ["title", "description", "slug", "authors.name", "categories.title"],
     threshold: 0.3,
   });
 
