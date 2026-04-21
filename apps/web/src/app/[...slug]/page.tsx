@@ -49,10 +49,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const slugString = `/${slug.join("/")}`;
   const { data: pageData } = await fetchSlugPageData(slugString);
+  const pageDescription =
+    pageData && "description" in pageData ? pageData.description : null;
 
   return getSEOMetadata({
     title: pageData?.title ?? pageData?.seoTitle,
-    description: pageData?.description ?? pageData?.seoDescription,
+    description: pageDescription ?? pageData?.seoDescription,
     slug: slugString,
     contentId: pageData?._id,
     contentType: pageData?._type,

@@ -48,6 +48,24 @@ export const pageBuilderField = defineField({
     "Build your page by adding different sections like text, images, and other content blocks",
 });
 
+export const sectionIdField = defineField({
+  name: "sectionId",
+  title: "Section ID",
+  type: "string",
+  description:
+    "Optional unique section ID used by Button Link blocks with 'Scroll to Section' (enter without #, e.g. pricing or contact-form).",
+});
+
+export const backgroundColorField = defineField({
+  name: "backgroundColor",
+  title: "Background Color",
+  type: "color",
+  description: "Optional background color for this main block section.",
+  options: {
+    disableAlpha: false,
+  },
+});
+
 export const iconField = defineField({
   name: "icon",
   title: "Icon",
@@ -56,16 +74,28 @@ export const iconField = defineField({
     "Choose a small picture symbol to represent this item, like a home icon or shopping cart",
 });
 
-export const blogPostSlugField = (options: { group?: string } = {}) =>
+export const blogPostSlugField = (
+  options: {
+    group?: string;
+    title?: string;
+    description?: string;
+    publicPathPrefix?: string;
+  } = {}
+) =>
   defineField({
     name: "slug",
     type: "slug",
-    title: "Slug",
+    title: options.title ?? "Slug",
     description:
+      options.description ??
       "URL segment for this post (shown at /resources/blog/{slug} on the site).",
     group: options.group,
     components: {
-      field: BlogSlugFieldComponent,
+      field: (props) =>
+        BlogSlugFieldComponent({
+          ...props,
+          publicPathPrefix: options.publicPathPrefix ?? "/resources/blog",
+        }),
     },
     options: {
       source: "title",

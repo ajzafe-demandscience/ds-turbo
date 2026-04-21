@@ -3,16 +3,23 @@ import { Badge } from "@workspace/ui/components/badge";
 import { RichText } from "@/components/elements/rich-text";
 import type { PagebuilderType } from "@/types";
 
-export type RichTextBlockProps = PagebuilderType<"richTextBlock">;
+export type RichTextBlockProps = PagebuilderType<"richTextBlock"> & {
+  isNested?: boolean;
+};
 
 export function RichTextBlock({
   richText,
   title,
   eyebrow,
+  sectionId,
+  isNested = false,
 }: RichTextBlockProps) {
+  const containerClassName = isNested ? undefined : "section-container-md6";
+  const resolvedSectionId = sectionId?.trim() || undefined;
+
   return (
-    <section className="my-6 md:my-16">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="my-6 md:my-16" id={resolvedSectionId}>
+      <div className={containerClassName}>
         <div className="flex w-full flex-col items-center">
           <div className="flex flex-col items-center space-y-4 text-center sm:space-y-6 md:text-center">
             {eyebrow && <Badge variant="secondary">{eyebrow}</Badge>}

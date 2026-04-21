@@ -5,15 +5,25 @@ import { category } from "@/schemaTypes/documents/category";
 import { faq } from "@/schemaTypes/documents/faq";
 import { footer } from "@/schemaTypes/documents/footer";
 import { homePage } from "@/schemaTypes/documents/home-page";
+import { landingPage } from "@/schemaTypes/documents/landing-page";
+import { landingPageIndex } from "@/schemaTypes/documents/landing-page-index";
 import { navbar } from "@/schemaTypes/documents/navbar";
 import { page } from "@/schemaTypes/documents/page";
 import { redirect } from "@/schemaTypes/documents/redirect";
 import { settings } from "@/schemaTypes/documents/settings";
 
-export const singletons = [homePage, blogIndex, settings, footer, navbar];
+export const singletons = [
+  homePage,
+  blogIndex,
+  landingPageIndex,
+  settings,
+  footer,
+  navbar,
+];
 
 export const documents = [
   blog,
+  landingPage,
   category,
   page,
   faq,

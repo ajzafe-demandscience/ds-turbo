@@ -12,7 +12,9 @@ import type { PagebuilderType } from "@/types";
 import { RichText } from "../elements/rich-text";
 import { FaqJsonLd } from "../json-ld";
 
-type FaqAccordionProps = PagebuilderType<"faqAccordion">;
+type FaqAccordionProps = PagebuilderType<"faqAccordion"> & {
+  isNested?: boolean;
+};
 
 export function FaqAccordion({
   eyebrow,
@@ -20,11 +22,16 @@ export function FaqAccordion({
   subtitle,
   faqs,
   link,
+  sectionId,
+  isNested = false,
 }: FaqAccordionProps) {
+  const containerClassName = isNested ? undefined : "section-container-md6";
+  const resolvedSectionId = sectionId?.trim() || "faq";
+
   return (
-    <section className="my-8" id="faq">
+    <section className="my-8" id={resolvedSectionId}>
       <FaqJsonLd faqs={faqs} />
-      <div className="container mx-auto px-4 md:px-6">
+      <div className={containerClassName}>
         <div className="flex w-full flex-col items-center">
           <div className="flex flex-col items-center space-y-4 text-center sm:space-y-6 md:text-center">
             {eyebrow && <Badge variant="secondary">{eyebrow}</Badge>}

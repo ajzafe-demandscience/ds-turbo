@@ -4,6 +4,7 @@ import { CTABlock } from "./cta";
 import { FaqAccordion } from "./faq-accordion";
 import { FeatureCardsWithIcon } from "./feature-cards-with-icon";
 import { H1Block } from "./h1";
+import { HeroBlock } from "./hero";
 import { ImageBlock } from "./image";
 import { ImageLinkCards } from "./image-link-cards";
 import { PBlock } from "./p";
@@ -11,18 +12,19 @@ import { PardotFormBlock } from "./pardot-form";
 import { RichTextBlock } from "./rich-text-block";
 import { SubscribeNewsletter } from "./subscribe-newsletter";
 
-type HeroBlockProps = PagebuilderType<"hero"> & {
+type TwoColumnsBlockProps = PagebuilderType<"twoColumns"> & {
   isNested?: boolean;
 };
 
 const NESTED_COMPONENTS = {
+  cta: CTABlock,
+  faqAccordion: FaqAccordion,
+  hero: HeroBlock,
   h1: H1Block,
   buttonLink: ButtonLinkBlock,
   imageBlock: ImageBlock,
   p: PBlock,
   pardotForm: PardotFormBlock,
-  cta: CTABlock,
-  faqAccordion: FaqAccordion,
   featureCardsIcon: FeatureCardsWithIcon,
   subscribeNewsletter: SubscribeNewsletter,
   imageLinkCards: ImageLinkCards,
@@ -46,7 +48,6 @@ function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
 
     const extraProps = {
       isNested: true,
-      ...(block._type === "p" ? { isHero: true } : {}),
       ...(block._type === "pardotForm" ? { compact: true } : {}),
     };
 
@@ -55,26 +56,28 @@ function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
   });
 }
 
-export function HeroBlock({
+export function TwoColumnsBlock({
   leftColumn,
   rightColumn,
   sectionId,
   isNested = false,
-}: HeroBlockProps) {
-  const containerClassName = isNested
-    ? "w-full px-0 pt-10 pb-12 md:pt-14 md:pb-16 lg:pt-16 lg:pb-20"
-    : "hero-surface-container";
+}: TwoColumnsBlockProps) {
+  const resolvedSectionId = sectionId?.trim() || undefined;
 
-  const resolvedSectionId = sectionId?.trim() || "hero";
+  const grid = (
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
+      <div className="space-y-8">{renderNestedBlocks(leftColumn)}</div>
+      <div className="space-y-8">{renderNestedBlocks(rightColumn)}</div>
+    </div>
+  );
 
   return (
-    <section className="article-hero-surface" id={resolvedSectionId}>
-      <div className={containerClassName}>
-        <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,480px)] md:gap-10">
-          <div className="space-y-8">{renderNestedBlocks(leftColumn)}</div>
-          <div className="space-y-8">{renderNestedBlocks(rightColumn)}</div>
-        </div>
-      </div>
+    <section id={resolvedSectionId}>
+      {isNested ? (
+        grid
+      ) : (
+        <div className="container-wrapper">{grid}</div>
+      )}
     </section>
   );
 }

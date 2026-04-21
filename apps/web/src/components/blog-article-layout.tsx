@@ -70,7 +70,7 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
   return (
     <>
       <section className="article-hero-surface">
-        <div className="container mx-auto w-full max-w-[1200px] px-4 pt-10 pb-12 md:px-6 md:pt-14 md:pb-16 lg:pt-16 lg:pb-20">
+        <div className="hero-surface-container">
           <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:gap-10">
             <div className="text-white">
               <div className="mb-6 inline-flex">
@@ -89,7 +89,7 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
                 )}
               </div>
 
-              <h1 className="max-w-3xl text-balance text-[50px] font-bold leading-[1.08] tracking-tight text-white">
+              <h1 className="hero-page-title max-w-3xl text-white">
                 {title}
               </h1>
 
@@ -157,7 +157,7 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
       </section>
 
       <div className="border-b bg-white dark:bg-background">
-        <div className="container mx-auto max-w-[1200px] px-4 py-14 md:px-6 md:py-20">
+        <div className="article-content-container">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,65%)_minmax(0,35%)] lg:gap-12">
             <article className="min-w-0">
               {description ? (

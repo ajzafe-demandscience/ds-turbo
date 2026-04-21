@@ -72,6 +72,13 @@ const CONFIGS: Record<string, SlugValidationOptions> = {
           : [],
     ],
   },
+  landingPage: {
+    documentType: "Landing page",
+    requiredPrefix: "/demand/",
+    requireSlash: true,
+    segmentCount: 2,
+    sanityDocumentType: "landingPage",
+  },
   homePage: {
     documentType: "Home page",
     requireSlash: true,
@@ -89,6 +96,7 @@ const CONFIGS: Record<string, SlugValidationOptions> = {
         const reserved = [
           ["/blog", "blog content"],
           ["/resources/blog", "blog content"],
+          ["/demand", "landing pages"],
           ["/author", "authors"],
           ["/admin", "admin"],
           ["/api", "API routes"],
@@ -145,9 +153,6 @@ function validatePathStructure(
 ): string[] {
   const errors: string[] = [];
 
-  if (options.requireSlash && !slug.startsWith("/")) {
-    errors.push(SLUG_ERROR_MESSAGES.MISSING_LEADING_SLASH);
-  }
   if (slug.length > 1 && slug.endsWith("/")) {
     errors.push(SLUG_ERROR_MESSAGES.TRAILING_SLASH);
   }
@@ -274,6 +279,8 @@ export function generateSlugFromTitle(
       return "/";
     case "blogIndex":
       return "/resources/blog";
+    case "landingPage":
+      return `/demand/${clean}`;
     case "author":
       return `/author/${clean}`;
     case "blog":

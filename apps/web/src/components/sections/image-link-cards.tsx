@@ -5,17 +5,24 @@ import type { PagebuilderType } from "@/types";
 import { RichText } from "../elements/rich-text";
 import { CTACard } from "../image-link-card";
 
-export type ImageLinkCardsProps = PagebuilderType<"imageLinkCards">;
+export type ImageLinkCardsProps = PagebuilderType<"imageLinkCards"> & {
+  isNested?: boolean;
+};
 
 export function ImageLinkCards({
   richText,
   title,
   eyebrow,
   cards,
+  sectionId,
+  isNested = false,
 }: ImageLinkCardsProps) {
+  const containerClassName = isNested ? undefined : "section-container-md6";
+  const resolvedSectionId = sectionId?.trim() || "image-link-cards";
+
   return (
-    <section className="my-16" id="image-link-cards">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="my-16" id={resolvedSectionId}>
+      <div className={containerClassName}>
         <div className="flex w-full flex-col items-center">
           <div className="flex flex-col items-center space-y-4 text-center sm:space-y-6 md:text-center">
             {eyebrow && <Badge variant="secondary">{eyebrow}</Badge>}

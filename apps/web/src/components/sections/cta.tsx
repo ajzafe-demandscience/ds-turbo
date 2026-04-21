@@ -4,12 +4,24 @@ import type { PagebuilderType } from "@/types";
 import { RichText } from "../elements/rich-text";
 import { SanityButtons } from "../elements/sanity-buttons";
 
-export type CTABlockProps = PagebuilderType<"cta">;
+export type CTABlockProps = PagebuilderType<"cta"> & {
+  isNested?: boolean;
+};
 
-export function CTABlock({ richText, title, eyebrow, buttons }: CTABlockProps) {
+export function CTABlock({
+  richText,
+  title,
+  eyebrow,
+  buttons,
+  sectionId,
+  isNested = false,
+}: CTABlockProps) {
+  const containerClassName = isNested ? undefined : "container-wrapper";
+  const resolvedSectionId = sectionId?.trim() || "features";
+
   return (
-    <section className="my-6 md:my-16" id="features">
-      <div className="container mx-auto px-4 md:px-8">
+    <section className="my-6 md:my-16" id={resolvedSectionId}>
+      <div className={containerClassName}>
         <div className="rounded-3xl bg-muted px-4 py-16">
           <div className="mx-auto max-w-3xl space-y-8 text-center">
             {eyebrow && (

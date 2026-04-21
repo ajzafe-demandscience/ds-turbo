@@ -1,6 +1,7 @@
 import { TextIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
+import { backgroundColorField, sectionIdField } from "@/schemaTypes/common";
 import { customRichText } from "@/schemaTypes/definitions/rich-text";
 
 export const richTextBlock = defineType({
@@ -22,6 +23,8 @@ export const richTextBlock = defineType({
       description: "The large text that is the primary focus of the block",
     }),
     customRichText(["block", "image"]),
+    backgroundColorField,
+    sectionIdField,
   ],
   preview: {
     select: {

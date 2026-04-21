@@ -6,13 +6,19 @@ import { createDataAttribute } from "next-sanity";
 import { useCallback, useMemo } from "react";
 
 import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
+import { ButtonLinkBlock } from "./sections/button-link";
 import { CTABlock } from "./sections/cta";
 import { FaqAccordion } from "./sections/faq-accordion";
 import { FeatureCardsWithIcon } from "./sections/feature-cards-with-icon";
+import { H1Block } from "./sections/h1";
 import { HeroBlock } from "./sections/hero";
+import { ImageBlock } from "./sections/image";
 import { ImageLinkCards } from "./sections/image-link-cards";
+import { PBlock } from "./sections/p";
+import { PardotFormBlock } from "./sections/pardot-form";
 import { RichTextBlock } from "./sections/rich-text-block";
 import { SubscribeNewsletter } from "./sections/subscribe-newsletter";
+import { TwoColumnsBlock } from "./sections/two-columns";
 
 export type PageBuilderProps = {
   readonly pageBuilder?: PageBuilderBlock[];
@@ -20,23 +26,38 @@ export type PageBuilderProps = {
   readonly type: string;
 };
 
+type ExtendedPageBuilderBlockTypes =
+  | PageBuilderBlockTypes
+  | "imageBlock"
+  | "buttonLink";
+
 type SanityDataAttributeConfig = {
   readonly id: string;
   readonly type: string;
   readonly path: string;
 };
 
+type SanityColorValue = {
+  hex?: string;
+};
+
 // Strongly typed component mapping with proper component signatures
 const BLOCK_COMPONENTS = {
   cta: CTABlock,
+  buttonLink: ButtonLinkBlock,
   faqAccordion: FaqAccordion,
   hero: HeroBlock,
+  h1: H1Block,
+  imageBlock: ImageBlock,
+  p: PBlock,
+  pardotForm: PardotFormBlock,
   featureCardsIcon: FeatureCardsWithIcon,
   subscribeNewsletter: SubscribeNewsletter,
   imageLinkCards: ImageLinkCards,
   richTextBlock: RichTextBlock,
+  twoColumns: TwoColumnsBlock,
   // biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering>
-} as const satisfies Record<PageBuilderBlockTypes, React.ComponentType<any>>;
+} as const satisfies Record<ExtendedPageBuilderBlockTypes, React.ComponentType<any>>;
 
 /**
  * Helper function to create consistent Sanity data attributes
@@ -127,10 +148,22 @@ function useBlockRenderer(id: string, type: string) {
         );
       }
 
+      const resolvedBackgroundColor =
+        typeof block.backgroundColor === "string"
+          ? block.backgroundColor
+          : (block.backgroundColor as SanityColorValue | null | undefined)?.hex;
+
+      const blockStyle =
+        typeof resolvedBackgroundColor === "string" &&
+        resolvedBackgroundColor.trim()
+          ? { backgroundColor: resolvedBackgroundColor.trim() }
+          : undefined;
+
       return (
         <div
           data-sanity={createBlockDataAttribute(block._key)}
           key={`${block._type}-${block._key}`}
+          style={blockStyle}
         >
           {/** biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering> */}
           <Component {...(block as any)} />
@@ -165,7 +198,6 @@ export function PageBuilder({
 
   return (
     <main
-      className="mx-auto my-16 flex max-w-7xl flex-col gap-16"
       data-sanity={containerDataAttribute}
     >
       {blocks.map(renderBlock)}

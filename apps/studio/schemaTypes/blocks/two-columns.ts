@@ -1,8 +1,9 @@
-import { Star } from "lucide-react";
+import { Columns2Icon } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { backgroundColorField, sectionIdField } from "@/schemaTypes/common";
 
 const nestedBlockTypes = [
+  "hero",
   "h1",
   "buttonLink",
   "imageBlock",
@@ -16,11 +17,13 @@ const nestedBlockTypes = [
   "subscribeNewsletter",
 ] as const;
 
-export const hero = defineType({
-  name: "hero",
-  title: "Hero",
-  icon: Star,
+export const twoColumns = defineType({
+  name: "twoColumns",
+  title: "Two Columns",
   type: "object",
+  icon: Columns2Icon,
+  description:
+    "Two-column container where each column can include other page builder components.",
   fields: [
     defineField({
       name: "leftColumn",
@@ -45,7 +48,7 @@ export const hero = defineType({
       rightCount: "rightColumn",
     },
     prepare: ({ leftCount, rightCount }) => ({
-      title: "Hero",
+      title: "Two Columns",
       subtitle: `Left: ${leftCount?.length ?? 0} • Right: ${rightCount?.length ?? 0}`,
     }),
   },

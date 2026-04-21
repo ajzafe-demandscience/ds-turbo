@@ -4,7 +4,9 @@ import type { PagebuilderType } from "@/types";
 import { RichText } from "../elements/rich-text";
 import { SanityIcon } from "../elements/sanity-icon";
 
-type FeatureCardsWithIconProps = PagebuilderType<"featureCardsIcon">;
+type FeatureCardsWithIconProps = PagebuilderType<"featureCardsIcon"> & {
+  isNested?: boolean;
+};
 
 type FeatureCardProps = {
   card: NonNullable<FeatureCardsWithIconProps["cards"]>[number];
@@ -34,10 +36,15 @@ export function FeatureCardsWithIcon({
   title,
   richText,
   cards,
+  sectionId,
+  isNested = false,
 }: FeatureCardsWithIconProps) {
+  const containerClassName = isNested ? undefined : "section-container-md6";
+  const resolvedSectionId = sectionId?.trim() || "features";
+
   return (
-    <section className="my-6 md:my-16" id="features">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="my-6 md:my-16" id={resolvedSectionId}>
+      <div className={containerClassName}>
         <div className="flex w-full flex-col items-center">
           <div className="flex flex-col items-center space-y-4 text-center sm:space-y-6 md:text-center">
             {eyebrow && <Badge variant="secondary">{eyebrow}</Badge>}

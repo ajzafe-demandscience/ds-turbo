@@ -65,6 +65,7 @@ type CreateIndexList = {
   list: Base;
   index: Base<SingletonType>;
   context: StructureResolverContext;
+  extraItems?: Array<ReturnType<StructureBuilder["listItem"]>>;
 };
 
 const createIndexListWithOrderableItems = ({
@@ -72,6 +73,7 @@ const createIndexListWithOrderableItems = ({
   index,
   list,
   context,
+  extraItems = [],
 }: CreateIndexList) => {
   const indexTitle = index.title ?? getTitleCase(index.type);
   const listTitle = list.title ?? getTitleCase(list.type);
@@ -98,10 +100,7 @@ const createIndexListWithOrderableItems = ({
             icon: list.icon ?? File,
             title: `${listTitle}`,
           }),
-          S.documentTypeListItem("category")
-            .id("category")
-            .title("Categories")
-            .icon(Tag),
+          ...extraItems,
         ])
     );
 };
@@ -120,6 +119,18 @@ export const structure = (
         S,
         index: { type: "blogIndex", icon: BookMarked },
         list: { type: "blog", title: "Blogs", icon: FileText },
+        context,
+        extraItems: [
+          S.documentTypeListItem("category")
+            .id("category")
+            .title("Categories")
+            .icon(Tag),
+        ],
+      }),
+      createIndexListWithOrderableItems({
+        S,
+        index: { type: "landingPageIndex", icon: File },
+        list: { type: "landingPage", title: "Landing Pages", icon: FileText },
         context,
       }),
       createList({

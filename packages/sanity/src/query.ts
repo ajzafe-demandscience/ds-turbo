@@ -135,12 +135,42 @@ const imageLinkCardsBlock = /* groq */ `
   }
 `;
 
-const heroBlock = /* groq */ `
-  _type == "hero" => {
+const h1Block = /* groq */ `
+  _type == "h1" => {
     ...,
-    ${imageFragment},
-    ${buttonsFragment},
+  }
+`;
+
+const buttonLinkBlock = /* groq */ `
+  _type == "buttonLink" => {
+    ...,
+    style,
+    linkType,
+    "scrollToSectionId": scrollToSectionId,
+    text,
+    variant,
+    openInNewTab,
+    "href": url
+  }
+`;
+
+const imageBlock = /* groq */ `
+  _type == "imageBlock" => {
+    ...,
+    ${imageFragment}
+  }
+`;
+
+const pBlock = /* groq */ `
+  _type == "p" => {
+    ...,
     ${richTextFragment}
+  }
+`;
+
+const pardotFormBlock = /* groq */ `
+  _type == "pardotForm" => {
+    ...,
   }
 `;
 
@@ -202,17 +232,97 @@ const richTextBlockFragment = /* groq */ `
   }
 `;
 
+const heroBlock = /* groq */ `
+  _type == "hero" => {
+    ...,
+    leftColumn[]{
+      ...,
+      _type,
+      ${ctaBlock},
+      ${h1Block},
+      ${buttonLinkBlock},
+      ${imageBlock},
+      ${pBlock},
+      ${pardotFormBlock},
+      ${faqAccordionBlock},
+      ${featureCardsIconBlock},
+      ${subscribeNewsletterBlock},
+      ${imageLinkCardsBlock},
+      ${richTextBlockFragment}
+    },
+    rightColumn[]{
+      ...,
+      _type,
+      ${ctaBlock},
+      ${h1Block},
+      ${buttonLinkBlock},
+      ${imageBlock},
+      ${pBlock},
+      ${pardotFormBlock},
+      ${faqAccordionBlock},
+      ${featureCardsIconBlock},
+      ${subscribeNewsletterBlock},
+      ${imageLinkCardsBlock},
+      ${richTextBlockFragment}
+    }
+  }
+`;
+
+const twoColumnsBlock = /* groq */ `
+  _type == "twoColumns" => {
+    ...,
+    leftColumn[]{
+      ...,
+      _type,
+      ${ctaBlock},
+      ${heroBlock},
+      ${h1Block},
+      ${buttonLinkBlock},
+      ${imageBlock},
+      ${pBlock},
+      ${pardotFormBlock},
+      ${faqAccordionBlock},
+      ${featureCardsIconBlock},
+      ${subscribeNewsletterBlock},
+      ${imageLinkCardsBlock},
+      ${richTextBlockFragment}
+    },
+    rightColumn[]{
+      ...,
+      _type,
+      ${ctaBlock},
+      ${heroBlock},
+      ${h1Block},
+      ${buttonLinkBlock},
+      ${imageBlock},
+      ${pBlock},
+      ${pardotFormBlock},
+      ${faqAccordionBlock},
+      ${featureCardsIconBlock},
+      ${subscribeNewsletterBlock},
+      ${imageLinkCardsBlock},
+      ${richTextBlockFragment}
+    }
+  }
+`;
+
 const pageBuilderFragment = /* groq */ `
   pageBuilder[]{
     ...,
     _type,
     ${ctaBlock},
     ${heroBlock},
+    ${h1Block},
+    ${buttonLinkBlock},
+    ${imageBlock},
+    ${pBlock},
+    ${pardotFormBlock},
     ${faqAccordionBlock},
     ${featureCardsIconBlock},
     ${subscribeNewsletterBlock},
     ${imageLinkCardsBlock},
-    ${richTextBlockFragment}
+    ${richTextBlockFragment},
+    ${twoColumnsBlock}
   }
 `;
 
@@ -239,15 +349,32 @@ export const queryHomePageData =
   }`);
 
 export const querySlugPageData = defineQuery(`
-  *[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
+  *[
+    defined(slug.current) &&
+    (
+      (_type == "page" && slug.current == $slug) ||
+      (_type == "landingPage" && (
+        slug.current == $slug ||
+        "/demand/" + slug.current == $slug
+      ))
+    )
+  ][0]{
     ...,
-    "slug": slug.current,
+    "slug": select(
+      _type == "landingPage" => "/demand/" + slug.current,
+      slug.current
+    ),
     ${pageBuilderFragment}
   }
   `);
 
 export const querySlugPagePaths = defineQuery(`
-  *[_type == "page" && defined(slug.current)].slug.current
+  *[_type in ["page", "landingPage"] && defined(slug.current)]{
+    "slug": select(
+      _type == "landingPage" => "/demand/" + slug.current,
+      slug.current
+    )
+  }.slug
 `);
 
 export const queryBlogIndexPageData = defineQuery(`

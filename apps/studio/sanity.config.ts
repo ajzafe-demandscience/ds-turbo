@@ -1,4 +1,5 @@
 import { assist } from "@sanity/assist";
+import { colorInput } from "@sanity/color-input";
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { presentationTool } from "sanity/presentation";
@@ -44,6 +45,7 @@ export default defineConfig({
     }),
     presentationUrl(),
     visionTool(),
+    colorInput(),
     lucideIconPicker(),
     unsplashImageAsset(),
     media(),
@@ -61,6 +63,7 @@ export default defineConfig({
               "footer",
               "settings",
               "blogIndex",
+              "landingPageIndex",
               "assist.instruction.context",
               "media.tag",
             ].includes(template?.templateId)

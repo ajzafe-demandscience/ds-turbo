@@ -147,7 +147,7 @@ export function PathnameFieldComponent(props: ObjectFieldProps<SlugValue>) {
       <Stack space={4}>
         <Stack space={2}>
           <Text size={1} weight="medium">
-            URL Path
+            Slug
           </Text>
           <Flex align="center" gap={2}>
             <Box flex={1}>
@@ -155,7 +155,7 @@ export function PathnameFieldComponent(props: ObjectFieldProps<SlugValue>) {
                 disabled={readOnly}
                 fontSize={1}
                 onChange={handleSlugChange}
-                placeholder="e.g., /about-us or /blog/my-post"
+                placeholder="e.g., /about-us"
                 style={monoStyle}
                 value={currentSlug}
               />
@@ -174,9 +174,7 @@ export function PathnameFieldComponent(props: ObjectFieldProps<SlugValue>) {
         <ValidationMessages errors={errors} warnings={warnings} />
 
         <Text muted size={1}>
-          Must start with a forward slash (/). Use forward slashes to create
-          nested paths. Only lowercase letters, numbers, hyphens, and slashes
-          are allowed.
+          Only lowercase letters, numbers, hyphens, and slashes are allowed.
         </Text>
 
         {currentSlug && errors.length === 0 && (
@@ -205,14 +203,14 @@ export function PathnameFieldComponent(props: ObjectFieldProps<SlugValue>) {
   );
 }
 
-function normalizeBlogSlugSegment(raw: string): string {
+function normalizeSingleSegmentSlug(raw: string, publicPathPrefix: string): string {
   const trimmed = raw.trim();
   if (!trimmed) {
     return "";
   }
   const withoutHostPath = trimmed
     .replace(/^https?:\/\/[^/]+/i, "")
-    .replace(new RegExp(`^${blogPublicPathPrefix}/?`, "i"), "")
+    .replace(new RegExp(`^${publicPathPrefix}/?`, "i"), "")
     .replace(/^\//, "");
   const segment = withoutHostPath.split("/").filter(Boolean)[0] ?? "";
   return segment;
@@ -220,6 +218,9 @@ function normalizeBlogSlugSegment(raw: string): string {
 
 /** Blog post slug: single segment; preview URL {origin}/resources/blog/{slug} */
 export function BlogSlugFieldComponent(props: ObjectFieldProps<SlugValue>) {
+  const publicPathPrefix =
+    (props as ObjectFieldProps<SlugValue> & { publicPathPrefix?: string })
+      .publicPathPrefix ?? blogPublicPathPrefix;
   const {
     inputProps: { onChange, value, readOnly },
     title,
@@ -229,7 +230,7 @@ export function BlogSlugFieldComponent(props: ObjectFieldProps<SlugValue>) {
 
   const document = useFormValue([]) as SanityDocument;
   const currentSlug = (value?.current ?? "").trim();
-  const segment = normalizeBlogSlugSegment(currentSlug);
+  const segment = normalizeSingleSegmentSlug(currentSlug, publicPathPrefix);
 
   const errors = useMemo(
     () => [
@@ -252,7 +253,7 @@ export function BlogSlugFieldComponent(props: ObjectFieldProps<SlugValue>) {
     [validation]
   );
 
-  const pathname = segment ? `${blogPublicPathPrefix}/${segment}` : "";
+  const pathname = segment ? `${publicPathPrefix}/${segment}` : "";
   const fullUrl = `${presentationOriginUrl ?? ""}${pathname}`;
 
   const handleChange = useCallback(
@@ -272,10 +273,10 @@ export function BlogSlugFieldComponent(props: ObjectFieldProps<SlugValue>) {
 
   const handleSlugChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      const next = normalizeBlogSlugSegment(e.target.value);
+      const next = normalizeSingleSegmentSlug(e.target.value, publicPathPrefix);
       handleChange(next);
     },
-    [handleChange]
+    [handleChange, publicPathPrefix]
   );
 
   const handleGenerate = useCallback(() => {
@@ -363,7 +364,7 @@ export function BlogSlugFieldComponent(props: ObjectFieldProps<SlugValue>) {
 
         <Text muted size={1}>
           One segment only: lowercase letters, numbers, and hyphens. No slashes.
-          The live URL will be {blogPublicPathPrefix}/ plus this slug.
+          The live URL will be {publicPathPrefix}/ plus this slug.
         </Text>
 
         {segment && errors.length === 0 && (

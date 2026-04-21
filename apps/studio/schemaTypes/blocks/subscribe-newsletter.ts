@@ -1,6 +1,7 @@
 import { Mail } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
+import { backgroundColorField, sectionIdField } from "@/schemaTypes/common";
 import { customRichText } from "@/schemaTypes/definitions/rich-text";
 
 export const subscribeNewsletter = defineType({
@@ -22,6 +23,8 @@ export const subscribeNewsletter = defineType({
       name: "helperText",
       title: "Helper Text",
     }),
+    backgroundColorField,
+    sectionIdField,
   ],
   preview: {
     select: {
