@@ -11,6 +11,7 @@ const logger = new Logger("RichText");
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
+    center: ({ children }) => <p className="text-center">{children}</p>,
     h2: ({ children, value }) => {
       const slug = parseChildrenToSlug(value.children);
       return (
@@ -56,6 +57,9 @@ const components: Partial<PortableTextReactComponents> = {
     },
   },
   marks: {
+    centerText: ({ children }) => (
+      <span className="inline-block w-full text-center">{children}</span>
+    ),
     code: ({ children }) => (
       <code className="rounded-md border border-white/10 bg-opacity-5 p-1 text-sm lg:whitespace-nowrap">
         {children}

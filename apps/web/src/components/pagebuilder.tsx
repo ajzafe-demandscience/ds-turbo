@@ -8,18 +8,19 @@ import { useCallback, useMemo } from "react";
 import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
 import { ButtonLinkBlock } from "./sections/button-link";
 import { CompanyLogoCarouselBlock } from "./sections/company-logo-carousel";
-import { CTABlock } from "./sections/cta";
-import { FaqAccordion } from "./sections/faq-accordion";
-import { FeatureCardsWithIcon } from "./sections/feature-cards-with-icon";
 import { H1Block } from "./sections/h1";
+import { HowItWorksCardsBlock } from "./sections/how-it-works-cards";
 import { HeroBlock } from "./sections/hero";
+import { ImageCardBlock } from "./sections/image-card";
 import { ImageBlock } from "./sections/image";
-import { ImageLinkCards } from "./sections/image-link-cards";
 import { PBlock } from "./sections/p";
 import { PardotFormBlock } from "./sections/pardot-form";
 import { RichTextBlock } from "./sections/rich-text-block";
-import { SubscribeNewsletter } from "./sections/subscribe-newsletter";
+import { SectionBuilderBlock } from "./sections/section-builder";
+import { StatsCounterBlock } from "./sections/stats-counter";
 import { TwoColumnsBlock } from "./sections/two-columns";
+import { WhatWeDoCardsBlock } from "./sections/what-we-do-cards";
+import { WhatYouCanRunCardsBlock } from "./sections/what-you-can-run-cards";
 
 export type PageBuilderProps = {
   readonly pageBuilder?: PageBuilderBlock[];
@@ -30,8 +31,14 @@ export type PageBuilderProps = {
 type ExtendedPageBuilderBlockTypes =
   | PageBuilderBlockTypes
   | "imageBlock"
+  | "imageCard"
   | "buttonLink"
-  | "companyLogoCarousel";
+  | "companyLogoCarousel"
+  | "howItWorksCards"
+  | "sectionBuilder"
+  | "statsCounter"
+  | "whatWeDoCards"
+  | "whatYouCanRunCards";
 
 type SanityDataAttributeConfig = {
   readonly id: string;
@@ -45,18 +52,19 @@ type SanityColorValue = {
 
 // Strongly typed component mapping with proper component signatures
 const BLOCK_COMPONENTS = {
-  cta: CTABlock,
   companyLogoCarousel: CompanyLogoCarouselBlock,
+  howItWorksCards: HowItWorksCardsBlock,
+  sectionBuilder: SectionBuilderBlock,
+  statsCounter: StatsCounterBlock,
+  whatYouCanRunCards: WhatYouCanRunCardsBlock,
+  whatWeDoCards: WhatWeDoCardsBlock,
   buttonLink: ButtonLinkBlock,
-  faqAccordion: FaqAccordion,
   hero: HeroBlock,
   h1: H1Block,
   imageBlock: ImageBlock,
+  imageCard: ImageCardBlock,
   p: PBlock,
   pardotForm: PardotFormBlock,
-  featureCardsIcon: FeatureCardsWithIcon,
-  subscribeNewsletter: SubscribeNewsletter,
-  imageLinkCards: ImageLinkCards,
   richTextBlock: RichTextBlock,
   twoColumns: TwoColumnsBlock,
   // biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering>
@@ -151,10 +159,16 @@ function useBlockRenderer(id: string, type: string) {
         );
       }
 
+      const backgroundColorValue =
+        "backgroundColor" in block
+          ? (block as { backgroundColor?: string | SanityColorValue | null })
+              .backgroundColor
+          : undefined;
+
       const resolvedBackgroundColor =
-        typeof block.backgroundColor === "string"
-          ? block.backgroundColor
-          : (block.backgroundColor as SanityColorValue | null | undefined)?.hex;
+        typeof backgroundColorValue === "string"
+          ? backgroundColorValue
+          : backgroundColorValue?.hex;
 
       const blockStyle =
         typeof resolvedBackgroundColor === "string" &&

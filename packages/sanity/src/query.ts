@@ -110,31 +110,6 @@ const buttonsFragment = /* groq */ `
 `;
 
 // Page builder block fragments
-const ctaBlock = /* groq */ `
-  _type == "cta" => {
-    ...,
-    ${richTextFragment},
-    ${buttonsFragment},
-  }
-`;
-const imageLinkCardsBlock = /* groq */ `
-  _type == "imageLinkCards" => {
-    ...,
-    ${richTextFragment},
-    ${buttonsFragment},
-    "cards": array::compact(cards[]{
-      ...,
-      "openInNewTab": url.openInNewTab,
-      "href": select(
-        url.type == "internal" => url.internal->slug.current,
-        url.type == "external" => url.external,
-        url.href
-      ),
-      ${imageFragment},
-    })
-  }
-`;
-
 const h1Block = /* groq */ `
   _type == "h1" => {
     ...,
@@ -157,7 +132,74 @@ const buttonLinkBlock = /* groq */ `
 const imageBlock = /* groq */ `
   _type == "imageBlock" => {
     ...,
-    ${imageFragment}
+    ${imageFragment},
+    "openInNewTab": url.openInNewTab,
+    "href": select(
+      url.type == "internal" => url.internal->slug.current,
+      url.type == "external" => url.external,
+      url.href
+    )
+  }
+`;
+
+const imageCardBlock = /* groq */ `
+  _type == "imageCard" => {
+    ...,
+    ${imageFragment},
+    "openInNewTab": url.openInNewTab,
+    "href": select(
+      url.type == "internal" => url.internal->slug.current,
+      url.type == "external" => url.external,
+      url.href
+    )
+  }
+`;
+
+const howItWorksCardsBlock = /* groq */ `
+  _type == "howItWorksCards" => {
+    ...,
+    "items": array::compact(items[]{
+      ...,
+      ${imageFragment}
+    })
+  }
+`;
+
+const whatYouCanRunCardsBlock = /* groq */ `
+  _type == "whatYouCanRunCards" => {
+    ...,
+    "items": array::compact(items[]{
+      ...,
+      ${imageFragment}
+    })
+  }
+`;
+
+const whatWeDoCardsBlock = /* groq */ `
+  _type == "whatWeDoCards" => {
+    ...,
+    "cards": array::compact(cards[]{
+      ...,
+      accentImage {
+        ${imageFields}
+      }
+    }),
+    featureImage {
+      ${imageFields}
+    },
+    featureLogo {
+      ${imageFields}
+    }
+  }
+`;
+
+const statsCounterBlock = /* groq */ `
+  _type == "statsCounter" => {
+    ...,
+    "items": array::compact(items[]{
+      ...,
+      "value": value
+    })
   }
 `;
 
@@ -198,57 +240,6 @@ const pardotFormBlock = /* groq */ `
   }
 `;
 
-const faqFragment = /* groq */ `
-  "faqs": array::compact(faqs[]->{
-    title,
-    _id,
-    _type,
-    ${richTextFragment}
-  })
-`;
-
-const faqAccordionBlock = /* groq */ `
-  _type == "faqAccordion" => {
-    ...,
-    "eyebrow": coalesce(eyebrow, null),
-    ${faqFragment},
-    link{
-      ...,
-      "openInNewTab": url.openInNewTab,
-      "href": select(
-        url.type == "internal" => url.internal->slug.current,
-        url.type == "external" => url.external,
-        url.href
-      )
-    }
-  }
-`;
-
-const subscribeNewsletterBlock = /* groq */ `
-  _type == "subscribeNewsletter" => {
-    ...,
-    "subTitle": subTitle[]{
-      ...,
-      ${markDefsFragment}
-    },
-    "helperText": helperText[]{
-      ...,
-      ${markDefsFragment}
-    }
-  }
-`;
-
-const featureCardsIconBlock = /* groq */ `
-  _type == "featureCardsIcon" => {
-    ...,
-    ${richTextFragment},
-    "cards": array::compact(cards[]{
-      ...,
-      ${richTextFragment},
-    })
-  }
-`;
-
 const richTextBlockFragment = /* groq */ `
   _type == "richTextBlock" => {
     ...,
@@ -262,31 +253,23 @@ const heroBlock = /* groq */ `
     leftColumn[]{
       ...,
       _type,
-      ${ctaBlock},
       ${h1Block},
       ${buttonLinkBlock},
       ${imageBlock},
+      ${imageCardBlock},
       ${pBlock},
       ${pardotFormBlock},
-      ${faqAccordionBlock},
-      ${featureCardsIconBlock},
-      ${subscribeNewsletterBlock},
-      ${imageLinkCardsBlock},
       ${richTextBlockFragment}
     },
     rightColumn[]{
       ...,
       _type,
-      ${ctaBlock},
       ${h1Block},
       ${buttonLinkBlock},
       ${imageBlock},
+      ${imageCardBlock},
       ${pBlock},
       ${pardotFormBlock},
-      ${faqAccordionBlock},
-      ${featureCardsIconBlock},
-      ${subscribeNewsletterBlock},
-      ${imageLinkCardsBlock},
       ${richTextBlockFragment}
     }
   }
@@ -298,36 +281,52 @@ const twoColumnsBlock = /* groq */ `
     leftColumn[]{
       ...,
       _type,
-      ${ctaBlock},
       ${heroBlock},
       ${h1Block},
       ${buttonLinkBlock},
       ${companyLogoCarouselBlock},
       ${imageBlock},
+      ${imageCardBlock},
       ${pBlock},
       ${pardotFormBlock},
-      ${faqAccordionBlock},
-      ${featureCardsIconBlock},
-      ${subscribeNewsletterBlock},
-      ${imageLinkCardsBlock},
       ${richTextBlockFragment}
     },
     rightColumn[]{
       ...,
       _type,
-      ${ctaBlock},
       ${heroBlock},
       ${h1Block},
       ${buttonLinkBlock},
       ${companyLogoCarouselBlock},
       ${imageBlock},
+      ${imageCardBlock},
       ${pBlock},
       ${pardotFormBlock},
-      ${faqAccordionBlock},
-      ${featureCardsIconBlock},
-      ${subscribeNewsletterBlock},
-      ${imageLinkCardsBlock},
       ${richTextBlockFragment}
+    }
+  }
+`;
+
+const sectionBuilderBlock = /* groq */ `
+  _type == "sectionBuilder" => {
+    ...,
+    pageBuilder[]{
+      ...,
+      _type,
+      ${heroBlock},
+      ${howItWorksCardsBlock},
+      ${statsCounterBlock},
+      ${whatYouCanRunCardsBlock},
+      ${whatWeDoCardsBlock},
+      ${h1Block},
+      ${buttonLinkBlock},
+      ${companyLogoCarouselBlock},
+      ${imageBlock},
+      ${imageCardBlock},
+      ${pBlock},
+      ${pardotFormBlock},
+      ${richTextBlockFragment},
+      ${twoColumnsBlock}
     }
   }
 `;
@@ -336,18 +335,19 @@ const pageBuilderFragment = /* groq */ `
   pageBuilder[]{
     ...,
     _type,
-    ${ctaBlock},
     ${heroBlock},
+    ${howItWorksCardsBlock},
+    ${sectionBuilderBlock},
+    ${statsCounterBlock},
+    ${whatYouCanRunCardsBlock},
+    ${whatWeDoCardsBlock},
     ${h1Block},
     ${buttonLinkBlock},
     ${companyLogoCarouselBlock},
     ${imageBlock},
+    ${imageCardBlock},
     ${pBlock},
     ${pardotFormBlock},
-    ${faqAccordionBlock},
-    ${featureCardsIconBlock},
-    ${subscribeNewsletterBlock},
-    ${imageLinkCardsBlock},
     ${richTextBlockFragment},
     ${twoColumnsBlock}
   }

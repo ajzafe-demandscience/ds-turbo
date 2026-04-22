@@ -1,15 +1,11 @@
 import type { PageBuilderBlock, PagebuilderType } from "@/types";
 import { ButtonLinkBlock } from "./button-link";
-import { CTABlock } from "./cta";
-import { FaqAccordion } from "./faq-accordion";
-import { FeatureCardsWithIcon } from "./feature-cards-with-icon";
 import { H1Block } from "./h1";
+import { ImageCardBlock } from "./image-card";
 import { ImageBlock } from "./image";
-import { ImageLinkCards } from "./image-link-cards";
 import { PBlock } from "./p";
 import { PardotFormBlock } from "./pardot-form";
 import { RichTextBlock } from "./rich-text-block";
-import { SubscribeNewsletter } from "./subscribe-newsletter";
 
 type HeroBlockProps = PagebuilderType<"hero"> & {
   isNested?: boolean;
@@ -19,13 +15,9 @@ const NESTED_COMPONENTS = {
   h1: H1Block,
   buttonLink: ButtonLinkBlock,
   imageBlock: ImageBlock,
+  imageCard: ImageCardBlock,
   p: PBlock,
   pardotForm: PardotFormBlock,
-  cta: CTABlock,
-  faqAccordion: FaqAccordion,
-  featureCardsIcon: FeatureCardsWithIcon,
-  subscribeNewsletter: SubscribeNewsletter,
-  imageLinkCards: ImageLinkCards,
   richTextBlock: RichTextBlock,
   // biome-ignore lint/suspicious/noExplicitAny: dynamic block rendering
 } as const satisfies Record<string, React.ComponentType<any>>;

@@ -164,10 +164,9 @@
   }
 
   h2 {
-    margin-top: 35px !important;
-    margin-bottom: 20px !important;
     font-size: 38px !important;
     font-weight: 600;
+    line-height: normal !important;
     text-decoration: none;
     border-bottom: 0 !important;
   }
@@ -187,15 +186,6 @@
   .toc-title {
     font-size: 28px !important;
     margin: 10px 0 !important;
-  }
-
-  img {
-    display: block;
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: var(--radius-md);
   }
 }
 

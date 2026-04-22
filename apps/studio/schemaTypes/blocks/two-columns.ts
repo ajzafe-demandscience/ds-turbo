@@ -7,15 +7,11 @@ const nestedBlockTypes = [
   "h1",
   "buttonLink",
   "imageBlock",
+  "imageCard",
   "p",
   "pardotForm",
-  "cta",
   "companyLogoCarousel",
-  "featureCardsIcon",
-  "faqAccordion",
-  "imageLinkCards",
   "richTextBlock",
-  "subscribeNewsletter",
 ] as const;
 
 export const twoColumns = defineType({
@@ -26,6 +22,13 @@ export const twoColumns = defineType({
   description:
     "Two-column container where each column can include other page builder components.",
   fields: [
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      description:
+        "For internal use in Page Builder only. This title helps identify the block in Studio and is not displayed on the website.",
+    }),
     defineField({
       name: "leftColumn",
       title: "Left Column",
@@ -45,11 +48,12 @@ export const twoColumns = defineType({
   ],
   preview: {
     select: {
+      title: "title",
       leftCount: "leftColumn",
       rightCount: "rightColumn",
     },
-    prepare: ({ leftCount, rightCount }) => ({
-      title: "Two Columns",
+    prepare: ({ title, leftCount, rightCount }) => ({
+      title: title || "Two Columns",
       subtitle: `Left: ${leftCount?.length ?? 0} • Right: ${rightCount?.length ?? 0}`,
     }),
   },

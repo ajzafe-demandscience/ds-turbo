@@ -2,16 +2,46 @@ import { defineArrayMember, defineType } from "sanity";
 
 import { pageBuilderBlocks } from "@/schemaTypes/blocks/index";
 
-export const pagebuilderBlockTypes = pageBuilderBlocks.map(({ name }) => ({
-  type: name,
-}));
+const COMPONENT_BLOCK_NAMES = new Set([
+  "buttonLink",
+  "h1",
+  "imageBlock",
+  "p",
+  "pardotForm",
+]);
+
+const componentBlockTypes = pageBuilderBlocks
+  .map(({ name }) => name)
+  .filter((name) => COMPONENT_BLOCK_NAMES.has(name));
+
+const sectionBlockTypes = pageBuilderBlocks
+  .map(({ name }) => name)
+  .filter((name) => !COMPONENT_BLOCK_NAMES.has(name));
+
+export const pagebuilderBlockTypes = pageBuilderBlocks.map(({ name }) =>
+  defineArrayMember({
+    type: name,
+  })
+);
 
 export const pageBuilder = defineType({
   name: "pageBuilder",
   type: "array",
-  of: pagebuilderBlockTypes.map((block) => defineArrayMember(block)),
+  of: pagebuilderBlockTypes,
   options: {
     insertMenu: {
+      groups: [
+        {
+          name: "sections",
+          title: "Sections",
+          of: sectionBlockTypes,
+        },
+        {
+          name: "components",
+          title: "Components",
+          of: componentBlockTypes,
+        },
+      ],
       views: [
         {
           name: "grid",

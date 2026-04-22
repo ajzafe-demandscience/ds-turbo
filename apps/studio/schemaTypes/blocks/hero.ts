@@ -6,14 +6,10 @@ const nestedBlockTypes = [
   "h1",
   "buttonLink",
   "imageBlock",
+  "imageCard",
   "p",
   "pardotForm",
-  "cta",
-  "featureCardsIcon",
-  "faqAccordion",
-  "imageLinkCards",
   "richTextBlock",
-  "subscribeNewsletter",
 ] as const;
 
 export const hero = defineType({

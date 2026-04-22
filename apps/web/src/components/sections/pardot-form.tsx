@@ -9,6 +9,7 @@ type PardotResizerWindow = Window & {
 export type PardotFormBlockProps = PagebuilderType<"pardotForm"> & {
   pardotUrl?: string | null;
   compact?: boolean;
+  transparent?: boolean;
 };
 
 const IFRAME_RESIZER_SRC =
@@ -19,15 +20,18 @@ export function PardotFormBlock({
   pardotUrl,
   sectionId,
   compact = false,
+  transparent = false,
 }: PardotFormBlockProps) {
   const iframeUrl = pardotUrl ?? url;
   if (!iframeUrl) {
     return null;
   }
 
-  const wrapperClassName = compact
-    ? "overflow-hidden rounded-2xl border border-white/20 bg-background/95 p-6 shadow-sm"
-    : "overflow-hidden rounded-2xl border bg-background p-6 shadow-sm";
+  const wrapperClassName = transparent
+    ? "overflow-hidden rounded-2xl border-0 bg-transparent p-0 shadow-none"
+    : compact
+      ? "overflow-hidden rounded-2xl border border-white/20 bg-background/95 p-6 shadow-sm"
+      : "overflow-hidden rounded-2xl border bg-background p-6 shadow-sm";
 
   const sectionClassName = compact
     ? undefined

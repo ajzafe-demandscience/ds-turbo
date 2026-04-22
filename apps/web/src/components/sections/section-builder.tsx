@@ -1,28 +1,37 @@
-import type { PageBuilderBlock, PagebuilderType } from "@/types";
+import type { PageBuilderBlock } from "@/types";
 import { ButtonLinkBlock } from "./button-link";
 import { CompanyLogoCarouselBlock } from "./company-logo-carousel";
 import { H1Block } from "./h1";
+import { HowItWorksCardsBlock } from "./how-it-works-cards";
 import { ImageCardBlock } from "./image-card";
-import { HeroBlock } from "./hero";
 import { ImageBlock } from "./image";
 import { PBlock } from "./p";
 import { PardotFormBlock } from "./pardot-form";
 import { RichTextBlock } from "./rich-text-block";
+import { StatsCounterBlock } from "./stats-counter";
+import { TwoColumnsBlock } from "./two-columns";
+import { WhatWeDoCardsBlock } from "./what-we-do-cards";
+import { WhatYouCanRunCardsBlock } from "./what-you-can-run-cards";
 
-type TwoColumnsBlockProps = PagebuilderType<"twoColumns"> & {
-  isNested?: boolean;
+type SectionBuilderBlockProps = {
+  title?: string | null;
+  pageBuilder?: PageBuilderBlock[] | null;
 };
 
 const NESTED_COMPONENTS = {
-  companyLogoCarousel: CompanyLogoCarouselBlock,
-  hero: HeroBlock,
-  h1: H1Block,
   buttonLink: ButtonLinkBlock,
+  companyLogoCarousel: CompanyLogoCarouselBlock,
+  h1: H1Block,
+  howItWorksCards: HowItWorksCardsBlock,
   imageBlock: ImageBlock,
   imageCard: ImageCardBlock,
   p: PBlock,
   pardotForm: PardotFormBlock,
   richTextBlock: RichTextBlock,
+  statsCounter: StatsCounterBlock,
+  twoColumns: TwoColumnsBlock,
+  whatWeDoCards: WhatWeDoCardsBlock,
+  whatYouCanRunCards: WhatYouCanRunCardsBlock,
   // biome-ignore lint/suspicious/noExplicitAny: dynamic block rendering
 } as const satisfies Record<string, React.ComponentType<any>>;
 
@@ -42,7 +51,9 @@ function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
 
     const extraProps = {
       isNested: true,
-      ...(block._type === "pardotForm" ? { compact: true } : {}),
+      ...(block._type === "pardotForm"
+        ? { compact: true, transparent: true }
+        : {}),
     };
 
     // biome-ignore lint/suspicious/noExplicitAny: dynamic block rendering
@@ -50,28 +61,19 @@ function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
   });
 }
 
-export function TwoColumnsBlock({
-  leftColumn,
-  rightColumn,
-  sectionId,
-  isNested = false,
-}: TwoColumnsBlockProps) {
-  const resolvedSectionId = sectionId?.trim() || undefined;
-
-  const grid = (
-    <div className="two-column-responsive-padding grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-10">
-      <div className="space-y-4">{renderNestedBlocks(leftColumn)}</div>
-      <div className="space-y-4">{renderNestedBlocks(rightColumn)}</div>
-    </div>
-  );
+export function SectionBuilderBlock({ title, pageBuilder }: SectionBuilderBlockProps) {
+  if (!title?.trim() && !pageBuilder?.length) {
+    return null;
+  }
 
   return (
-    <section className="py-10" id={resolvedSectionId}>
-      {isNested ? (
-        grid
-      ) : (
-        <div className="container-wrapper">{grid}</div>
-      )}
+    <section className="container-wrapper py-10 md:py-14">
+      {title ? (
+        <h2 className="mb-8 text-center font-semibold text-3xl tracking-tight md:text-5xl">
+          {title}
+        </h2>
+      ) : null}
+      <div>{renderNestedBlocks(pageBuilder)}</div>
     </section>
   );
 }

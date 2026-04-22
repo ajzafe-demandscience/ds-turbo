@@ -1,4 +1,6 @@
 import { ImageIcon, LinkIcon } from "@sanity/icons";
+import { AlignCenter } from "lucide-react";
+import { createElement, type ReactNode } from "react";
 import {
   type ConditionalProperty,
   defineArrayMember,
@@ -6,12 +8,25 @@ import {
   defineType,
 } from "sanity";
 
+function AlignCenterIcon() {
+  return createElement(AlignCenter, { size: 16, strokeWidth: 2.2 });
+}
+
+function CenterTextDecorator(props: { children: ReactNode }) {
+  return createElement(
+    "span",
+    { style: { display: "inline-block", width: "100%", textAlign: "center" } },
+    props.children
+  );
+}
+
 const richTextMembers = [
   defineArrayMember({
     name: "block",
     type: "block",
     styles: [
       { title: "Normal", value: "normal" },
+      { title: "Text Center", value: "center" },
       { title: "H2", value: "h2" },
       { title: "H3", value: "h3" },
       { title: "H4", value: "h4" },
@@ -42,6 +57,12 @@ const richTextMembers = [
         { title: "Strong", value: "strong" },
         { title: "Emphasis", value: "em" },
         { title: "Code", value: "code" },
+        {
+          title: "Align Center",
+          value: "centerText",
+          icon: AlignCenterIcon,
+          component: CenterTextDecorator,
+        },
       ],
     },
   }),

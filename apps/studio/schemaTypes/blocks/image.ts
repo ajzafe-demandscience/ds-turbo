@@ -17,6 +17,13 @@ export const imageBlock = defineType({
       },
       validation: (Rule) => Rule.required().error("An image is required"),
     }),
+    defineField({
+      name: "url",
+      title: "Link URL",
+      type: "customUrl",
+      description:
+        "Optional link for this image. If set, clicking the image navigates to this destination.",
+    }),
     backgroundColorField,
     sectionIdField,
   ],
