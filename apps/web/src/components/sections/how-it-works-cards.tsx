@@ -60,7 +60,7 @@ export function HowItWorksCardsBlock({
               <div className="flex justify-center overflow-hidden rounded-xl">
                 <SanityImage
                   alt={item.image.alt ?? item.title ?? "How it works item image"}
-                  className="h-auto w-full max-h-[88px] object-contain md:max-h-[104px] lg:max-h-none"
+                  className="h-auto w-full max-h-[350px] object-contain md:max-h-[350px] lg:max-h-none"
                   image={item.image}
                 />
               </div>

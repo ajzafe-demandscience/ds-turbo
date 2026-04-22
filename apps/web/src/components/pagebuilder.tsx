@@ -11,12 +11,12 @@ import { CompanyLogoCarouselBlock } from "./sections/company-logo-carousel";
 import { H1Block } from "./sections/h1";
 import { HowItWorksCardsBlock } from "./sections/how-it-works-cards";
 import { HeroBlock } from "./sections/hero";
+import { CTABlock } from "./sections/cta";
 import { ImageCardBlock } from "./sections/image-card";
 import { ImageBlock } from "./sections/image";
 import { PBlock } from "./sections/p";
 import { PardotFormBlock } from "./sections/pardot-form";
 import { RichTextBlock } from "./sections/rich-text-block";
-import { SectionBuilderBlock } from "./sections/section-builder";
 import { StatsCounterBlock } from "./sections/stats-counter";
 import { TwoColumnsBlock } from "./sections/two-columns";
 import { WhatWeDoCardsBlock } from "./sections/what-we-do-cards";
@@ -34,8 +34,8 @@ type ExtendedPageBuilderBlockTypes =
   | "imageCard"
   | "buttonLink"
   | "companyLogoCarousel"
+  | "cta"
   | "howItWorksCards"
-  | "sectionBuilder"
   | "statsCounter"
   | "whatWeDoCards"
   | "whatYouCanRunCards";
@@ -53,8 +53,8 @@ type SanityColorValue = {
 // Strongly typed component mapping with proper component signatures
 const BLOCK_COMPONENTS = {
   companyLogoCarousel: CompanyLogoCarouselBlock,
+  cta: CTABlock,
   howItWorksCards: HowItWorksCardsBlock,
-  sectionBuilder: SectionBuilderBlock,
   statsCounter: StatsCounterBlock,
   whatYouCanRunCards: WhatYouCanRunCardsBlock,
   whatWeDoCards: WhatWeDoCardsBlock,

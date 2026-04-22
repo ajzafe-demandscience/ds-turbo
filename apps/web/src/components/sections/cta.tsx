@@ -13,7 +13,7 @@ import { TwoColumnsBlock } from "./two-columns";
 import { WhatWeDoCardsBlock } from "./what-we-do-cards";
 import { WhatYouCanRunCardsBlock } from "./what-you-can-run-cards";
 
-type SectionBuilderBlockProps = {
+type CTABlockProps = {
   title?: string | null;
   pageBuilder?: PageBuilderBlock[] | null;
 };
@@ -61,19 +61,21 @@ function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
   });
 }
 
-export function SectionBuilderBlock({ title, pageBuilder }: SectionBuilderBlockProps) {
+export function CTABlock({ title, pageBuilder }: CTABlockProps) {
   if (!title?.trim() && !pageBuilder?.length) {
     return null;
   }
 
   return (
     <section className="container-wrapper py-10 md:py-14">
-      {title ? (
-        <h2 className="mb-8 text-center font-semibold text-3xl tracking-tight md:text-5xl">
-          {title}
-        </h2>
-      ) : null}
-      <div>{renderNestedBlocks(pageBuilder)}</div>
+      <div className="rounded-[28px] bg-gradient-to-b from-[#101f80] to-[#2f25b0] px-8 py-10 md:px-14 md:py-12 lg:px-20">
+        {title ? (
+          <h2 className="mb-8 text-center font-semibold text-3xl text-white tracking-tight md:text-5xl">
+            {title}
+          </h2>
+        ) : null}
+        <div className="mx-auto max-w-4xl">{renderNestedBlocks(pageBuilder)}</div>
+      </div>
     </section>
   );
 }

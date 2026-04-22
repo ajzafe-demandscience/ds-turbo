@@ -307,8 +307,8 @@ const twoColumnsBlock = /* groq */ `
   }
 `;
 
-const sectionBuilderBlock = /* groq */ `
-  _type == "sectionBuilder" => {
+const ctaBlock = /* groq */ `
+  _type == "cta" => {
     ...,
     pageBuilder[]{
       ...,
@@ -337,7 +337,7 @@ const pageBuilderFragment = /* groq */ `
     _type,
     ${heroBlock},
     ${howItWorksCardsBlock},
-    ${sectionBuilderBlock},
+    ${ctaBlock},
     ${statsCounterBlock},
     ${whatYouCanRunCardsBlock},
     ${whatWeDoCardsBlock},

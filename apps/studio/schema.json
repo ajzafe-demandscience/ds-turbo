@@ -1001,7 +1001,7 @@
     }
   },
   {
-    "name": "sectionBuilder",
+    "name": "cta",
     "type": "type",
     "value": {
       "type": "object",
@@ -1010,7 +1010,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "sectionBuilder"
+            "value": "cta"
           }
         },
         "title": {
@@ -2752,7 +2752,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "sectionBuilder"
+              "name": "cta"
             }
           },
           {

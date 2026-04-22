@@ -17,9 +17,9 @@ const nestedBlockTypes = [
   "twoColumns",
 ] as const;
 
-export const sectionBuilder = defineType({
-  name: "sectionBuilder",
-  title: "Section Builder",
+export const cta = defineType({
+  name: "cta",
+  title: "Cta",
   type: "object",
   icon: LayoutPanelTopIcon,
   fields: [
@@ -48,7 +48,7 @@ export const sectionBuilder = defineType({
       blocks: "pageBuilder",
     },
     prepare: ({ title, blocks }) => ({
-      title: title || "Section Builder",
+      title: title || "Cta",
       subtitle: `${Array.isArray(blocks) ? blocks.length : 0} block(s)`,
     }),
   },
