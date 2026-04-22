@@ -586,32 +586,99 @@ export type Navbar = {
   _updatedAt: string;
   _rev: string;
   label: string;
-  columns?: Array<
+  menuItems: Array<
     | {
-        title?: string;
-        links: Array<{
-          icon?: LucideIcon;
-          name?: string;
-          description?: string;
-          url?: CustomUrl;
-          _type: "navbarColumnLink";
-          _key: string;
-        }>;
-        _type: "navbarColumn";
+        name: string;
+        url: CustomUrl;
+        _type: "navLinkItem";
         _key: string;
       }
     | {
-        name?: string;
+        menuLabel: string;
         url?: CustomUrl;
-        _type: "navbarLink";
+        rightPanelLabel: string;
+        featuredItems: Array<{
+          name: string;
+          description: string;
+          url: CustomUrl;
+          _type: "solutionsFeaturedItem";
+          _key: string;
+        }>;
+        categoryGroups: Array<{
+          title?: string;
+          description?: string;
+          iconImage?: {
+            asset?: SanityImageAssetReference;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          };
+          url?: CustomUrl;
+          links: Array<{
+            icon?: LucideIcon;
+            name: string;
+            description?: string;
+            iconImage?: {
+              asset?: SanityImageAssetReference;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              _type: "image";
+            };
+            url: CustomUrl;
+            _type: "solutionsCategoryLink";
+            _key: string;
+          }>;
+          _type: "solutionsCategoryGroup";
+          _key: string;
+        }>;
+        _type: "solutionsMegaMenuItem";
+        _key: string;
+      }
+    | {
+        menuLabel: string;
+        url?: CustomUrl;
+        cards: Array<{
+          title: string;
+          description: string;
+          url: CustomUrl;
+          _type: "gridMegaMenuCard";
+          _key: string;
+        }>;
+        columns: number;
+        _type: "gridMegaMenuItem";
         _key: string;
       }
   >;
+  logo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   buttons?: Array<
     {
       _key: string;
     } & Button
   >;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type LucideIcon = string;
@@ -661,22 +728,6 @@ export type Settings = {
     instagram?: string;
     youtube?: string;
   };
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
 };
 
 export type CompanyLogoCarouselConfig = {
@@ -1214,11 +1265,11 @@ export type AllSanitySchemaTypes =
   | Redirect
   | Slug
   | Navbar
+  | SanityImageCrop
+  | SanityImageHotspot
   | LucideIcon
   | Footer
   | Settings
-  | SanityImageCrop
-  | SanityImageHotspot
   | CompanyLogoCarouselConfig
   | LandingPageIndex
   | BlogIndex
@@ -16713,32 +16764,109 @@ export type QueryFooterDataResult = {
 
 // Source: ../../packages/sanity/src/query.ts
 // Variable: queryNavbarData
-// Query: *[_type == "navbar" && _id == "navbar"][0]{    _id,    columns[]{      _key,      _type == "navbarColumn" => {        "type": "column",        title,        links[]{          _key,          name,          icon,          description,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => url.internal->slug.current,            url.type == "external" => url.external,            url.href          )        }      },      _type == "navbarLink" => {        "type": "link",        name,        description,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => url.internal->slug.current,          url.type == "external" => url.external,          url.href        )      }    },      buttons[]{    text,    variant,    _key,    _type,    "openInNewTab": url.openInNewTab,    "href": select(      url.type == "internal" => url.internal->slug.current,      url.type == "external" => url.external,      url.href    ),  },  }
+// Query: *[_type == "navbar" && _id == "navbar"][0]{    _id,    logo {        "id": asset._ref,  "preview": asset->metadata.lqip,  "alt": coalesce(    alt,    asset->altText,    caption,    asset->originalFilename,    "untitled"  ),  hotspot {    x,    y  },  crop {    bottom,    left,    right,    top  }    },    menuItems[]{      _key,      _type == "navLinkItem" => {        "type": "link",        name,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => url.internal->slug.current,          url.type == "external" => url.external,          url.href        )      },      _type == "solutionsMegaMenuItem" => {        "type": "solutionsMegaMenu",        "label": menuLabel,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => url.internal->slug.current,          url.type == "external" => url.external,          url.href        ),        rightPanelLabel,        featuredItems[]{          _key,          name,          icon,          description,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => url.internal->slug.current,            url.type == "external" => url.external,            url.href          )        },        categoryGroups[]{          _key,          title,          description,          iconImage {              "id": asset._ref,  "preview": asset->metadata.lqip,  "alt": coalesce(    alt,    asset->altText,    caption,    asset->originalFilename,    "untitled"  ),  hotspot {    x,    y  },  crop {    bottom,    left,    right,    top  }          },          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => url.internal->slug.current,            url.type == "external" => url.external,            url.href          ),          links[]{            _key,            name,            icon,            iconImage {                "id": asset._ref,  "preview": asset->metadata.lqip,  "alt": coalesce(    alt,    asset->altText,    caption,    asset->originalFilename,    "untitled"  ),  hotspot {    x,    y  },  crop {    bottom,    left,    right,    top  }            },            description,            "openInNewTab": url.openInNewTab,            "href": select(              url.type == "internal" => url.internal->slug.current,              url.type == "external" => url.external,              url.href            )          }        }      },      _type == "gridMegaMenuItem" => {        "type": "gridMegaMenu",        "label": menuLabel,        "openInNewTab": url.openInNewTab,        "href": select(          url.type == "internal" => url.internal->slug.current,          url.type == "external" => url.external,          url.href        ),        columns,        cards[]{          _key,          title,          description,          "openInNewTab": url.openInNewTab,          "href": select(            url.type == "internal" => url.internal->slug.current,            url.type == "external" => url.external,            url.href          )        }      }    },      buttons[]{    text,    variant,    _key,    _type,    "openInNewTab": url.openInNewTab,    "href": select(      url.type == "internal" => url.internal->slug.current,      url.type == "external" => url.external,      url.href    ),  },  }
 export type QueryNavbarDataResult = {
   _id: "navbar";
-  columns: Array<
+  logo: {
+    id: string | null;
+    preview: string | null;
+    alt: string | "untitled";
+    hotspot: {
+      x: number;
+      y: number;
+    } | null;
+    crop: {
+      bottom: number;
+      left: number;
+      right: number;
+      top: number;
+    } | null;
+  } | null;
+  menuItems: Array<
     | {
         _key: string;
-        type: "link";
-        name: string | null;
-        description: null;
+        type: "gridMegaMenu";
+        label: string;
         openInNewTab: boolean | null;
         href: string | null;
-      }
-    | {
-        _key: string;
-        type: "column";
-        title: string | null;
-        links: Array<{
+        columns: number;
+        cards: Array<{
           _key: string;
-          name: string | null;
-          icon: LucideIcon | null;
-          description: string | null;
+          title: string;
+          description: string;
           openInNewTab: boolean | null;
           href: string | null;
         }>;
       }
-  > | null;
+    | {
+        _key: string;
+        type: "solutionsMegaMenu";
+        label: string;
+        openInNewTab: boolean | null;
+        href: string | null;
+        rightPanelLabel: string;
+        featuredItems: Array<{
+          _key: string;
+          name: string;
+          icon: null;
+          description: string;
+          openInNewTab: boolean | null;
+          href: string | null;
+        }>;
+        categoryGroups: Array<{
+          _key: string;
+          title: string | null;
+          description: string | null;
+          iconImage: {
+            id: string | null;
+            preview: string | null;
+            alt: string | "untitled";
+            hotspot: {
+              x: number;
+              y: number;
+            } | null;
+            crop: {
+              bottom: number;
+              left: number;
+              right: number;
+              top: number;
+            } | null;
+          } | null;
+          openInNewTab: boolean | null;
+          href: string | null;
+          links: Array<{
+            _key: string;
+            name: string;
+            icon: LucideIcon | null;
+            iconImage: {
+              id: string | null;
+              preview: string | null;
+              alt: string | "untitled";
+              hotspot: {
+                x: number;
+                y: number;
+              } | null;
+              crop: {
+                bottom: number;
+                left: number;
+                right: number;
+                top: number;
+              } | null;
+            } | null;
+            description: string | null;
+            openInNewTab: boolean | null;
+            href: string | null;
+          }>;
+        }>;
+      }
+    | {
+        _key: string;
+        type: "link";
+        name: string;
+        openInNewTab: boolean | null;
+        href: string | null;
+      }
+  >;
   buttons: Array<{
     text: string | null;
     variant: "default" | "link" | "outline" | "secondary" | null;
@@ -16846,7 +16974,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "blog" && _id == $id][0]{\n    \n  _id,\n  _type,\n  "title": select(\n    defined(ogTitle) => ogTitle,\n    defined(seoTitle) => seoTitle,\n    title\n  ),\n  "description": select(\n    defined(ogDescription) => ogDescription,\n    defined(seoDescription) => seoDescription,\n    description\n  ),\n  "image": image.asset->url + "?w=566&h=566&dpr=2&fit=max",\n  "dominantColor": image.asset->metadata.palette.dominant.background,\n  "seoImage": seoImage.asset->url + "?w=1200&h=630&dpr=2&fit=max", \n  "logo": *[_type == "settings"][0].logo.asset->url + "?w=80&h=40&dpr=3&fit=max&q=100",\n  "date": coalesce(date, _createdAt)\n\n  }\n': QueryBlogPageOGDataResult;
     '\n  *[ defined(slug.current) && _id == $id][0]{\n    \n  _id,\n  _type,\n  "title": select(\n    defined(ogTitle) => ogTitle,\n    defined(seoTitle) => seoTitle,\n    title\n  ),\n  "description": select(\n    defined(ogDescription) => ogDescription,\n    defined(seoDescription) => seoDescription,\n    description\n  ),\n  "image": image.asset->url + "?w=566&h=566&dpr=2&fit=max",\n  "dominantColor": image.asset->metadata.palette.dominant.background,\n  "seoImage": seoImage.asset->url + "?w=1200&h=630&dpr=2&fit=max", \n  "logo": *[_type == "settings"][0].logo.asset->url + "?w=80&h=40&dpr=3&fit=max&q=100",\n  "date": coalesce(date, _createdAt)\n\n  }\n': QueryGenericPageOGDataResult;
     '\n  *[_type == "footer" && _id == "footer"][0]{\n    _id,\n    subtitle,\n    columns[]{\n      _key,\n      title,\n      links[]{\n        _key,\n        name,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => url.internal->slug.current,\n          url.type == "external" => url.external,\n          url.href\n        ),\n      }\n    }\n  }\n': QueryFooterDataResult;
-    '\n  *[_type == "navbar" && _id == "navbar"][0]{\n    _id,\n    columns[]{\n      _key,\n      _type == "navbarColumn" => {\n        "type": "column",\n        title,\n        links[]{\n          _key,\n          name,\n          icon,\n          description,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => url.internal->slug.current,\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      },\n      _type == "navbarLink" => {\n        "type": "link",\n        name,\n        description,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => url.internal->slug.current,\n          url.type == "external" => url.external,\n          url.href\n        )\n      }\n    },\n    \n  buttons[]{\n    text,\n    variant,\n    _key,\n    _type,\n    "openInNewTab": url.openInNewTab,\n    "href": select(\n      url.type == "internal" => url.internal->slug.current,\n      url.type == "external" => url.external,\n      url.href\n    ),\n  }\n,\n  }\n': QueryNavbarDataResult;
+    '\n  *[_type == "navbar" && _id == "navbar"][0]{\n    _id,\n    logo {\n      \n  "id": asset._ref,\n  "preview": asset->metadata.lqip,\n  "alt": coalesce(\n    alt,\n    asset->altText,\n    caption,\n    asset->originalFilename,\n    "untitled"\n  ),\n  hotspot {\n    x,\n    y\n  },\n  crop {\n    bottom,\n    left,\n    right,\n    top\n  }\n\n    },\n    menuItems[]{\n      _key,\n      _type == "navLinkItem" => {\n        "type": "link",\n        name,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => url.internal->slug.current,\n          url.type == "external" => url.external,\n          url.href\n        )\n      },\n      _type == "solutionsMegaMenuItem" => {\n        "type": "solutionsMegaMenu",\n        "label": menuLabel,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => url.internal->slug.current,\n          url.type == "external" => url.external,\n          url.href\n        ),\n        rightPanelLabel,\n        featuredItems[]{\n          _key,\n          name,\n          icon,\n          description,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => url.internal->slug.current,\n            url.type == "external" => url.external,\n            url.href\n          )\n        },\n        categoryGroups[]{\n          _key,\n          title,\n          description,\n          iconImage {\n            \n  "id": asset._ref,\n  "preview": asset->metadata.lqip,\n  "alt": coalesce(\n    alt,\n    asset->altText,\n    caption,\n    asset->originalFilename,\n    "untitled"\n  ),\n  hotspot {\n    x,\n    y\n  },\n  crop {\n    bottom,\n    left,\n    right,\n    top\n  }\n\n          },\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => url.internal->slug.current,\n            url.type == "external" => url.external,\n            url.href\n          ),\n          links[]{\n            _key,\n            name,\n            icon,\n            iconImage {\n              \n  "id": asset._ref,\n  "preview": asset->metadata.lqip,\n  "alt": coalesce(\n    alt,\n    asset->altText,\n    caption,\n    asset->originalFilename,\n    "untitled"\n  ),\n  hotspot {\n    x,\n    y\n  },\n  crop {\n    bottom,\n    left,\n    right,\n    top\n  }\n\n            },\n            description,\n            "openInNewTab": url.openInNewTab,\n            "href": select(\n              url.type == "internal" => url.internal->slug.current,\n              url.type == "external" => url.external,\n              url.href\n            )\n          }\n        }\n      },\n      _type == "gridMegaMenuItem" => {\n        "type": "gridMegaMenu",\n        "label": menuLabel,\n        "openInNewTab": url.openInNewTab,\n        "href": select(\n          url.type == "internal" => url.internal->slug.current,\n          url.type == "external" => url.external,\n          url.href\n        ),\n        columns,\n        cards[]{\n          _key,\n          title,\n          description,\n          "openInNewTab": url.openInNewTab,\n          "href": select(\n            url.type == "internal" => url.internal->slug.current,\n            url.type == "external" => url.external,\n            url.href\n          )\n        }\n      }\n    },\n    \n  buttons[]{\n    text,\n    variant,\n    _key,\n    _type,\n    "openInNewTab": url.openInNewTab,\n    "href": select(\n      url.type == "internal" => url.internal->slug.current,\n      url.type == "external" => url.external,\n      url.href\n    ),\n  }\n,\n  }\n': QueryNavbarDataResult;
     '{\n  "slugPages": *[_type == "page" && defined(slug.current)]{\n    "slug": slug.current,\n    "lastModified": _updatedAt\n  },\n  "blogIndexPages": *[_type == "blogIndex" && defined(slug.current)]{\n    "slug": slug.current,\n    "lastModified": _updatedAt\n  },\n  "blogPages": *[_type == "blog" && defined(slug.current)]{\n    "slug": select(\n      slug.current match "/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],\n      slug.current match "/resources/blog/*" => "/resources/blog/" + string::split(slug.current, "/")[-1],\n      "/resources/blog/" + slug.current\n    ),\n    "lastModified": _updatedAt\n  }\n}': QuerySitemapDataResult;
     '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    siteTitle,\n    logo {\n      \n  "id": asset._ref,\n  "preview": asset->metadata.lqip,\n  "alt": coalesce(\n    alt,\n    asset->altText,\n    caption,\n    asset->originalFilename,\n    "untitled"\n  ),\n  hotspot {\n    x,\n    y\n  },\n  crop {\n    bottom,\n    left,\n    right,\n    top\n  }\n\n    },\n    siteDescription,\n    socialLinks{\n      linkedin,\n      facebook,\n      twitter,\n      instagram,\n      youtube\n    }\n  }\n': QueryGlobalSeoSettingsResult;
     '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    siteTitle,\n    siteDescription,\n    "logo": logo.asset->url + "?w=80&h=40&dpr=3&fit=max",\n    "socialLinks": socialLinks,\n    "contactEmail": contactEmail,\n  }\n': QuerySettingsDataResult;

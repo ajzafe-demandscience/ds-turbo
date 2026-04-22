@@ -523,12 +523,32 @@ export const queryFooterData = defineQuery(`
 export const queryNavbarData = defineQuery(`
   *[_type == "navbar" && _id == "navbar"][0]{
     _id,
-    columns[]{
+    logo {
+      ${imageFields}
+    },
+    menuItems[]{
       _key,
-      _type == "navbarColumn" => {
-        "type": "column",
-        title,
-        links[]{
+      _type == "navLinkItem" => {
+        "type": "link",
+        name,
+        "openInNewTab": url.openInNewTab,
+        "href": select(
+          url.type == "internal" => url.internal->slug.current,
+          url.type == "external" => url.external,
+          url.href
+        )
+      },
+      _type == "solutionsMegaMenuItem" => {
+        "type": "solutionsMegaMenu",
+        "label": menuLabel,
+        "openInNewTab": url.openInNewTab,
+        "href": select(
+          url.type == "internal" => url.internal->slug.current,
+          url.type == "external" => url.external,
+          url.href
+        ),
+        rightPanelLabel,
+        featuredItems[]{
           _key,
           name,
           icon,
@@ -539,18 +559,58 @@ export const queryNavbarData = defineQuery(`
             url.type == "external" => url.external,
             url.href
           )
+        },
+        categoryGroups[]{
+          _key,
+          title,
+          description,
+          iconImage {
+            ${imageFields}
+          },
+          "openInNewTab": url.openInNewTab,
+          "href": select(
+            url.type == "internal" => url.internal->slug.current,
+            url.type == "external" => url.external,
+            url.href
+          ),
+          links[]{
+            _key,
+            name,
+            icon,
+            iconImage {
+              ${imageFields}
+            },
+            description,
+            "openInNewTab": url.openInNewTab,
+            "href": select(
+              url.type == "internal" => url.internal->slug.current,
+              url.type == "external" => url.external,
+              url.href
+            )
+          }
         }
       },
-      _type == "navbarLink" => {
-        "type": "link",
-        name,
-        description,
+      _type == "gridMegaMenuItem" => {
+        "type": "gridMegaMenu",
+        "label": menuLabel,
         "openInNewTab": url.openInNewTab,
         "href": select(
           url.type == "internal" => url.internal->slug.current,
           url.type == "external" => url.external,
           url.href
-        )
+        ),
+        columns,
+        cards[]{
+          _key,
+          title,
+          description,
+          "openInNewTab": url.openInNewTab,
+          "href": select(
+            url.type == "internal" => url.internal->slug.current,
+            url.type == "external" => url.external,
+            url.href
+          )
+        }
       }
     },
     ${buttonsFragment},

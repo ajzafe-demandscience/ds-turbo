@@ -42,10 +42,25 @@ export type NavigationData = {
   settingsData: QueryGlobalSeoSettingsResult;
 };
 
-export type NavColumn = Get<QueryNavbarDataResult, "columns", number>;
+export type NavMenuItem = Get<QueryNavbarDataResult, "menuItems", number>;
 
-export type ColumnLink =
-  Extract<NavColumn, { type: "column" }>["links"] extends Array<infer T>
+export type SolutionsFeaturedLink =
+  Extract<NavMenuItem, { type: "solutionsMegaMenu" }>["featuredItems"] extends
+    Array<infer T>
+    ? T
+    : never;
+
+export type SolutionsCategoryGroup =
+  Extract<NavMenuItem, { type: "solutionsMegaMenu" }>["categoryGroups"] extends
+    Array<infer T>
+    ? T
+    : never;
+
+export type SolutionsCategoryLink =
+  SolutionsCategoryGroup["links"] extends Array<infer T> ? T : never;
+
+export type GridMegaMenuCard =
+  Extract<NavMenuItem, { type: "gridMegaMenu" }>["cards"] extends Array<infer T>
     ? T
     : never;
 
@@ -55,4 +70,8 @@ export type MenuLinkProps = {
   description?: string;
   icon?: string | null;
   onClick?: () => void;
+  showTitleArrow?: boolean;
+  titleClassName?: string;
+  descriptionClassName?: string;
+  linkClassName?: string;
 };

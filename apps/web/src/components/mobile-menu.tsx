@@ -20,7 +20,12 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import type { ColumnLink, NavigationData } from "@/types";
+import type {
+  GridMegaMenuCard,
+  NavigationData,
+  SolutionsCategoryLink,
+  SolutionsFeaturedLink,
+} from "@/types";
 import { MenuLink } from "./elements/menu-link";
 import { SanityButtons } from "./elements/sanity-buttons";
 import { Logo } from "./logo";
@@ -32,8 +37,10 @@ export function MobileMenu({ navbarData, settingsData }: NavigationData) {
     setIsOpen(false);
   }
 
-  const { columns, buttons } = navbarData || {};
-  const { logo, siteTitle } = settingsData || {};
+  const { menuItems, buttons } = navbarData || {};
+  const { logo: settingsLogo, siteTitle } = settingsData || {};
+  const navbarLogo = (navbarData as { logo?: typeof settingsLogo })?.logo;
+  const logo = navbarLogo || settingsLogo;
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -66,42 +73,92 @@ export function MobileMenu({ navbarData, settingsData }: NavigationData) {
         {/* Navigation items - scrollable */}
         <nav className="flex-1 overflow-y-auto pt-4 grid px-6 gap-1 content-start">
           <Accordion type="single" collapsible>
-            {columns?.map((column) => {
-              if (column.type === "link") {
-                if (!column.href) return null;
+            {menuItems?.map((item) => {
+              if (item.type === "link") {
+                if (!item.href) return null;
                 return (
                   <Link
                     className="flex items-center py-3 font-medium text-sm transition-colors hover:text-primary"
-                    href={column.href}
-                    key={column._key}
+                    href={item.href}
+                    key={item._key}
                     onClick={closeMenu}
+                    rel={item.openInNewTab ? "noopener noreferrer" : undefined}
+                    target={item.openInNewTab ? "_blank" : undefined}
                   >
-                    {column.name}
+                    {item.name}
                   </Link>
                 );
               }
 
-              if (column.type === "column") {
+              if (item.type === "solutionsMegaMenu") {
                 return (
-                  <AccordionItem
-                    key={column._key}
-                    value={column._key}
-                    className="border-b-0"
-                  >
+                  <AccordionItem key={item._key} value={item._key} className="border-b-0">
                     <AccordionTrigger className="py-3 hover:no-underline">
-                      {column.title}
+                      {item.label}
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div className="grid gap-1 border-border border-l-2 pl-4 ml-1">
-                        {column.links?.map((link: ColumnLink) => (
-                          <MenuLink
-                            description={link.description || ""}
-                            href={link.href || ""}
-                            icon={link.icon}
-                            key={link._key}
-                            name={link.name || ""}
+                      <div className="space-y-3 border-border border-l-2 pl-4 ml-1">
+                        <div className="grid gap-1">
+                          {item.featuredItems?.map(
+                            (link: SolutionsFeaturedLink) => (
+                              <MenuLink
+                                description={link.description || ""}
+                                href={link.href || ""}
+                                icon={link.icon}
+                                key={link._key}
+                                name={link.name || ""}
+                                onClick={closeMenu}
+                              />
+                            )
+                          )}
+                        </div>
+                        {item.categoryGroups?.map((group) => (
+                          <section key={group._key}>
+                            <p className="mb-1 font-semibold text-xs uppercase tracking-wide">
+                              {group.title}
+                            </p>
+                            <div className="grid gap-1">
+                              {group.links?.map((link: SolutionsCategoryLink) => (
+                                <MenuLink
+                                  description={link.description || ""}
+                                  href={link.href || ""}
+                                  icon={link.icon}
+                                  key={link._key}
+                                  name={link.name || ""}
+                                  onClick={closeMenu}
+                                />
+                              ))}
+                            </div>
+                          </section>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              }
+
+              if (item.type === "gridMegaMenu") {
+                return (
+                  <AccordionItem key={item._key} value={item._key} className="border-b-0">
+                    <AccordionTrigger className="py-3 hover:no-underline">
+                      {item.label}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="grid gap-2 border-border border-l-2 pl-4 ml-1">
+                        {item.cards?.map((card: GridMegaMenuCard) => (
+                          <Link
+                            className="rounded-lg bg-muted/50 p-3 transition-colors hover:bg-muted"
+                            href={card.href || "#"}
+                            key={card._key}
                             onClick={closeMenu}
-                          />
+                            rel={card.openInNewTab ? "noopener noreferrer" : undefined}
+                            target={card.openInNewTab ? "_blank" : undefined}
+                          >
+                            <p className="font-semibold text-sm">{card.title}</p>
+                            <p className="text-muted-foreground text-xs">
+                              {card.description}
+                            </p>
+                          </Link>
                         ))}
                       </div>
                     </AccordionContent>

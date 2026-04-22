@@ -9,12 +9,16 @@ export function MenuLink({
   description,
   icon,
   onClick,
+  showTitleArrow,
+  titleClassName,
+  descriptionClassName,
+  linkClassName,
 }: MenuLinkProps) {
   if (!href) return null;
 
   return (
     <Link
-      className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-accent"
+      className={`group/menu-item flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-accent ${linkClassName || ""}`}
       href={href}
       onClick={onClick}
     >
@@ -24,12 +28,33 @@ export function MenuLink({
           icon={icon}
         />
       )}
-      <div className="grid gap-1">
-        <div className="font-medium leading-none group-hover:text-accent-foreground">
+      <div className="grid flex-1 gap-1">
+        <div
+          className={`flex items-center justify-between gap-2 font-medium leading-none transition-colors duration-200 ${titleClassName || "group-hover/menu-item:text-accent-foreground"}`}
+        >
           {name}
+          {showTitleArrow ? (
+            <svg
+              aria-hidden="true"
+              className="size-[18px] shrink-0 text-white transition-colors duration-200 group-hover/menu-item:text-[#d52c5a]"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Open link</title>
+              <line x1="7" x2="17" y1="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          ) : null}
         </div>
         {description && (
-          <div className="line-clamp-2 text-muted-foreground text-sm">
+          <div
+            className={`line-clamp-2 text-muted-foreground text-sm ${descriptionClassName || ""}`}
+          >
             {description}
           </div>
         )}
