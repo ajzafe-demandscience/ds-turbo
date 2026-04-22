@@ -21,8 +21,20 @@ export function ImageBlock({
 
   return (
     <section className={sectionClassName} id={resolvedSectionId}>
-      <div className="overflow-hidden rounded-2xl">
-        <SanityImage alt={image.alt ?? "Image block"} image={image} />
+      <div
+        className={`overflow-hidden rounded-2xl ${
+          isNested ? "flex justify-center" : ""
+        }`}
+      >
+        <SanityImage
+          alt={image.alt ?? "Image block"}
+          className={
+            isNested
+              ? "mx-auto h-auto w-auto max-h-[420px] lg:max-h-none"
+              : undefined
+          }
+          image={image}
+        />
       </div>
     </section>
   );

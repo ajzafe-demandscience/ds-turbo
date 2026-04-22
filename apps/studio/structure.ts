@@ -133,6 +133,12 @@ export const structure = (
         list: { type: "landingPage", title: "Landing Pages", icon: FileText },
         context,
       }),
+      createSingleTon({
+        S,
+        type: "companyLogoCarouselConfig",
+        title: "Company Logo Carousel",
+        icon: File,
+      }),
       createList({
         S,
         type: "faq",

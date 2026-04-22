@@ -13,8 +13,8 @@ async function fetchHomePageData() {
 export async function generateMetadata() {
   const { data: homePageData } = await fetchHomePageData();
   return getSEOMetadata({
-    title: homePageData?.title ?? homePageData?.seoTitle,
-    description: homePageData?.description ?? homePageData?.seoDescription,
+    title: homePageData?.seoTitle,
+    description: homePageData?.seoDescription,
     slug: "/",
     contentId: homePageData?._id,
     contentType: homePageData?._type,

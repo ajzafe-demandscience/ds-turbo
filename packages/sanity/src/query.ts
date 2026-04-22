@@ -161,6 +161,30 @@ const imageBlock = /* groq */ `
   }
 `;
 
+/** Logos for page-builder carousel blocks (singleton or legacy id). */
+const companyLogoCarouselConfigFields = /* groq */ `
+  _id,
+  title,
+  "logos": array::compact(logos[]{
+    ...,
+    ${imageFragment}
+  })
+`;
+
+const companyLogoCarouselBlock = /* groq */ `
+  _type == "companyLogoCarousel" => {
+    ...,
+    "config": coalesce(
+      *[_type == "companyLogoCarouselConfig" && _id == "companyLogoCarouselConfig"][0]{
+        ${companyLogoCarouselConfigFields}
+      },
+      (*[_type == "companyLogoCarouselConfig"] | order(_updatedAt desc))[0]{
+        ${companyLogoCarouselConfigFields}
+      }
+    )
+  }
+`;
+
 const pBlock = /* groq */ `
   _type == "p" => {
     ...,
@@ -278,6 +302,7 @@ const twoColumnsBlock = /* groq */ `
       ${heroBlock},
       ${h1Block},
       ${buttonLinkBlock},
+      ${companyLogoCarouselBlock},
       ${imageBlock},
       ${pBlock},
       ${pardotFormBlock},
@@ -294,6 +319,7 @@ const twoColumnsBlock = /* groq */ `
       ${heroBlock},
       ${h1Block},
       ${buttonLinkBlock},
+      ${companyLogoCarouselBlock},
       ${imageBlock},
       ${pBlock},
       ${pardotFormBlock},
@@ -314,6 +340,7 @@ const pageBuilderFragment = /* groq */ `
     ${heroBlock},
     ${h1Block},
     ${buttonLinkBlock},
+    ${companyLogoCarouselBlock},
     ${imageBlock},
     ${pBlock},
     ${pardotFormBlock},
@@ -342,9 +369,6 @@ export const queryHomePageData =
     ...,
     _id,
     _type,
-    "slug": slug.current,
-    title,
-    description,
     ${pageBuilderFragment}
   }`);
 

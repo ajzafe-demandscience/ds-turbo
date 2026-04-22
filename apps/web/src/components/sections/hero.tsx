@@ -47,6 +47,7 @@ function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
     const extraProps = {
       isNested: true,
       ...(block._type === "p" ? { isHero: true } : {}),
+      ...(block._type === "richTextBlock" ? { isHero: true } : {}),
       ...(block._type === "pardotForm" ? { compact: true } : {}),
     };
 
@@ -70,9 +71,11 @@ export function HeroBlock({
   return (
     <section className="article-hero-surface" id={resolvedSectionId}>
       <div className={containerClassName}>
-        <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,480px)] md:gap-10">
+        <div className="two-column-responsive-padding grid items-center gap-8 md:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)]">
           <div className="space-y-8">{renderNestedBlocks(leftColumn)}</div>
-          <div className="space-y-8">{renderNestedBlocks(rightColumn)}</div>
+          <div className="space-y-8 lg:justify-self-end">
+            {renderNestedBlocks(rightColumn)}
+          </div>
         </div>
       </div>
     </section>

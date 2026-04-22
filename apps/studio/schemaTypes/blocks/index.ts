@@ -1,4 +1,5 @@
 import { buttonLink } from "@/schemaTypes/blocks/button-link";
+import { companyLogoCarousel } from "@/schemaTypes/blocks/company-logo-carousel";
 import { cta } from "@/schemaTypes/blocks/cta";
 import { faqAccordion } from "@/schemaTypes/blocks/faq-accordion";
 import { featureCardsIcon } from "@/schemaTypes/blocks/feature-cards-icon";
@@ -14,6 +15,7 @@ import { twoColumns } from "@/schemaTypes/blocks/two-columns";
 
 export const pageBuilderBlocks = [
   hero,
+  companyLogoCarousel,
   buttonLink,
   h1,
   imageBlock,

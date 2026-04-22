@@ -1,5 +1,6 @@
 import type { PageBuilderBlock, PagebuilderType } from "@/types";
 import { ButtonLinkBlock } from "./button-link";
+import { CompanyLogoCarouselBlock } from "./company-logo-carousel";
 import { CTABlock } from "./cta";
 import { FaqAccordion } from "./faq-accordion";
 import { FeatureCardsWithIcon } from "./feature-cards-with-icon";
@@ -18,6 +19,7 @@ type TwoColumnsBlockProps = PagebuilderType<"twoColumns"> & {
 
 const NESTED_COMPONENTS = {
   cta: CTABlock,
+  companyLogoCarousel: CompanyLogoCarouselBlock,
   faqAccordion: FaqAccordion,
   hero: HeroBlock,
   h1: H1Block,
@@ -65,7 +67,7 @@ export function TwoColumnsBlock({
   const resolvedSectionId = sectionId?.trim() || undefined;
 
   const grid = (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
+    <div className="two-column-responsive-padding grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-10">
       <div className="space-y-8">{renderNestedBlocks(leftColumn)}</div>
       <div className="space-y-8">{renderNestedBlocks(rightColumn)}</div>
     </div>

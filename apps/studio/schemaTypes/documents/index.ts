@@ -2,6 +2,7 @@ import { author } from "@/schemaTypes/documents/author";
 import { blog } from "@/schemaTypes/documents/blog";
 import { blogIndex } from "@/schemaTypes/documents/blog-index";
 import { category } from "@/schemaTypes/documents/category";
+import { companyLogoCarouselConfig } from "@/schemaTypes/documents/company-logo-carousel-config";
 import { faq } from "@/schemaTypes/documents/faq";
 import { footer } from "@/schemaTypes/documents/footer";
 import { homePage } from "@/schemaTypes/documents/home-page";
@@ -16,6 +17,7 @@ export const singletons = [
   homePage,
   blogIndex,
   landingPageIndex,
+  companyLogoCarouselConfig,
   settings,
   footer,
   navbar,

@@ -7,6 +7,7 @@ import { useCallback, useMemo } from "react";
 
 import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
 import { ButtonLinkBlock } from "./sections/button-link";
+import { CompanyLogoCarouselBlock } from "./sections/company-logo-carousel";
 import { CTABlock } from "./sections/cta";
 import { FaqAccordion } from "./sections/faq-accordion";
 import { FeatureCardsWithIcon } from "./sections/feature-cards-with-icon";
@@ -29,7 +30,8 @@ export type PageBuilderProps = {
 type ExtendedPageBuilderBlockTypes =
   | PageBuilderBlockTypes
   | "imageBlock"
-  | "buttonLink";
+  | "buttonLink"
+  | "companyLogoCarousel";
 
 type SanityDataAttributeConfig = {
   readonly id: string;
@@ -44,6 +46,7 @@ type SanityColorValue = {
 // Strongly typed component mapping with proper component signatures
 const BLOCK_COMPONENTS = {
   cta: CTABlock,
+  companyLogoCarousel: CompanyLogoCarouselBlock,
   buttonLink: ButtonLinkBlock,
   faqAccordion: FaqAccordion,
   hero: HeroBlock,

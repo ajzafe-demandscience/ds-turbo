@@ -10,6 +10,7 @@ const nestedBlockTypes = [
   "p",
   "pardotForm",
   "cta",
+  "companyLogoCarousel",
   "featureCardsIcon",
   "faqAccordion",
   "imageLinkCards",

@@ -62,6 +62,7 @@ export default defineConfig({
               "navbar",
               "footer",
               "settings",
+              "companyLogoCarouselConfig",
               "blogIndex",
               "landingPageIndex",
               "assist.instruction.context",
