@@ -246,8 +246,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/typescript-config
       baseline-browser-mapping:
-        specifier: ^2.10.8
-        version: 2.10.8
+        specifier: ^2.10.21
+        version: 2.10.21
       dotenv:
         specifier: ^17.3.1
         version: 17.3.1
@@ -3967,8 +3967,8 @@ packages:
   bare-url@2.3.2:
     resolution: {integrity: sha512-ZMq4gd9ngV5aTMa5p9+UfY0b3skwhHELaDkhEHetMdX0LRkW9kzaym4oo/Eh+Ghm0CCDuMTsRIGM/ytUc1ZYmw==}
 
-  baseline-browser-mapping@2.10.8:
-    resolution: {integrity: sha512-PCLz/LXGBsNTErbtB6i5u4eLpHeMfi93aUv5duMmj6caNu6IphS4q6UevDnL36sZQv9lrP11dbPKGMaXPwMKfQ==}
+  baseline-browser-mapping@2.10.21:
+    resolution: {integrity: sha512-Q+rUQ7Uz8AHM7DEaNdwvfFCTq7a43lNTzuS94eiWqwyxfV/wJv+oUivef51T91mmRY4d4A1u9rcSvkeufCVXlA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -11085,7 +11085,7 @@ snapshots:
       bare-path: 3.0.0
     optional: true
 
-  baseline-browser-mapping@2.10.8: {}
+  baseline-browser-mapping@2.10.21: {}
 
   basic-ftp@5.0.5: {}
 
@@ -12638,7 +12638,7 @@ snapshots:
     dependencies:
       '@next/env': 16.1.7
       '@swc/helpers': 0.5.15
-      baseline-browser-mapping: 2.10.8
+      baseline-browser-mapping: 2.10.21
       caniuse-lite: 1.0.30001735
       postcss: 8.4.31
       react: 19.2.4
@@ -12664,7 +12664,7 @@ snapshots:
     dependencies:
       '@next/env': 16.1.7
       '@swc/helpers': 0.5.15
-      baseline-browser-mapping: 2.10.8
+      baseline-browser-mapping: 2.10.21
       caniuse-lite: 1.0.30001735
       postcss: 8.4.31
       react: 19.2.4
