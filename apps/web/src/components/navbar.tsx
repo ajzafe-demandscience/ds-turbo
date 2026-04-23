@@ -20,7 +20,6 @@ import { SanityIcon } from "./elements/sanity-icon";
 import { SanityButtons } from "./elements/sanity-buttons";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
-import { ModeToggle } from "./mode-toggle";
 
 // Fetcher function
 const fetcher = async (url: string): Promise<NavigationData> => {
@@ -407,7 +406,7 @@ function NavbarSkeleton() {
             ))}
           </nav> */}
 
-          {/* Desktop actions skeleton - matches gap-4, ModeToggle (icon button) + SanityButtons */}
+          {/* Desktop actions skeleton - matches gap-4 + SanityButtons */}
           {/* <div className="hidden md:flex items-center gap-4">
             <div className="h-9 w-9 rounded bg-muted/50 animate-pulse" />
             <div className="h-9 px-4 rounded-lg bg-muted/50 animate-pulse min-w-[80px]" />
@@ -494,7 +493,6 @@ export function Navbar({
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-4 md:flex">
-            <ModeToggle />
             <SanityButtons
               buttonClassName="rounded-lg"
               buttons={buttons || []}
@@ -504,7 +502,6 @@ export function Navbar({
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 md:hidden">
-            <ModeToggle />
             <MobileMenu navbarData={navbarData} settingsData={settingsData} />
           </div>
         </div>
