@@ -27,6 +27,12 @@ const buttonVariants = cva(
         icon: "size-9",
       },
     },
+    compoundVariants: [
+      {
+        variant: ["default", "outline"],
+        className: "rounded-[18px]",
+      },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",

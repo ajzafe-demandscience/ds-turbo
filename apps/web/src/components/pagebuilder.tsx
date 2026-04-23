@@ -21,6 +21,7 @@ import { PardotFormBlock } from "./sections/pardot-form";
 import { RichTextBlock } from "./sections/rich-text-block";
 import { StatsCounterBlock } from "./sections/stats-counter";
 import { TwoColumnsBlock } from "./sections/two-columns";
+import { NewsletterBlock } from "./sections/newsletter";
 import { WhatWeDoCardsBlock } from "./sections/what-we-do-cards";
 import { WhatYouCanRunCardsBlock } from "./sections/what-you-can-run-cards";
 
@@ -39,6 +40,7 @@ type ExtendedPageBuilderBlockTypes =
   | "cta"
   | "howItWorksCards"
   | "statsCounter"
+  | "newsletter"
   | "whatWeDoCards"
   | "whatYouCanRunCards";
 
@@ -58,6 +60,7 @@ const BLOCK_COMPONENTS = {
   cta: CTABlock,
   howItWorksCards: HowItWorksCardsBlock,
   statsCounter: StatsCounterBlock,
+  newsletter: NewsletterBlock,
   whatYouCanRunCards: WhatYouCanRunCardsBlock,
   whatWeDoCards: WhatWeDoCardsBlock,
   buttonLink: ButtonLinkBlock,

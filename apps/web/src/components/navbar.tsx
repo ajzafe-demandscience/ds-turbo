@@ -2,6 +2,7 @@
 
 import { env } from "@workspace/env/client";
 import { SANITY_BASE_URL } from "@workspace/sanity/image";
+import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -14,13 +15,13 @@ import type {
   MobileMenuProps,
   NavMenuItem,
   NavigationData,
+  SanityButtonProps,
   SolutionsCategoryLink,
   SolutionsFeaturedLink,
 } from "@/types";
 import { MenuLink } from "./elements/menu-link";
 import { SanityImage } from "./elements/sanity-image";
 import { SanityIcon } from "./elements/sanity-icon";
-import { SanityButtons } from "./elements/sanity-buttons";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 
@@ -171,13 +172,13 @@ function DesktopSolutionsMegaMenu({
       )}
       {isOpen ? (
         <div
-          className="fade-in-0 zoom-in-95 absolute top-full left-0 z-50 w-[760px] animate-in overflow-hidden rounded-xl border border-[#05195f] bg-[#05195f] shadow-lg"
+          className="fade-in-0 zoom-in-95 absolute top-full left-0 z-50 w-[760px] animate-in overflow-hidden rounded-xl border border-primary bg-primary shadow-lg"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           role="menu"
         >
           <div className="grid md:grid-cols-[260px_1fr]">
-            <div className="space-y-2 bg-[#05195f] px-4 py-4 text-primary-foreground">
+            <div className="space-y-2 bg-primary px-4 py-4 text-primary-foreground">
               {item.featuredItems?.map((feature: SolutionsFeaturedLink) => (
                 <MenuLink
                   description={feature.description || ""}
@@ -432,6 +433,112 @@ function DesktopNavLink({
   );
 }
 
+type NavbarButtonDropdownItem = {
+  _key?: string;
+  text?: string | null;
+  href?: string | null;
+  openInNewTab?: boolean | null;
+};
+
+function DesktopNavbarButtons({
+  buttons,
+  isHomePage,
+}: {
+  buttons: SanityButtonProps[];
+  isHomePage: boolean;
+}) {
+  return (
+    <div className="hidden items-center gap-2 md:flex">
+      {buttons.map((button) => {
+        const dropdownItems = Array.isArray(
+          (button as { items?: NavbarButtonDropdownItem[] | null }).items
+        )
+          ? (((button as { items?: NavbarButtonDropdownItem[] | null }).items ??
+              []) as NavbarButtonDropdownItem[])
+          : [];
+        const hasDropdown = dropdownItems.length > 0;
+        const key = `button-${button._key}`;
+        const isOutline = button.variant === "outline";
+        const homeOutlineClass = isHomePage
+          ? "border-white text-white bg-transparent hover:bg-white/10 hover:text-white"
+          : undefined;
+
+        if (!hasDropdown) {
+          if (!button.href) {
+            return null;
+          }
+
+          return (
+            <Button
+              asChild
+              className={cn("rounded-lg", isOutline ? homeOutlineClass : undefined)}
+              key={key}
+              variant={button.variant}
+            >
+              <Link
+                href={button.href}
+                rel={button.openInNewTab ? "noopener noreferrer" : undefined}
+                target={button.openInNewTab ? "_blank" : undefined}
+              >
+                {button.text}
+              </Link>
+            </Button>
+          );
+        }
+
+        const trigger = (
+          <Button
+            className={cn(
+              "rounded-lg",
+              isOutline ? homeOutlineClass : undefined,
+            )}
+            variant={button.variant}
+          >
+            {button.text}
+            <ChevronDown className="size-3" />
+          </Button>
+        );
+
+        return (
+          <div className="group relative" key={key}>
+            {button.href ? (
+              <Link
+                href={button.href}
+                rel={button.openInNewTab ? "noopener noreferrer" : undefined}
+                target={button.openInNewTab ? "_blank" : undefined}
+              >
+                {trigger}
+              </Link>
+            ) : (
+              trigger
+            )}
+            <div className="invisible absolute top-full right-0 z-50 mt-2 min-w-[220px] translate-y-1 overflow-hidden rounded-xl border border-[#e5e7eb] bg-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+              <div className="grid p-2">
+                {dropdownItems.map((item) => {
+                  if (!item.href) {
+                    return null;
+                  }
+                  return (
+                    <Link
+                      className="rounded-lg px-3 py-2 text-[#403f3f] text-sm transition-colors hover:bg-[#f5f6fa]"
+                      href={item.href}
+                      key={item._key || `${key}-${item.text}`}
+                      rel={item.openInNewTab ? "noopener noreferrer" : undefined}
+                      target={item.openInNewTab ? "_blank" : undefined}
+                    >
+                      {item.text}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function NavbarSkeleton({ isHomePage = false }: { isHomePage?: boolean }) {
   return (
     <header
@@ -445,7 +552,7 @@ function NavbarSkeleton({ isHomePage = false }: { isHomePage?: boolean }) {
         isHomePage ? { background: HOME_NAVBAR_GRADIENT } : undefined
       }
     >
-      <div className="mx-auto w-full max-w-[1200px] px-6">
+      <div className="mx-auto w-full max-w-[1550px] px-6">
         <div className="flex h-16 items-center justify-between">
           {/* Logo skeleton - matches Logo component dimensions: width={120} height={40} */}
           {/* <div className="flex items-center">
@@ -559,8 +666,10 @@ export function Navbar({
   return (
     <header
       className={cn(
-        "navbar fixed top-0 z-[1000] w-full border-b transition-[transform,border-color] duration-300",
-        isNavbarVisible ? "translate-y-0" : "-translate-y-full",
+        "navbar fixed top-0 z-[1000] w-full border-b transition-[transform,opacity,border-color] duration-300 ease-in-out",
+        isNavbarVisible
+          ? "translate-y-0 opacity-100"
+          : "-translate-y-full opacity-0",
         isHomePage
           ? "border-transparent"
           : "border-border backdrop-blur-sm bg-white",
@@ -576,7 +685,7 @@ export function Navbar({
           style={{ background: HOME_NAVBAR_GRADIENT }}
         />
       ) : null}
-      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6">
+      <div className="relative z-10 mx-auto w-full max-w-[1550px] px-6">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div
@@ -629,13 +738,7 @@ export function Navbar({
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden items-center gap-4 md:flex">
-            <SanityButtons
-              buttonClassName="rounded-lg"
-              buttons={buttons || []}
-              className="flex items-center gap-2"
-            />
-          </div>
+          <DesktopNavbarButtons buttons={buttons || []} isHomePage={isHomePage} />
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 md:hidden">

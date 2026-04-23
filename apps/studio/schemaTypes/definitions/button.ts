@@ -35,6 +35,58 @@ export const button = defineType({
       description:
         "Where the button links to - can be an internal page or external website",
     }),
+    defineField({
+      name: "items",
+      title: "Dropdown Items",
+      type: "array",
+      description:
+        "Optional dropdown links shown under this button in the navbar. Leave empty for a regular button.",
+      of: [
+        defineField({
+          name: "item",
+          title: "Dropdown Item",
+          type: "object",
+          fields: [
+            defineField({
+              name: "text",
+              title: "Item Text",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "url",
+              title: "Url",
+              type: "customUrl",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: "text",
+              externalUrl: "url.external",
+              urlType: "url.type",
+              internalUrl: "url.internal.slug.current",
+              openInNewTab: "url.openInNewTab",
+            },
+            prepare: ({
+              title,
+              externalUrl,
+              urlType,
+              internalUrl,
+              openInNewTab,
+            }) => {
+              const url = urlType === "external" ? externalUrl : internalUrl;
+              const newTabIndicator = openInNewTab ? " ↗" : "";
+
+              return {
+                title: title || "Untitled Dropdown Item",
+                subtitle: `${urlType === "external" ? "External" : "Internal"} • ${url}${newTabIndicator}`,
+              };
+            },
+          },
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {
@@ -44,6 +96,7 @@ export const button = defineType({
       urlType: "url.type",
       internalUrl: "url.internal.slug.current",
       openInNewTab: "url.openInNewTab",
+      items: "items",
     },
     prepare: ({
       title,
@@ -52,13 +105,14 @@ export const button = defineType({
       urlType,
       internalUrl,
       openInNewTab,
+      items = [],
     }) => {
       const url = urlType === "external" ? externalUrl : internalUrl;
       const newTabIndicator = openInNewTab ? " ↗" : "";
 
       return {
         title: title || "Untitled Button",
-        subtitle: `${capitalize(variant ?? "default")} • ${url}${newTabIndicator}`,
+        subtitle: `${capitalize(variant ?? "default")} • ${url}${newTabIndicator}${items.length ? ` • ${items.length} dropdown item(s)` : ""}`,
       };
     },
   },

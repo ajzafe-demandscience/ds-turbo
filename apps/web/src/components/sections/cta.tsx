@@ -8,6 +8,7 @@ import { H1Block } from "./h1";
 import { HowItWorksCardsBlock } from "./how-it-works-cards";
 import { ImageCardBlock } from "./image-card";
 import { ImageBlock } from "./image";
+import { NewsletterBlock } from "./newsletter";
 import { PBlock } from "./p";
 import { PardotFormBlock } from "./pardot-form";
 import { RichTextBlock } from "./rich-text-block";
@@ -28,6 +29,7 @@ const NESTED_COMPONENTS = {
   howItWorksCards: HowItWorksCardsBlock,
   imageBlock: ImageBlock,
   imageCard: ImageCardBlock,
+  newsletter: NewsletterBlock,
   p: PBlock,
   pardotForm: PardotFormBlock,
   richTextBlock: RichTextBlock,

@@ -118,6 +118,7 @@ All frontend types derive from generated Sanity types. `apps/web/src/types.ts` e
 - Use `SanityImage` component for Sanity images (from `sanity-image` library)
 - Use `SanityButtons` resolver for button arrays
 - Shared UI components in `@workspace/ui` (Radix + CVA pattern)
+- Button style standard: `default` and `outline` button variants must use an `18px` border radius
 
 ### Formatting (Biome)
 - Double quotes, semicolons, trailing commas (ES5), 2-space indent, 80 char line width

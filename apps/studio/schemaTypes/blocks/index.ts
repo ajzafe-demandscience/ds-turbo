@@ -6,6 +6,7 @@ import { howItWorksCards } from "@/schemaTypes/blocks/how-it-works-cards";
 import { hero } from "@/schemaTypes/blocks/hero";
 import { imageBlock } from "@/schemaTypes/blocks/image";
 import { imageCard } from "@/schemaTypes/blocks/image-card";
+import { newsletter } from "@/schemaTypes/blocks/newsletter";
 import { p } from "@/schemaTypes/blocks/p";
 import { pardotForm } from "@/schemaTypes/blocks/pardot-form";
 import { richTextBlock } from "@/schemaTypes/blocks/rich-text";
@@ -22,6 +23,7 @@ export const pageBuilderBlocks = [
   howItWorksCards,
   imageBlock,
   imageCard,
+  newsletter,
   p,
   pardotForm,
   richTextBlock,

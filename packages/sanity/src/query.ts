@@ -29,12 +29,13 @@ const imageFragment = /* groq */ `
 `;
 
 const customLinkFragment = /* groq */ `
-  ...customLink{
-    openInNewTab,
+  _type == "customLink" => {
+    ...,
+    "openInNewTab": customLink.openInNewTab,
     "href": select(
-      type == "internal" => internal->slug.current,
-      type == "external" => external,
-      "#"
+      customLink.type == "internal" => customLink.internal->slug.current,
+      customLink.type == "external" => customLink.external,
+      customLink.href
     ),
   }
 `;
@@ -106,6 +107,16 @@ const buttonsFragment = /* groq */ `
       url.type == "external" => url.external,
       url.href
     ),
+    "items": array::compact(items[]{
+      _key,
+      text,
+      "openInNewTab": url.openInNewTab,
+      "href": select(
+        url.type == "internal" => url.internal->slug.current,
+        url.type == "external" => url.external,
+        url.href
+      )
+    }),
   }
 `;
 
@@ -189,6 +200,20 @@ const whatWeDoCardsBlock = /* groq */ `
     },
     featureLogo {
       ${imageFields}
+    }
+  }
+`;
+
+const newsletterBlock = /* groq */ `
+  _type == "newsletter" => {
+    ...,
+    logo {
+      ${imageFields}
+    },
+    socialLinks {
+      linkedin,
+      twitter,
+      facebook
     }
   }
 `;
@@ -318,6 +343,7 @@ const ctaBlock = /* groq */ `
       ${statsCounterBlock},
       ${whatYouCanRunCardsBlock},
       ${whatWeDoCardsBlock},
+      ${newsletterBlock},
       ${h1Block},
       ${buttonLinkBlock},
       ${companyLogoCarouselBlock},
@@ -341,6 +367,7 @@ const pageBuilderFragment = /* groq */ `
     ${statsCounterBlock},
     ${whatYouCanRunCardsBlock},
     ${whatWeDoCardsBlock},
+    ${newsletterBlock},
     ${h1Block},
     ${buttonLinkBlock},
     ${companyLogoCarouselBlock},
@@ -502,6 +529,7 @@ export const queryGenericPageOGData = defineQuery(`
 export const queryFooterData = defineQuery(`
   *[_type == "footer" && _id == "footer"][0]{
     _id,
+    title,
     subtitle,
     columns[]{
       _key,
@@ -515,6 +543,87 @@ export const queryFooterData = defineQuery(`
           url.type == "external" => url.external,
           url.href
         ),
+      }
+    },
+    pageBuilder[]{
+      _key,
+      _type,
+      _type == "footerMegaMenu" => {
+        columnsPerRow,
+        pageBuilder[]{
+          _key,
+          _type,
+          _type == "footerNewsletter" => {
+            logo {
+              ${imageFields}
+            },
+            description,
+            inputPlaceholder,
+            buttonLabel,
+            terms[]{
+              ...,
+              _type == "block" => {
+                ...,
+                markDefs[]{
+                  ...,
+                  _type == "customLink" => {
+                    ...,
+                    "openInNewTab": customLink.openInNewTab,
+                    "href": select(
+                      customLink.type == "internal" => customLink.internal->slug.current,
+                      customLink.type == "external" => customLink.external,
+                      customLink.href
+                    ),
+                  }
+                }
+              },
+              _type == "image" => {
+                ${imageFields},
+                "caption": caption
+              }
+            },
+            socialLinks {
+              linkedin,
+              twitter,
+              facebook,
+              linkedinIcon {
+                ${imageFields}
+              },
+              twitterIcon {
+                ${imageFields}
+              },
+              facebookIcon {
+                ${imageFields}
+              }
+            }
+          },
+          _type == "footerLinks" => {
+            title,
+            links[]{
+              _key,
+              name,
+              "openInNewTab": url.openInNewTab,
+              "href": select(
+                url.type == "internal" => url.internal->slug.current,
+                url.type == "external" => url.external,
+                url.href
+              ),
+            }
+          },
+        }
+      },
+      _type == "footerCopyright" => {
+        copyrightText,
+        links[]{
+          _key,
+          label,
+          "openInNewTab": url.openInNewTab,
+          "href": select(
+            url.type == "internal" => url.internal->slug.current,
+            url.type == "external" => url.external,
+            url.href
+          ),
+        }
       }
     }
   }

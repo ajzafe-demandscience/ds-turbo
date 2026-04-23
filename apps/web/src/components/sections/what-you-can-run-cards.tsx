@@ -74,7 +74,7 @@ export function WhatYouCanRunCardsBlock({
           >
             {row.map((item) => (
               <article
-                className="min-w-0 w-full rounded-[18px] bg-[#fff] p-5 text-center lg:w-auto lg:max-w-[240px]"
+                className="min-w-0 w-full rounded-[18px] bg-[#fff] p-5 text-center md:w-[calc(50%-0.625rem)] lg:w-auto lg:max-w-[240px]"
                 key={item._key}
               >
                 <div className="flex justify-center overflow-hidden rounded-xl">
