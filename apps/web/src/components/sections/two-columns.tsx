@@ -27,6 +27,19 @@ type ColumnColorValue =
   | null
   | undefined;
 
+function resolveColorValue(color: ColumnColorValue): string | undefined {
+  if (typeof color === "string") {
+    return color;
+  }
+
+  if (color && typeof color === "object" && "hex" in color) {
+    const hex = color.hex;
+    return typeof hex === "string" ? hex : undefined;
+  }
+
+  return undefined;
+}
+
 const NESTED_COMPONENTS = {
   companyLogoCarousel: CompanyLogoCarouselBlock,
   hero: HeroBlock,
@@ -79,14 +92,12 @@ export function TwoColumnsBlock({
   isNested = false,
 }: TwoColumnsBlockProps) {
   const resolvedSectionId = sectionId?.trim() || undefined;
-  const resolvedLeftColumnBackgroundColor =
-    typeof leftColumnBackgroundColor === "string"
-      ? leftColumnBackgroundColor
-      : (leftColumnBackgroundColor as ColumnColorValue)?.hex;
-  const resolvedRightColumnBackgroundColor =
-    typeof rightColumnBackgroundColor === "string"
-      ? rightColumnBackgroundColor
-      : (rightColumnBackgroundColor as ColumnColorValue)?.hex;
+  const resolvedLeftColumnBackgroundColor = resolveColorValue(
+    leftColumnBackgroundColor as ColumnColorValue
+  );
+  const resolvedRightColumnBackgroundColor = resolveColorValue(
+    rightColumnBackgroundColor as ColumnColorValue
+  );
 
   const grid = (
     <div className="two-column-responsive-padding grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-10">
