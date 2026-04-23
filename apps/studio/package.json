@@ -22,7 +22,7 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/assist": "^6.0.3",
+    "@sanity/assist": "^6.0.4",
     "@sanity/client": "catalog:",
     "@sanity/color-input": "^6.0.4",
     "@sanity/functions": "^1.3.1",
