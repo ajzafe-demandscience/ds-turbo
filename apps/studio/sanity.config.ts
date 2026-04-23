@@ -59,8 +59,6 @@ export default defineConfig({
           (template) =>
             ![
               "homePage",
-              "navbar",
-              "footer",
               "settings",
               "companyLogoCarouselConfig",
               "blogIndex",

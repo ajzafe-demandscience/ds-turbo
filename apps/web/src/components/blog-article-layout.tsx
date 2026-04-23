@@ -1,9 +1,11 @@
 import type { QueryBlogSlugPageDataResult } from "@workspace/sanity/types";
+import { BookOpenText } from "lucide-react";
 import Link from "next/link";
 
 import { RichText } from "@/components/elements/rich-text";
 import { SanityImage } from "@/components/elements/sanity-image";
 import { TableOfContent } from "@/components/elements/table-of-content";
+import { TitleIcon } from "@/components/elements/title-icon";
 
 function formatPublishedDate(publishedAt?: string | null) {
   if (!publishedAt) {
@@ -156,7 +158,7 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
         </div>
       </section>
 
-      <div className="border-b bg-white dark:bg-background">
+      <div className="bg-white dark:bg-background">
         <div className="article-content-container">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,65%)_minmax(0,35%)] lg:gap-12">
             <article className="min-w-0">
@@ -172,9 +174,17 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
             </article>
             <div className="hidden lg:block">
               <div className="scrollbar-thin sticky top-20 max-h-[calc(100vh-5.25rem)] overflow-y-auto p-4">
-                <h2 className="mb-4 toc-title font-semibold tracking-tight">
-                  Chapters
-                </h2>
+                <TitleIcon
+                  as="h2"
+                  className="mb-4 toc-title font-semibold tracking-tight"
+                  icon={
+                    <BookOpenText
+                      aria-hidden
+                      className="size-5 text-[var(--article-accent)]"
+                    />
+                  }
+                  title="Chapters"
+                />
                 <TableOfContent
                   collapsible={false}
                   richText={richText ?? []}

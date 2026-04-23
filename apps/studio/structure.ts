@@ -7,8 +7,8 @@ import {
   HomeIcon,
   type LucideIcon,
   MessageCircle,
-  PanelBottom,
   PanelBottomIcon,
+  PanelTop,
   Settings2,
   Tag,
   TrendingUpDown,
@@ -160,17 +160,17 @@ export const structure = (
           S.list()
             .title("Site Configuration")
             .items([
-              createSingleTon({
-                S,
-                type: "navbar",
-                title: "Navigation",
-                icon: PanelBottom,
-              }),
-              createSingleTon({
+              createList({
                 S,
                 type: "footer",
                 title: "Footer",
                 icon: PanelBottomIcon,
+              }),
+              createList({
+                S,
+                type: "navbar",
+                title: "Navigation",
+                icon: PanelTop,
               }),
               createSingleTon({
                 S,

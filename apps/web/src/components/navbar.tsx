@@ -592,6 +592,12 @@ export function Navbar({
 }: NavigationData) {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const navigationVariant =
+    pathname === "/" || pathname.startsWith("/resources/blog")
+      ? "main"
+      : pathname.startsWith("/demand")
+        ? "logoOnly"
+        : "main";
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
   const lastScrollYRef = useRef(0);
@@ -626,7 +632,7 @@ export function Navbar({
   }, []);
 
   const { data, error, isLoading } = useSWR<NavigationData>(
-    "/api/navigation",
+    `/api/navigation?variant=${navigationVariant}`,
     fetcher,
     {
       fallbackData: {

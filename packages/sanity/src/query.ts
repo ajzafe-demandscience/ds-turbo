@@ -127,6 +127,12 @@ const h1Block = /* groq */ `
   }
 `;
 
+const titleIconBlock = /* groq */ `
+  _type == "titleIcon" => {
+    ...,
+  }
+`;
+
 const buttonLinkBlock = /* groq */ `
   _type == "buttonLink" => {
     ...,
@@ -163,6 +169,18 @@ const imageCardBlock = /* groq */ `
       url.type == "external" => url.external,
       url.href
     )
+  }
+`;
+
+const cardStatBlock = /* groq */ `
+  _type == "cardStat" => {
+    ...,
+  }
+`;
+
+const caseStudyStatsCardBlock = /* groq */ `
+  _type == "caseStudyStatsCard" => {
+    ...,
   }
 `;
 
@@ -279,6 +297,7 @@ const heroBlock = /* groq */ `
       ...,
       _type,
       ${h1Block},
+      ${titleIconBlock},
       ${buttonLinkBlock},
       ${imageBlock},
       ${imageCardBlock},
@@ -290,6 +309,7 @@ const heroBlock = /* groq */ `
       ...,
       _type,
       ${h1Block},
+      ${titleIconBlock},
       ${buttonLinkBlock},
       ${imageBlock},
       ${imageCardBlock},
@@ -308,7 +328,10 @@ const twoColumnsBlock = /* groq */ `
       _type,
       ${heroBlock},
       ${h1Block},
+      ${titleIconBlock},
       ${buttonLinkBlock},
+      ${cardStatBlock},
+      ${caseStudyStatsCardBlock},
       ${companyLogoCarouselBlock},
       ${imageBlock},
       ${imageCardBlock},
@@ -321,7 +344,10 @@ const twoColumnsBlock = /* groq */ `
       _type,
       ${heroBlock},
       ${h1Block},
+      ${titleIconBlock},
       ${buttonLinkBlock},
+      ${cardStatBlock},
+      ${caseStudyStatsCardBlock},
       ${companyLogoCarouselBlock},
       ${imageBlock},
       ${imageCardBlock},
@@ -369,7 +395,10 @@ const pageBuilderFragment = /* groq */ `
     ${whatWeDoCardsBlock},
     ${newsletterBlock},
     ${h1Block},
+    ${titleIconBlock},
     ${buttonLinkBlock},
+    ${cardStatBlock},
+    ${caseStudyStatsCardBlock},
     ${companyLogoCarouselBlock},
     ${imageBlock},
     ${imageCardBlock},
@@ -527,7 +556,13 @@ export const queryGenericPageOGData = defineQuery(`
 `);
 
 export const queryFooterData = defineQuery(`
-  *[_type == "footer" && _id == "footer"][0]{
+  *[_type == "footer"]
+    | order(
+      select(lower(coalesce(title, "")) == lower($footerTitle) => 0, 1) asc,
+      select(lower(coalesce(title, "")) == "footer main" => 0, 1) asc,
+      select(_id == "footer" => 0, 1) asc,
+      _updatedAt desc
+    )[0]{
     _id,
     title,
     subtitle,
@@ -630,7 +665,12 @@ export const queryFooterData = defineQuery(`
 `);
 
 export const queryNavbarData = defineQuery(`
-  *[_type == "navbar" && _id == "navbar"][0]{
+  *[_type == "navbar"]
+    | order(
+      select(lower(coalesce(label, "")) == lower($navigationLabel) => 0, 1) asc,
+      select(lower(coalesce(label, "")) == "navigation main" => 0, 1) asc,
+      _updatedAt desc
+    )[0]{
     _id,
     logo {
       ${imageFields}

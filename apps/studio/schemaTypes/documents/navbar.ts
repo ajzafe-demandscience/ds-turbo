@@ -419,7 +419,6 @@ export const navbar = defineType({
       title: "Navigation Items",
       description:
         "Add top-level items. Use one Solutions Mega Menu, plus simple links or grid mega menus for the rest.",
-      validation: (rule) => rule.required(),
       of: [navLinkItem, solutionsMegaMenuItem, gridMegaMenuItem],
     }),
     buttonsField,

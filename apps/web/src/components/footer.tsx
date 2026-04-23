@@ -1,8 +1,3 @@
-import { sanityFetch } from "@workspace/sanity/live";
-import {
-  queryFooterData,
-  queryGlobalSeoSettings,
-} from "@workspace/sanity/query";
 import { urlFor } from "@workspace/sanity/client";
 import type {
   QueryFooterDataResult,
@@ -141,23 +136,6 @@ function FooterLogoImg({
       style={{ filter: "brightness(30)" }}
     />
   );
-}
-
-export async function FooterServer() {
-  const [response, settingsResponse] = await Promise.all([
-    sanityFetch({
-      query: queryFooterData,
-    }),
-    sanityFetch({
-      query: queryGlobalSeoSettings,
-    }),
-  ]);
-
-  const footerData = response?.data ?? EMPTY_FOOTER_DOCUMENT;
-  const settingsData =
-    settingsResponse?.data ?? EMPTY_SETTINGS_FOR_FOOTER;
-
-  return <Footer data={footerData} settingsData={settingsData} />;
 }
 
 function SocialLinks({ data }: SocialLinksProps) {
@@ -489,7 +467,7 @@ export function FooterSkeleton() {
   );
 }
 
-function Footer({ data, settingsData }: FooterProps) {
+export function Footer({ data, settingsData }: FooterProps) {
   const { pageBuilder } = data;
   const legacyFooterData = data as QueryFooterDataResult & {
     subtitle?: string | null;

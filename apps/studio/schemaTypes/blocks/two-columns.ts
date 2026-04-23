@@ -6,17 +6,20 @@ const nestedBlockTypes = [
   "hero",
   "h1",
   "buttonLink",
+  "cardStat",
+  "caseStudyStatsCard",
   "imageBlock",
   "imageCard",
   "p",
   "pardotForm",
   "companyLogoCarousel",
+  "titleIcon",
   "richTextBlock",
 ] as const;
 
 export const twoColumns = defineType({
   name: "twoColumns",
-  title: "Two Columns",
+  title: "Split Content",
   type: "object",
   icon: Columns2Icon,
   description:
@@ -26,8 +29,14 @@ export const twoColumns = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      description:
-        "For internal use in Page Builder only. This title helps identify the block in Studio and is not displayed on the website.",
+      description: "Section title shown above the split content columns.",
+    }),
+    defineField({
+      name: "description",
+      title: "Description",
+      type: "text",
+      rows: 3,
+      description: "Optional description shown below the title.",
     }),
     defineField({
       name: "leftColumn",
@@ -43,6 +52,24 @@ export const twoColumns = defineType({
       of: nestedBlockTypes.map((type) => defineArrayMember({ type })),
       options: { insertMenu: { views: [{ name: "grid" }] } },
     }),
+    defineField({
+      name: "leftColumnBackgroundColor",
+      title: "Left Column Background Color",
+      type: "color",
+      description: "Optional background color for the left column.",
+      options: {
+        disableAlpha: false,
+      },
+    }),
+    defineField({
+      name: "rightColumnBackgroundColor",
+      title: "Right Column Background Color",
+      type: "color",
+      description: "Optional background color for the right column.",
+      options: {
+        disableAlpha: false,
+      },
+    }),
     backgroundColorField,
     sectionIdField,
   ],
@@ -53,7 +80,7 @@ export const twoColumns = defineType({
       rightCount: "rightColumn",
     },
     prepare: ({ title, leftCount, rightCount }) => ({
-      title: title || "Two Columns",
+      title: title || "Split Content",
       subtitle: `Left: ${leftCount?.length ?? 0} • Right: ${rightCount?.length ?? 0}`,
     }),
   },

@@ -6,7 +6,7 @@ import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { preconnect, prefetchDNS } from "react-dom";
 
-import { FooterServer } from "@/components/footer";
+import { FooterServer } from "@/components/footer-server";
 import { CombinedJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PreviewBar } from "@/components/preview-bar";
@@ -36,7 +36,7 @@ export default async function RootLayout({
 }>) {
   preconnect("https://cdn.sanity.io");
   prefetchDNS("https://cdn.sanity.io");
-  const nav = await getNavigationData();
+  const nav = await getNavigationData("main");
   return (
     <html
       className={`${fontSans.variable} ${fontHeading.variable} ${fontMono.variable}`}

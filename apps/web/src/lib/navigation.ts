@@ -4,9 +4,20 @@ import {
   queryNavbarData,
 } from "@workspace/sanity/query";
 
-export const getNavigationData = async () => {
+export type NavigationVariant = "main" | "logoOnly";
+
+function variantToNavigationLabel(variant: NavigationVariant) {
+  return variant === "logoOnly"
+    ? "Navbar Logo Only"
+    : "Navbar Main";
+}
+
+export const getNavigationData = async (variant: NavigationVariant = "main") => {
   const [navbarData, settingsData] = await Promise.all([
-    sanityFetch({ query: queryNavbarData }),
+    sanityFetch({
+      query: queryNavbarData,
+      params: { navigationLabel: variantToNavigationLabel(variant) },
+    }),
     sanityFetch({ query: queryGlobalSeoSettings }),
   ]);
 

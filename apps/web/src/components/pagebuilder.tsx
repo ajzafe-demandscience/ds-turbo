@@ -9,6 +9,8 @@ import { useCallback, useMemo } from "react";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
 import { ButtonLinkBlock } from "./sections/button-link";
+import { CaseStudyStatsCardBlock } from "./sections/case-study-stats-card";
+import { CardStatBlock } from "./sections/card-stat";
 import { CompanyLogoCarouselBlock } from "./sections/company-logo-carousel";
 import { H1Block } from "./sections/h1";
 import { HowItWorksCardsBlock } from "./sections/how-it-works-cards";
@@ -20,6 +22,7 @@ import { PBlock } from "./sections/p";
 import { PardotFormBlock } from "./sections/pardot-form";
 import { RichTextBlock } from "./sections/rich-text-block";
 import { StatsCounterBlock } from "./sections/stats-counter";
+import { TitleIconBlock } from "./sections/title-icon";
 import { TwoColumnsBlock } from "./sections/two-columns";
 import { NewsletterBlock } from "./sections/newsletter";
 import { WhatWeDoCardsBlock } from "./sections/what-we-do-cards";
@@ -36,10 +39,13 @@ type ExtendedPageBuilderBlockTypes =
   | "imageBlock"
   | "imageCard"
   | "buttonLink"
+  | "cardStat"
+  | "caseStudyStatsCard"
   | "companyLogoCarousel"
   | "cta"
   | "howItWorksCards"
   | "statsCounter"
+  | "titleIcon"
   | "newsletter"
   | "whatWeDoCards"
   | "whatYouCanRunCards";
@@ -57,9 +63,12 @@ type SanityColorValue = {
 // Strongly typed component mapping with proper component signatures
 const BLOCK_COMPONENTS = {
   companyLogoCarousel: CompanyLogoCarouselBlock,
+  cardStat: CardStatBlock,
+  caseStudyStatsCard: CaseStudyStatsCardBlock,
   cta: CTABlock,
   howItWorksCards: HowItWorksCardsBlock,
   statsCounter: StatsCounterBlock,
+  titleIcon: TitleIconBlock,
   newsletter: NewsletterBlock,
   whatYouCanRunCards: WhatYouCanRunCardsBlock,
   whatWeDoCards: WhatWeDoCardsBlock,

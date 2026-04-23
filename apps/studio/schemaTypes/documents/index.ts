@@ -19,8 +19,6 @@ export const singletons = [
   landingPageIndex,
   companyLogoCarouselConfig,
   settings,
-  footer,
-  navbar,
 ];
 
 export const documents = [
@@ -30,6 +28,8 @@ export const documents = [
   page,
   faq,
   author,
+  footer,
+  navbar,
   ...singletons,
   redirect,
 ];

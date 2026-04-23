@@ -9,7 +9,7 @@ import {
 
 export const imageCard = defineType({
   name: "imageCard",
-  title: "Image Card",
+  title: "Card Image",
   type: "object",
   icon: ImageIcon,
   fields: [
@@ -89,7 +89,7 @@ export const imageCard = defineType({
       media: "image",
     },
     prepare: ({ title, variant, blockPosition, media }) => ({
-      title: title || "Image Card",
+      title: title || "Card Image",
       subtitle: `Image ${variant || "top"} • Block ${blockPosition || "center"}`,
       media,
     }),
