@@ -3,6 +3,7 @@ import "@workspace/ui/globals.css";
 import { SanityLive } from "@workspace/sanity/live";
 import { Geist_Mono, Inter, Poppins } from "next/font/google";
 import { draftMode } from "next/headers";
+import type { Metadata } from "next";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { preconnect, prefetchDNS } from "react-dom";
 
@@ -28,6 +29,21 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 });
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      nosnippet: true,
+      noarchive: true,
+    },
+  },
+};
 
 export default async function RootLayout({
   children,
