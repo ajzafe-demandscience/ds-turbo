@@ -405,15 +405,6 @@ export const navbar = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "menuItems",
-      type: "array",
-      title: "Navigation Items",
-      description:
-        "Add top-level items. Use one Solutions Mega Menu, plus simple links or grid mega menus for the rest.",
-      validation: (rule) => rule.required(),
-      of: [navLinkItem, solutionsMegaMenuItem, gridMegaMenuItem],
-    }),
-    defineField({
       name: "logo",
       type: "image",
       title: "Navbar Logo",
@@ -421,6 +412,15 @@ export const navbar = defineType({
       options: {
         hotspot: true,
       },
+    }),
+    defineField({
+      name: "menuItems",
+      type: "array",
+      title: "Navigation Items",
+      description:
+        "Add top-level items. Use one Solutions Mega Menu, plus simple links or grid mega menus for the rest.",
+      validation: (rule) => rule.required(),
+      of: [navLinkItem, solutionsMegaMenuItem, gridMegaMenuItem],
     }),
     buttonsField,
   ],

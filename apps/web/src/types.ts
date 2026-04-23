@@ -42,6 +42,10 @@ export type NavigationData = {
   settingsData: QueryGlobalSeoSettingsResult;
 };
 
+export type MobileMenuProps = NavigationData & {
+  isHomePage?: boolean;
+};
+
 export type NavMenuItem = Get<QueryNavbarDataResult, "menuItems", number>;
 
 export type SolutionsFeaturedLink =

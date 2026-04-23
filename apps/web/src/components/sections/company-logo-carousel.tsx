@@ -1,5 +1,8 @@
+import { cn } from "@workspace/ui/lib/utils";
+
 import { CompanyLogoCarousel } from "@/components/elements/company-logo-carousel";
-import type { SanityImageProps } from "@/types";
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
+import type { PageBuilderBlock, SanityImageProps } from "@/types";
 
 type CompanyLogoCarouselBlockProps = {
   config?: {
@@ -10,11 +13,12 @@ type CompanyLogoCarouselBlockProps = {
   } | null;
   sectionId?: string | null;
   isNested?: boolean;
-};
+} & Pick<PageBuilderBlock, "_type">;
 
 export function CompanyLogoCarouselBlock({
   config,
   sectionId,
+  _type,
   isNested = false,
 }: CompanyLogoCarouselBlockProps) {
   const resolvedSectionId = sectionId?.trim() || undefined;
@@ -42,7 +46,10 @@ export function CompanyLogoCarouselBlock({
   }
 
   return (
-    <section className={sectionClassName} id={resolvedSectionId}>
+    <section
+      className={cn(camelCaseToKebabCase(_type), sectionClassName)}
+      id={resolvedSectionId}
+    >
       <CompanyLogoCarousel logos={items} />
     </section>
   );

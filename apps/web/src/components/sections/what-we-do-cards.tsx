@@ -1,5 +1,8 @@
+import { cn } from "@workspace/ui/lib/utils";
+
 import { SanityImage } from "@/components/elements/sanity-image";
-import type { SanityImageProps } from "@/types";
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
+import type { PageBuilderBlock, SanityImageProps } from "@/types";
 
 type WhatWeDoCardItem = {
   _key: string;
@@ -17,7 +20,7 @@ export type WhatWeDoCardsBlockProps = {
   featureLogo?: SanityImageProps | null;
   sectionId?: string | null;
   isNested?: boolean;
-};
+} & Pick<PageBuilderBlock, "_type">;
 
 export function WhatWeDoCardsBlock({
   title,
@@ -27,6 +30,7 @@ export function WhatWeDoCardsBlock({
   featureCaption,
   featureLogo,
   sectionId,
+  _type,
   isNested = false,
 }: WhatWeDoCardsBlockProps) {
   const resolvedCards = Array.isArray(cards) ? cards : [];
@@ -38,7 +42,10 @@ export function WhatWeDoCardsBlock({
 
   return (
     <section
-      className={isNested ? undefined : "container-wrapper py-10 md:py-14"}
+      className={cn(
+        camelCaseToKebabCase(_type),
+        isNested ? undefined : "container-wrapper py-10 md:py-14"
+      )}
       id={resolvedSectionId}
     >
       <div className="mx-auto max-w-4xl text-center">

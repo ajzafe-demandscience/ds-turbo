@@ -1,3 +1,6 @@
+import { cn } from "@workspace/ui/lib/utils";
+
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock } from "@/types";
 import { ButtonLinkBlock } from "./button-link";
 import { CompanyLogoCarouselBlock } from "./company-logo-carousel";
@@ -16,7 +19,7 @@ import { WhatYouCanRunCardsBlock } from "./what-you-can-run-cards";
 type CTABlockProps = {
   title?: string | null;
   pageBuilder?: PageBuilderBlock[] | null;
-};
+} & Pick<PageBuilderBlock, "_type">;
 
 const NESTED_COMPONENTS = {
   buttonLink: ButtonLinkBlock,
@@ -61,13 +64,18 @@ function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
   });
 }
 
-export function CTABlock({ title, pageBuilder }: CTABlockProps) {
+export function CTABlock({ title, pageBuilder, _type }: CTABlockProps) {
   if (!title?.trim() && !pageBuilder?.length) {
     return null;
   }
 
   return (
-    <section className="container-wrapper py-10 md:py-14">
+    <section
+      className={cn(
+        camelCaseToKebabCase(_type),
+        "container-wrapper py-10 md:py-14"
+      )}
+    >
       <div className="rounded-[28px] bg-gradient-to-b from-[#101f80] to-[#2f25b0] px-8 py-10 md:px-14 md:py-12 lg:px-20">
         {title ? (
           <h2 className="mb-8 text-center font-semibold text-3xl text-white tracking-tight md:text-5xl">

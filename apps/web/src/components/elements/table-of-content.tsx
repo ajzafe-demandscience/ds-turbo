@@ -607,7 +607,7 @@ export const TableOfContent: FC<TableOfContentProps> = ({
       <aside
         aria-labelledby="toc-heading"
         className={cn(
-          "flex w-full max-w-xs flex-col transition-all duration-200",
+          "table-of-content flex w-full max-w-xs flex-col transition-all duration-200",
           variant === "article"
             ? "bg-transparent"
             : "sticky top-20 rounded-lg border border-zinc-300 bg-gradient-to-b from-zinc-50 to-zinc-100 shadow-sm dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-900",

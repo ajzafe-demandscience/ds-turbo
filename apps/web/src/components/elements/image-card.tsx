@@ -107,7 +107,7 @@ export function ImageCard({
   );
 
   const baseClassName = cn(
-    "flex items-center gap-4 rounded-[16px] border border-border/60 bg-card p-[18px]",
+    "image-card flex items-center gap-4 rounded-[16px] border border-border/60 bg-card p-[18px]",
     VARIANT_LAYOUT_CLASS[variant],
     className,
   );

@@ -4,6 +4,9 @@ import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
 
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
+import type { PageBuilderBlock } from "@/types";
+
 type ButtonLinkBlockProps = {
   text?: string | null;
   variant?: "default" | "secondary" | "outline" | "link" | null;
@@ -14,7 +17,7 @@ type ButtonLinkBlockProps = {
   scrollToSectionId?: string | null;
   sectionId?: string | null;
   isNested?: boolean;
-};
+} & Pick<PageBuilderBlock, "_type">;
 
 export function ButtonLinkBlock({
   text,
@@ -25,6 +28,7 @@ export function ButtonLinkBlock({
   linkType = "url",
   scrollToSectionId,
   sectionId,
+  _type,
   isNested = false,
 }: ButtonLinkBlockProps) {
   const normalizedSectionId = scrollToSectionId?.trim().replace(/^#/, "") || "";
@@ -60,7 +64,7 @@ export function ButtonLinkBlock({
   };
 
   return (
-    <section id={resolvedSectionId}>
+    <section className={cn(camelCaseToKebabCase(_type))} id={resolvedSectionId}>
       <div className={containerClassName}>
         {linkType === "scrollToSection" ? (
           <Button

@@ -25,7 +25,7 @@ export function Logo({
   priority = true,
 }: LogoProps) {
   return (
-    <Link className="" href="/">
+    <Link className="logo" href="/">
       {image ? (
         <SanityImage
           alt={alt ?? "logo"}

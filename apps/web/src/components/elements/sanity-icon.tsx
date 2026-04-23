@@ -23,7 +23,10 @@ export const SanityIcon = memo(function SanityIconUnmemorized({
     <DynamicIcon
       {...props}
       name={icon as IconName}
-      className={cn("flex size-12 items-center justify-center", className)}
+      className={cn(
+        "sanity-icon flex size-12 items-center justify-center",
+        className
+      )}
       fallback={() => <TriangleAlert size={24} />}
       size={24}
     />

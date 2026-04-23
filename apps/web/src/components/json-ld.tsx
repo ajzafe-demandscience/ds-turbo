@@ -66,7 +66,7 @@ function extractPlainTextFromRichText(
 // Utility function to safely render JSON-LD
 export function JsonLdScript<T>({ data, id }: { data: T; id: string }) {
   return (
-    <script id={id} type="application/ld+json">
+    <script className="json-ld-script" id={id} type="application/ld+json">
       {JSON.stringify(data, null, 0)}
     </script>
   );
@@ -105,7 +105,11 @@ export function FaqJsonLd({ faqs }: FaqJsonLdProps) {
     ),
   };
 
-  return <JsonLdScript data={faqJsonLd} id="faq-json-ld" />;
+  return (
+    <div className="faq-json-ld">
+      <JsonLdScript data={faqJsonLd} id="faq-json-ld" />
+    </div>
+  );
 }
 
 const IMAGE_SIZE_WIDTH = 1920;
@@ -187,7 +191,12 @@ export function ArticleJsonLd({
   };
 
   return (
-    <JsonLdScript data={articleJsonLd} id={`article-json-ld-${article.slug}`} />
+    <div className="article-json-ld">
+      <JsonLdScript
+        data={articleJsonLd}
+        id={`article-json-ld-${article.slug}`}
+      />
+    </div>
   );
 }
 
@@ -229,7 +238,11 @@ export function OrganizationJsonLd({ settings }: OrganizationJsonLdProps) {
     sameAs: socialLinks?.length ? socialLinks : undefined,
   };
 
-  return <JsonLdScript data={organizationJsonLd} id="organization-json-ld" />;
+  return (
+    <div className="organization-json-ld">
+      <JsonLdScript data={organizationJsonLd} id="organization-json-ld" />
+    </div>
+  );
 }
 
 // Website JSON-LD Component
@@ -256,7 +269,11 @@ export function WebSiteJsonLd({ settings }: WebSiteJsonLdProps) {
     } as Organization,
   };
 
-  return <JsonLdScript data={websiteJsonLd} id="website-json-ld" />;
+  return (
+    <div className="website-json-ld">
+      <JsonLdScript data={websiteJsonLd} id="website-json-ld" />
+    </div>
+  );
 }
 
 // Combined JSON-LD Component for pages with multiple structured data
@@ -276,13 +293,13 @@ export async function CombinedJsonLd({
 
   const cleanSettings = stegaClean(res);
   return (
-    <>
+    <div className="combined-json-ld">
       {includeWebsite && cleanSettings && (
         <WebSiteJsonLd settings={cleanSettings} />
       )}
       {includeOrganization && cleanSettings && (
         <OrganizationJsonLd settings={cleanSettings} />
       )}
-    </>
+    </div>
   );
 }

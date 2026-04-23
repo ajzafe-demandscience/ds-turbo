@@ -1,6 +1,10 @@
 "use client";
 
+import { cn } from "@workspace/ui/lib/utils";
 import { useEffect, useMemo, useRef, useState } from "react";
+
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
+import type { PageBuilderBlock } from "@/types";
 
 type StatsCounterItem = {
   _key: string;
@@ -18,7 +22,7 @@ export type StatsCounterBlockProps = {
   items?: StatsCounterItem[] | null;
   sectionId?: string | null;
   isNested?: boolean;
-};
+} & Pick<PageBuilderBlock, "_type">;
 
 const DEFAULT_DURATION_MS = 1600;
 
@@ -75,6 +79,7 @@ export function StatsCounterBlock({
   footerText,
   items,
   sectionId,
+  _type,
   isNested = false,
 }: StatsCounterBlockProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -120,7 +125,10 @@ export function StatsCounterBlock({
 
   return (
     <section
-      className={isNested ? undefined : "container-wrapper py-10 md:py-14"}
+      className={cn(
+        camelCaseToKebabCase(_type),
+        isNested ? undefined : "container-wrapper py-10 md:py-14"
+      )}
       id={resolvedSectionId}
       ref={sectionRef}
     >

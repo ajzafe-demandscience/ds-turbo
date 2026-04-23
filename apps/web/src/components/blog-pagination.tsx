@@ -7,6 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@workspace/ui/components/pagination";
+import { cn } from "@workspace/ui/lib/utils";
 import { useCallback } from "react";
 
 export type PaginationProps = {
@@ -82,7 +83,7 @@ export function BlogPagination({
   );
 
   return (
-    <div className={className}>
+    <div className={cn("blog-pagination", className)}>
       <Pagination>
         <PaginationContent>
           {hasPreviousPage && (

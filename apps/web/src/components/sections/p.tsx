@@ -1,4 +1,7 @@
+import { cn } from "@workspace/ui/lib/utils";
+
 import { RichText } from "@/components/elements/rich-text";
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PagebuilderType } from "@/types";
 
 export type PBlockProps = PagebuilderType<"p"> & {
@@ -9,6 +12,7 @@ export type PBlockProps = PagebuilderType<"p"> & {
 export function PBlock({
   richText,
   sectionId,
+  _type,
   isNested = false,
   isHero = false,
 }: PBlockProps) {
@@ -20,7 +24,10 @@ export function PBlock({
   const resolvedSectionId = sectionId?.trim() || undefined;
 
   return (
-    <section className={sectionClassName} id={resolvedSectionId}>
+    <section
+      className={cn(camelCaseToKebabCase(_type), sectionClassName)}
+      id={resolvedSectionId}
+    >
       <div className="max-w-4xl">
         <RichText
           className={

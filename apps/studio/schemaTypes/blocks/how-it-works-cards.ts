@@ -27,6 +27,19 @@ export const howItWorksCards = defineType({
       description: "Optional supporting text shown below the title.",
     }),
     defineField({
+      name: "columnsPerRow",
+      title: "Cards per row (large screens)",
+      type: "number",
+      initialValue: 3,
+      description:
+        "How many cards appear in one row on large screens (about 1024px and wider). Phones use one full-width column; tablets use two columns.",
+      validation: (Rule) =>
+        Rule.integer()
+          .min(2)
+          .max(6)
+          .error("Enter a whole number from 2 to 6"),
+    }),
+    defineField({
       name: "items",
       title: "Items",
       type: "array",

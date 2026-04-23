@@ -1,5 +1,7 @@
 import { cn } from "@workspace/ui/lib/utils";
-import type { SanityImageProps } from "@/types";
+
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
+import type { PageBuilderBlock, SanityImageProps } from "@/types";
 import { ImageCard } from "../elements/image-card";
 
 type SanityColorValue = {
@@ -17,7 +19,7 @@ export type ImageCardBlockProps = {
   backgroundColor?: string | SanityColorValue | null;
   sectionId?: string | null;
   isNested?: boolean;
-};
+} & Pick<PageBuilderBlock, "_type">;
 
 export function ImageCardBlock({
   title,
@@ -29,6 +31,7 @@ export function ImageCardBlock({
   imageSize,
   backgroundColor,
   sectionId,
+  _type,
   isNested = false,
 }: ImageCardBlockProps) {
   const resolvedSectionId = sectionId?.trim() || undefined;
@@ -48,7 +51,13 @@ export function ImageCardBlock({
   );
 
   return (
-    <section className={isNested ? undefined : "container-wrapper"} id={resolvedSectionId}>
+    <section
+      className={cn(
+        camelCaseToKebabCase(_type),
+        isNested ? undefined : "container-wrapper"
+      )}
+      id={resolvedSectionId}
+    >
       <div className={cardWrapperClassName}>
         <ImageCard
           description={description ?? undefined}

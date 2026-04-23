@@ -93,6 +93,7 @@ export type WhatYouCanRunCards = {
   _type: "whatYouCanRunCards";
   title?: string;
   description?: string;
+  columnsPerRow?: number;
   items: Array<{
     image: ItemsItemImage;
     title: string;
@@ -348,6 +349,7 @@ export type HowItWorksCards = {
   _type: "howItWorksCards";
   title?: string;
   description?: string;
+  columnsPerRow?: number;
   items: Array<{
     image: ItemImage;
     title: string;
@@ -586,6 +588,13 @@ export type Navbar = {
   _updatedAt: string;
   _rev: string;
   label: string;
+  logo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   menuItems: Array<
     | {
         name: string;
@@ -651,13 +660,6 @@ export type Navbar = {
         _key: string;
       }
   >;
-  logo?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
   buttons?: Array<
     {
       _key: string;
@@ -1495,6 +1497,7 @@ export type QueryHomePageDataResult = {
               _type: "howItWorksCards";
               title?: string;
               description?: string;
+              columnsPerRow?: number;
               items: Array<{
                 image: {
                   id: string | null;
@@ -3070,6 +3073,7 @@ export type QueryHomePageDataResult = {
               _type: "whatYouCanRunCards";
               title?: string;
               description?: string;
+              columnsPerRow?: number;
               items: Array<{
                 image: {
                   id: string | null;
@@ -3494,6 +3498,7 @@ export type QueryHomePageDataResult = {
         _type: "howItWorksCards";
         title?: string;
         description?: string;
+        columnsPerRow?: number;
         items: Array<{
           image: {
             id: string | null;
@@ -5059,6 +5064,7 @@ export type QueryHomePageDataResult = {
         _type: "whatYouCanRunCards";
         title?: string;
         description?: string;
+        columnsPerRow?: number;
         items: Array<{
           image: {
             id: string | null;
@@ -5262,6 +5268,7 @@ export type QuerySlugPageDataResult =
                   _type: "howItWorksCards";
                   title?: string;
                   description?: string;
+                  columnsPerRow?: number;
                   items: Array<{
                     image: {
                       id: string | null;
@@ -6837,6 +6844,7 @@ export type QuerySlugPageDataResult =
                   _type: "whatYouCanRunCards";
                   title?: string;
                   description?: string;
+                  columnsPerRow?: number;
                   items: Array<{
                     image: {
                       id: string | null;
@@ -7261,6 +7269,7 @@ export type QuerySlugPageDataResult =
             _type: "howItWorksCards";
             title?: string;
             description?: string;
+            columnsPerRow?: number;
             items: Array<{
               image: {
                 id: string | null;
@@ -8826,6 +8835,7 @@ export type QuerySlugPageDataResult =
             _type: "whatYouCanRunCards";
             title?: string;
             description?: string;
+            columnsPerRow?: number;
             items: Array<{
               image: {
                 id: string | null;
@@ -9033,6 +9043,7 @@ export type QuerySlugPageDataResult =
                   _type: "howItWorksCards";
                   title?: string;
                   description?: string;
+                  columnsPerRow?: number;
                   items: Array<{
                     image: {
                       id: string | null;
@@ -10608,6 +10619,7 @@ export type QuerySlugPageDataResult =
                   _type: "whatYouCanRunCards";
                   title?: string;
                   description?: string;
+                  columnsPerRow?: number;
                   items: Array<{
                     image: {
                       id: string | null;
@@ -11032,6 +11044,7 @@ export type QuerySlugPageDataResult =
             _type: "howItWorksCards";
             title?: string;
             description?: string;
+            columnsPerRow?: number;
             items: Array<{
               image: {
                 id: string | null;
@@ -12597,6 +12610,7 @@ export type QuerySlugPageDataResult =
             _type: "whatYouCanRunCards";
             title?: string;
             description?: string;
+            columnsPerRow?: number;
             items: Array<{
               image: {
                 id: string | null;
@@ -12808,6 +12822,7 @@ export type QueryBlogIndexPageDataResult = {
               _type: "howItWorksCards";
               title?: string;
               description?: string;
+              columnsPerRow?: number;
               items: Array<{
                 image: {
                   id: string | null;
@@ -14383,6 +14398,7 @@ export type QueryBlogIndexPageDataResult = {
               _type: "whatYouCanRunCards";
               title?: string;
               description?: string;
+              columnsPerRow?: number;
               items: Array<{
                 image: {
                   id: string | null;
@@ -14807,6 +14823,7 @@ export type QueryBlogIndexPageDataResult = {
         _type: "howItWorksCards";
         title?: string;
         description?: string;
+        columnsPerRow?: number;
         items: Array<{
           image: {
             id: string | null;
@@ -16372,6 +16389,7 @@ export type QueryBlogIndexPageDataResult = {
         _type: "whatYouCanRunCards";
         title?: string;
         description?: string;
+        columnsPerRow?: number;
         items: Array<{
           image: {
             id: string | null;

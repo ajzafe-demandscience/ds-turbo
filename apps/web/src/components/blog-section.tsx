@@ -19,7 +19,7 @@ export function BlogSection({
 
   if (isFeatured) {
     return (
-      <section className="mx-auto mt-8 mb-12 grid grid-cols-1 gap-8 sm:mt-12 md:mt-16 md:gap-12 lg:mb-20">
+      <section className="blog-section mx-auto mt-8 mb-12 grid grid-cols-1 gap-8 sm:mt-12 md:mt-16 md:gap-12 lg:mb-20">
         <h2 className="sr-only">{title}</h2>
         {blogs.map((blog) => (
           <FeaturedBlogCard blog={blog} key={blog._id} />
@@ -29,7 +29,7 @@ export function BlogSection({
   }
 
   return (
-    <section className="mt-8">
+    <section className="blog-section mt-8">
       <h2 className="sr-only">{title}</h2>
       <BlogList blogs={blogs} />
     </section>

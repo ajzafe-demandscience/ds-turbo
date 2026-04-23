@@ -1,7 +1,9 @@
+import { cn } from "@workspace/ui/lib/utils";
+
 export function LinkedinIcon({ className }: { className?: string }) {
   return (
     <svg
-      className={className}
+      className={cn("linkedin-icon", className)}
       fill="none"
       height="18"
       viewBox="0 0 18 18"
@@ -17,7 +19,7 @@ export function LinkedinIcon({ className }: { className?: string }) {
 export function XIcon({ className }: { className?: string }) {
   return (
     <svg
-      className={className}
+      className={cn("x-icon", className)}
       fill="none"
       height="18"
       viewBox="0 0 20 18"
@@ -33,7 +35,7 @@ export function XIcon({ className }: { className?: string }) {
 export function YoutubeIcon({ className }: { className?: string }) {
   return (
     <svg
-      className={className}
+      className={cn("youtube-icon", className)}
       fill="none"
       height="16"
       viewBox="0 0 20 16"
@@ -49,7 +51,7 @@ export function YoutubeIcon({ className }: { className?: string }) {
 export function FacebookIcon({ className }: { className?: string }) {
   return (
     <svg
-      className={className}
+      className={cn("facebook-icon", className)}
       height="24"
       viewBox="0 0 24 24"
       width="24"
@@ -64,7 +66,7 @@ export function FacebookIcon({ className }: { className?: string }) {
 export function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg
-      className={className}
+      className={cn("instagram-icon", className)}
       height="24"
       viewBox="0 0 24 24"
       width="24"

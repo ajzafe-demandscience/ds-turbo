@@ -2,9 +2,11 @@
 
 import { useOptimistic } from "@sanity/visual-editing/react";
 import { env } from "@workspace/env/client";
+import { cn } from "@workspace/ui/lib/utils";
 import { createDataAttribute } from "next-sanity";
 import { useCallback, useMemo } from "react";
 
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
 import { ButtonLinkBlock } from "./sections/button-link";
 import { CompanyLogoCarouselBlock } from "./sections/company-logo-carousel";
@@ -97,7 +99,9 @@ function UnknownBlockError({
   return (
     <div
       aria-label={`Unknown block type: ${blockType}`}
-      className="flex items-center justify-center rounded-lg border-2 border-muted-foreground/20 border-dashed bg-muted p-8 text-center text-muted-foreground"
+      className={cn(
+        "unknown-block-error flex items-center justify-center rounded-lg border-2 border-muted-foreground/20 border-dashed bg-muted p-8 text-center text-muted-foreground"
+      )}
       key={`${blockType}-${blockKey}`}
       role="alert"
     >
@@ -178,12 +182,19 @@ function useBlockRenderer(id: string, type: string) {
 
       return (
         <div
+          className={cn(
+            "page-builder-block",
+            camelCaseToKebabCase(block._type)
+          )}
           data-sanity={createBlockDataAttribute(block._key)}
           key={`${block._type}-${block._key}`}
           style={blockStyle}
         >
           {/** biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering> */}
-          <Component {...(block as any)} />
+          <Component
+            {...(block as any)}
+            {...(block._type === "hero" ? { isHomePage: type === "homePage" } : {})}
+          />
         </div>
       );
     },
@@ -214,9 +225,7 @@ export function PageBuilder({
   }
 
   return (
-    <main
-      data-sanity={containerDataAttribute}
-    >
+    <main className="page-builder" data-sanity={containerDataAttribute}>
       {blocks.map(renderBlock)}
     </main>
   );

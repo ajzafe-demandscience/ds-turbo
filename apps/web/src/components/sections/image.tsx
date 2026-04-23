@@ -1,6 +1,9 @@
-import { SanityImage } from "@/components/elements/sanity-image";
+import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
-import type { SanityImageProps } from "@/types";
+
+import { SanityImage } from "@/components/elements/sanity-image";
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
+import type { PageBuilderBlock, SanityImageProps } from "@/types";
 
 export type ImageBlockProps = {
   image?: SanityImageProps | null;
@@ -8,13 +11,14 @@ export type ImageBlockProps = {
   openInNewTab?: boolean | null;
   sectionId?: string | null;
   isNested?: boolean;
-};
+} & Pick<PageBuilderBlock, "_type">;
 
 export function ImageBlock({
   image,
   href,
   openInNewTab,
   sectionId,
+  _type,
   isNested = false,
 }: ImageBlockProps) {
   if (!image?.id) {
@@ -62,7 +66,10 @@ export function ImageBlock({
   ].join(" ");
 
   return (
-    <section className={sectionClassName} id={resolvedSectionId}>
+    <section
+      className={cn(camelCaseToKebabCase(_type), sectionClassName)}
+      id={resolvedSectionId}
+    >
       <div className={frameClassName}>
         {resolvedHref ? (
           <Link

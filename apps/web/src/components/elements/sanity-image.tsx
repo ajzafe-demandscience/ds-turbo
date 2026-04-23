@@ -4,6 +4,7 @@ import {
   SANITY_BASE_URL,
   type SanityImageProps,
 } from "@workspace/sanity/image";
+import { cn } from "@workspace/ui/lib/utils";
 import { type ElementType, memo } from "react";
 import {
   SanityImage as BaseSanityImage,
@@ -16,7 +17,11 @@ const ImageWrapper = <T extends ElementType = "img">(
 ) => <BaseSanityImage baseUrl={SANITY_BASE_URL} {...props} />;
 
 // Main component
-function SanityImageUnmemorized({ image, ...props }: SanityImageProps) {
+function SanityImageUnmemorized({
+  image,
+  className,
+  ...props
+}: SanityImageProps) {
   const processedImageData = processImageData(image);
 
   // Early return for invalid image data
@@ -24,7 +29,13 @@ function SanityImageUnmemorized({ image, ...props }: SanityImageProps) {
     return null;
   }
 
-  return <ImageWrapper {...props} {...processedImageData} />;
+  return (
+    <ImageWrapper
+      {...props}
+      {...processedImageData}
+      className={cn("sanity-image", className)}
+    />
+  );
 }
 
 export const SanityImage = memo(SanityImageUnmemorized);

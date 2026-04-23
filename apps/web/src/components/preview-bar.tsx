@@ -21,7 +21,7 @@ export const PreviewBar: FC = () => {
   };
 
   return (
-    <div className="fixed right-0 bottom-1 left-0 z-10 px-2 md:bottom-2 md:px-4">
+    <div className="preview-bar fixed right-0 bottom-1 left-0 z-10 px-2 md:bottom-2 md:px-4">
       <div className="mx-auto max-w-96 rounded-md border border-zinc-200 bg-zinc-100/80 p-2 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-900/80">
         <div className="flex items-center">
           <div className="flex-1">

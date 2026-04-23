@@ -1,3 +1,6 @@
+import { cn } from "@workspace/ui/lib/utils";
+
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock, PagebuilderType } from "@/types";
 import { ButtonLinkBlock } from "./button-link";
 import { CompanyLogoCarouselBlock } from "./company-logo-carousel";
@@ -54,6 +57,7 @@ export function TwoColumnsBlock({
   leftColumn,
   rightColumn,
   sectionId,
+  _type,
   isNested = false,
 }: TwoColumnsBlockProps) {
   const resolvedSectionId = sectionId?.trim() || undefined;
@@ -66,7 +70,7 @@ export function TwoColumnsBlock({
   );
 
   return (
-    <section className="py-10" id={resolvedSectionId}>
+    <section className={cn(camelCaseToKebabCase(_type), "py-10")} id={resolvedSectionId}>
       {isNested ? (
         grid
       ) : (

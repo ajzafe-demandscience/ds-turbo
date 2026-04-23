@@ -127,14 +127,14 @@ export function BlogSearchResults({
 
   if (isSearching) {
     return (
-      <section className={cn("mt-8", className)}>
+      <section className={cn("blog-search-results mt-8", className)}>
         <LoadingState />
       </section>
     );
   }
 
   return (
-    <section className={cn("mt-8", className)}>
+    <section className={cn("blog-search-results mt-8", className)}>
       <SearchResultsHeader count={results.length} query={searchQuery} />
 
       {error ? (

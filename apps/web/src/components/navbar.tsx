@@ -2,13 +2,16 @@
 
 import { env } from "@workspace/env/client";
 import { SANITY_BASE_URL } from "@workspace/sanity/image";
+import { cn } from "@workspace/ui/lib/utils";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 
 import type {
   GridMegaMenuCard,
+  MobileMenuProps,
   NavMenuItem,
   NavigationData,
   SolutionsCategoryLink,
@@ -20,6 +23,42 @@ import { SanityIcon } from "./elements/sanity-icon";
 import { SanityButtons } from "./elements/sanity-buttons";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
+
+const HOME_NAVBAR_GRADIENT =
+  "linear-gradient(98deg, #3C13A5 1.95%, #181776 21.81%, #121970 75.49%, #0F399C 100%)";
+
+const desktopMainNavTriggerClass = {
+  base: "relative flex h-16 cursor-pointer items-center gap-1 px-3 text-[18px] transition-colors after:absolute after:right-3 after:bottom-0 after:left-3 after:h-[2px] after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100",
+  home: "text-white hover:text-white/90 after:bg-white",
+  default: "text-[#403f3f] hover:text-foreground after:bg-[rgb(64,63,63)]",
+} as const;
+
+const desktopNavLinkClass = {
+  base: "relative flex h-16 cursor-pointer items-center px-3 font-medium text-[18px] transition-colors after:absolute after:right-3 after:bottom-0 after:left-3 after:h-[2px] after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100",
+  home: "text-white hover:text-white/90 after:bg-white",
+  default: "text-[#403f3f] hover:text-foreground after:bg-[rgb(64,63,63)]",
+} as const;
+
+function desktopMegaTriggerCn(isHomePage: boolean) {
+  return cn(
+    desktopMainNavTriggerClass.base,
+    isHomePage ? desktopMainNavTriggerClass.home : desktopMainNavTriggerClass.default,
+  );
+}
+
+function desktopMegaButtonCn(isHomePage: boolean) {
+  return cn(
+    "relative flex h-16 items-center gap-1 px-3 text-[18px] transition-colors after:absolute after:right-3 after:bottom-0 after:left-3 after:h-[2px] after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100",
+    isHomePage ? desktopMainNavTriggerClass.home : desktopMainNavTriggerClass.default,
+  );
+}
+
+function desktopSimpleLinkCn(isHomePage: boolean) {
+  return cn(
+    desktopNavLinkClass.base,
+    isHomePage ? desktopNavLinkClass.home : desktopNavLinkClass.default,
+  );
+}
 
 // Fetcher function
 const fetcher = async (url: string): Promise<NavigationData> => {
@@ -51,8 +90,10 @@ function resolveSanityImageSrc(imageId: string): string | null {
 
 function DesktopSolutionsMegaMenu({
   item,
+  isHomePage,
 }: {
   item: Extract<NavMenuItem, { type: "solutionsMegaMenu" }>;
+  isHomePage: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const rightPanelLabel = (item as { rightPanelLabel?: string }).rightPanelLabel;
@@ -105,7 +146,7 @@ function DesktopSolutionsMegaMenu({
         <Link
           aria-expanded={isOpen}
           aria-haspopup="menu"
-          className="relative flex h-16 cursor-pointer items-center gap-1 px-3 text-[18px] text-[#403f3f] transition-colors hover:text-foreground after:absolute after:right-3 after:bottom-0 after:left-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-[rgb(64,63,63)] after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100"
+          className={desktopMegaTriggerCn(isHomePage)}
           href={topMenuHref}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -119,7 +160,7 @@ function DesktopSolutionsMegaMenu({
         <button
           aria-expanded={isOpen}
           aria-haspopup="menu"
-          className="relative flex h-16 items-center gap-1 px-3 text-[18px] text-[#403f3f] transition-colors hover:text-foreground after:absolute after:right-3 after:bottom-0 after:left-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-[rgb(64,63,63)] after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100"
+          className={desktopMegaButtonCn(isHomePage)}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           type="button"
@@ -288,8 +329,10 @@ function DesktopSolutionsMegaMenu({
 
 function DesktopGridMegaMenu({
   item,
+  isHomePage,
 }: {
   item: Extract<NavMenuItem, { type: "gridMegaMenu" }>;
+  isHomePage: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const topMenuHref = (item as { href?: string } | undefined)?.href;
@@ -311,7 +354,7 @@ function DesktopGridMegaMenu({
         <Link
           aria-expanded={isOpen}
           aria-haspopup="menu"
-          className="relative flex h-16 cursor-pointer items-center gap-1 px-3 text-[18px] text-[#403f3f] transition-colors hover:text-foreground after:absolute after:right-3 after:bottom-0 after:left-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-[rgb(64,63,63)] after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100"
+          className={desktopMegaTriggerCn(isHomePage)}
           href={topMenuHref}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -325,7 +368,7 @@ function DesktopGridMegaMenu({
         <button
           aria-expanded={isOpen}
           aria-haspopup="menu"
-          className="relative flex h-16 items-center gap-1 px-3 text-[18px] text-[#403f3f] transition-colors hover:text-foreground after:absolute after:right-3 after:bottom-0 after:left-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-[rgb(64,63,63)] after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100"
+          className={desktopMegaButtonCn(isHomePage)}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           type="button"
@@ -368,12 +411,18 @@ function DesktopGridMegaMenu({
   );
 }
 
-function DesktopNavLink({ item }: { item: Extract<NavMenuItem, { type: "link" }> }) {
+function DesktopNavLink({
+  item,
+  isHomePage,
+}: {
+  item: Extract<NavMenuItem, { type: "link" }>;
+  isHomePage: boolean;
+}) {
   if (!item.href) return null;
 
   return (
     <Link
-      className="relative flex h-16 cursor-pointer items-center px-3 font-medium text-[18px] text-[#403f3f] transition-colors hover:text-foreground after:absolute after:right-3 after:bottom-0 after:left-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-[rgb(64,63,63)] after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100"
+      className={desktopSimpleLinkCn(isHomePage)}
       href={item.href}
       rel={item.openInNewTab ? "noopener noreferrer" : undefined}
       target={item.openInNewTab ? "_blank" : undefined}
@@ -383,10 +432,20 @@ function DesktopNavLink({ item }: { item: Extract<NavMenuItem, { type: "link" }>
   );
 }
 
-function NavbarSkeleton() {
+function NavbarSkeleton({ isHomePage = false }: { isHomePage?: boolean }) {
   return (
-    <header className="sticky top-0 z-40 w-full border-b backdrop-blur-sm">
-      <div className="container mx-auto px-4">
+    <header
+      className={cn(
+        "navbar-skeleton fixed top-0 z-[1000] w-full border-b",
+        isHomePage
+          ? "border-transparent"
+          : "border-border backdrop-blur-sm bg-white",
+      )}
+      style={
+        isHomePage ? { background: HOME_NAVBAR_GRADIENT } : undefined
+      }
+    >
+      <div className="mx-auto w-full max-w-[1200px] px-6">
         <div className="flex h-16 items-center justify-between">
           {/* Logo skeleton - matches Logo component dimensions: width={120} height={40} */}
           {/* <div className="flex items-center">
@@ -424,6 +483,41 @@ export function Navbar({
   navbarData: initialNavbarData,
   settingsData: initialSettingsData,
 }: NavigationData) {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [isAtTop, setIsAtTop] = useState(true);
+  const lastScrollYRef = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      const isCurrentlyAtTop = currentScrollY <= 0;
+      setIsAtTop(isCurrentlyAtTop);
+
+      if (isCurrentlyAtTop) {
+        setIsNavbarVisible(true);
+        lastScrollYRef.current = 0;
+        return;
+      }
+
+      const threshold = 4;
+      if (currentScrollY > lastScrollYRef.current + threshold) {
+        setIsNavbarVisible(false);
+      } else if (currentScrollY < lastScrollYRef.current - threshold) {
+        setIsNavbarVisible(true);
+      }
+
+      lastScrollYRef.current = currentScrollY;
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   const { data, error, isLoading } = useSWR<NavigationData>(
     "/api/navigation",
     fetcher,
@@ -451,17 +545,44 @@ export function Navbar({
   const navbarLogo = (navbarData as { logo?: typeof settingsLogo })?.logo;
   const logo = navbarLogo || settingsLogo;
 
+  const mobileMenuProps = {
+    isHomePage,
+    navbarData,
+    settingsData,
+  } satisfies MobileMenuProps;
+
   // Show skeleton only on initial mount when no fallback data is available
   if (isLoading && !data && !(initialNavbarData && initialSettingsData)) {
-    return <NavbarSkeleton />;
+    return <NavbarSkeleton isHomePage={isHomePage} />;
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b  backdrop-blur-sm bg-white">
-      <div className="container mx-auto px-4">
+    <header
+      className={cn(
+        "navbar fixed top-0 z-[1000] w-full border-b transition-[transform,border-color] duration-300",
+        isNavbarVisible ? "translate-y-0" : "-translate-y-full",
+        isHomePage
+          ? "border-transparent"
+          : "border-border backdrop-blur-sm bg-white",
+      )}
+    >
+      {isHomePage ? (
+        <div
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute inset-0 transition-opacity duration-300",
+            isAtTop ? "opacity-0" : "opacity-100",
+          )}
+          style={{ background: HOME_NAVBAR_GRADIENT }}
+        />
+      ) : null}
+      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center">
+          <div
+            className="flex items-center"
+            style={isHomePage ? { filter: "brightness(30)" } : undefined}
+          >
             {logo && (
               <Logo
                 alt={siteTitle || ""}
@@ -478,14 +599,30 @@ export function Navbar({
             {menuItems?.map((item) => {
               if (item.type === "solutionsMegaMenu") {
                 return (
-                  <DesktopSolutionsMegaMenu item={item} key={item._key} />
+                  <DesktopSolutionsMegaMenu
+                    isHomePage={isHomePage}
+                    item={item}
+                    key={item._key}
+                  />
                 );
               }
               if (item.type === "gridMegaMenu") {
-                return <DesktopGridMegaMenu item={item} key={item._key} />;
+                return (
+                  <DesktopGridMegaMenu
+                    isHomePage={isHomePage}
+                    item={item}
+                    key={item._key}
+                  />
+                );
               }
               if (item.type === "link") {
-                return <DesktopNavLink item={item} key={item._key} />;
+                return (
+                  <DesktopNavLink
+                    isHomePage={isHomePage}
+                    item={item}
+                    key={item._key}
+                  />
+                );
               }
               return null;
             })}
@@ -502,14 +639,14 @@ export function Navbar({
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 md:hidden">
-            <MobileMenu navbarData={navbarData} settingsData={settingsData} />
+            <MobileMenu {...mobileMenuProps} />
           </div>
         </div>
       </div>
 
       {/* Error boundary for SWR */}
       {error && env.NODE_ENV === "development" && (
-        <div className="border-destructive/20 border-b bg-destructive/10 px-4 py-2 text-destructive text-xs">
+        <div className="relative z-10 border-destructive/20 border-b bg-destructive/10 px-4 py-2 text-destructive text-xs">
           Navigation data fetch error: {error.message}
         </div>
       )}

@@ -117,7 +117,9 @@ export function CompanyLogoCarousel({
   }
 
   return (
-    <section className={cn("w-full overflow-x-clip", className)}>
+    <section
+      className={cn("company-logo-carousel w-full overflow-x-clip", className)}
+    >
       <div className="relative w-full">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent" />

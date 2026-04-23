@@ -75,7 +75,7 @@ function SocialLinks({ data }: SocialLinksProps) {
   ].filter((link) => link.url);
 
   return (
-    <ul className="flex items-center space-x-6 text-muted-foreground">
+    <ul className="social-links flex items-center space-x-6 text-muted-foreground">
       {socialLinks.map(({ url, Icon, label }, index) => (
         <li
           className="font-medium hover:text-primary"
@@ -99,7 +99,7 @@ function SocialLinks({ data }: SocialLinksProps) {
 
 export function FooterSkeleton() {
   return (
-    <footer className="mt-16 pb-8">
+    <footer className="footer-skeleton mt-16 pb-8">
       <section className="container mx-auto px-4 md:px-6">
         <div className="h-[500px] lg:h-auto">
           <div className="flex flex-col items-center justify-between gap-10 text-center lg:flex-row lg:text-left">
@@ -154,7 +154,7 @@ function Footer({ data, settingsData }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-20 pb-8">
+    <footer className="footer mt-20 pb-8">
       <section className="container mx-auto">
         <div className="h-[500px] lg:h-auto">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-10 px-4 text-center md:px-6 lg:flex-row lg:text-left">

@@ -1,3 +1,4 @@
+import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
 
 import type { MenuLinkProps } from "@/types";
@@ -18,7 +19,10 @@ export function MenuLink({
 
   return (
     <Link
-      className={`group/menu-item flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-accent ${linkClassName || ""}`}
+      className={cn(
+        "menu-link group/menu-item flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-accent",
+        linkClassName
+      )}
       href={href}
       onClick={onClick}
     >

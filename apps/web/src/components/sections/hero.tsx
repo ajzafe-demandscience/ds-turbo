@@ -1,3 +1,6 @@
+import { cn } from "@workspace/ui/lib/utils";
+
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock, PagebuilderType } from "@/types";
 import { ButtonLinkBlock } from "./button-link";
 import { H1Block } from "./h1";
@@ -9,6 +12,7 @@ import { RichTextBlock } from "./rich-text-block";
 
 type HeroBlockProps = PagebuilderType<"hero"> & {
   isNested?: boolean;
+  isHomePage?: boolean;
 };
 
 const NESTED_COMPONENTS = {
@@ -52,16 +56,24 @@ export function HeroBlock({
   leftColumn,
   rightColumn,
   sectionId,
+  _type,
   isNested = false,
+  isHomePage = false,
 }: HeroBlockProps) {
   const containerClassName = isNested
     ? "w-full px-0 pt-10 pb-12 md:pt-14 md:pb-16 lg:pt-16 lg:pb-20"
-    : "hero-surface-container";
+    : cn(
+        "hero-surface-container",
+        isHomePage && "pt-24 md:pt-28 lg:pt-32",
+      );
 
   const resolvedSectionId = sectionId?.trim() || "hero";
 
   return (
-    <section className="article-hero-surface" id={resolvedSectionId}>
+    <section
+      className={cn(camelCaseToKebabCase(_type), "article-hero-surface")}
+      id={resolvedSectionId}
+    >
       <div className={containerClassName}>
         <div className="two-column-responsive-padding grid items-center gap-8 md:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)]">
           <div className="space-y-8">{renderNestedBlocks(leftColumn)}</div>

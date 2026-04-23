@@ -1,5 +1,7 @@
+import { cn } from "@workspace/ui/lib/utils";
 import Script from "next/script";
 
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PagebuilderType } from "@/types";
 
 type PardotResizerWindow = Window & {
@@ -19,6 +21,7 @@ export function PardotFormBlock({
   url,
   pardotUrl,
   sectionId,
+  _type,
   compact = false,
   transparent = false,
 }: PardotFormBlockProps) {
@@ -39,7 +42,7 @@ export function PardotFormBlock({
   const resolvedSectionId = sectionId?.trim() || undefined;
 
   return (
-    <>
+    <div className={cn(camelCaseToKebabCase(_type), "contents")}>
       <Script
         onLoad={() => {
           (window as PardotResizerWindow).iFrameResize?.();
@@ -56,6 +59,6 @@ export function PardotFormBlock({
           />
         </div>
       </section>
-    </>
+    </div>
   );
 }

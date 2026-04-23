@@ -1,6 +1,8 @@
 import { Badge } from "@workspace/ui/components/badge";
+import { cn } from "@workspace/ui/lib/utils";
 
 import { RichText } from "@/components/elements/rich-text";
+import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PagebuilderType } from "@/types";
 
 export type RichTextBlockProps = PagebuilderType<"richTextBlock"> & {
@@ -14,6 +16,7 @@ export function RichTextBlock({
   eyebrow,
   titleAlignment,
   sectionId,
+  _type,
   isNested = false,
   isHero = false,
 }: RichTextBlockProps) {
@@ -37,7 +40,10 @@ export function RichTextBlock({
         : "items-center";
 
   return (
-    <section className={sectionClassName} id={resolvedSectionId}>
+    <section
+      className={cn(camelCaseToKebabCase(_type), sectionClassName)}
+      id={resolvedSectionId}
+    >
       <div className={containerClassName}>
         <div className={contentAlignmentClass ? `flex w-full flex-col ${contentAlignmentClass}` : "flex w-full flex-col"}>
           <div

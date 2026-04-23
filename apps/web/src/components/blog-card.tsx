@@ -54,7 +54,7 @@ export function BlogAuthor({ author }: BlogAuthorProps) {
   }
 
   return (
-    <div className="flex items-center gap-x-2.5 font-semibold text-gray-900 text-sm/6">
+    <div className="blog-author flex items-center gap-x-2.5 font-semibold text-gray-900 text-sm/6">
       <AuthorImage author={author} />
       {author.name}
     </div>
@@ -148,7 +148,7 @@ export function FeaturedBlogCard({ blog }: BlogCardProps) {
   const { title, publishedAt, slug, description, categories, image } = blog ?? {};
 
   return (
-    <article className="grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
+    <article className="featured-blog-card grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
       <BlogImage image={image} title={title} />
       <div className="space-y-6">
         <BlogMeta publishedAt={publishedAt} />
@@ -167,7 +167,7 @@ export function FeaturedBlogCard({ blog }: BlogCardProps) {
 export function BlogCard({ blog }: BlogCardProps) {
   if (!blog) {
     return (
-      <article className="grid w-full grid-cols-1 gap-4">
+      <article className="blog-card grid w-full grid-cols-1 gap-4">
         <div className="h-48 animate-pulse rounded-2xl bg-muted" />
         <div className="space-y-2">
           <div className="h-4 w-24 animate-pulse rounded bg-muted" />
@@ -181,7 +181,7 @@ export function BlogCard({ blog }: BlogCardProps) {
   const { title, publishedAt, slug, description, categories, image } = blog;
 
   return (
-    <article className="grid w-full grid-cols-1 gap-4">
+    <article className="blog-card grid w-full grid-cols-1 gap-4">
       <div className="relative aspect-video h-auto w-full overflow-hidden rounded-2xl">
         <BlogImage image={image} title={title} />
         <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
@@ -207,7 +207,7 @@ export function BlogHeader({
   description: string | null;
 }) {
   return (
-    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <div className="blog-header mx-auto max-w-7xl px-6 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h1 className="font-bold text-3xl sm:text-4xl">{title}</h1>
         <p className="mt-4 text-lg text-muted-foreground leading-8">

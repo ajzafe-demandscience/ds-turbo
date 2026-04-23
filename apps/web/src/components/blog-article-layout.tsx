@@ -68,7 +68,7 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
   const primaryCategoryLabel = categoryLabels[0] ?? null;
 
   return (
-    <>
+    <div className="blog-article-layout">
       <section className="article-hero-surface">
         <div className="hero-surface-container">
           <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:gap-10">
@@ -187,6 +187,6 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
