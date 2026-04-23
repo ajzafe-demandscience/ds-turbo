@@ -18,7 +18,8 @@ alwaysApply: false
 - Always use appropriate semantic HTML
 - Use `SanityImage` for any images generated in Sanity if the component is available
 - Use `Buttons.tsx` resolver for any buttons unless specified otherwise
-- Button style standard: `default` and `outline` variants must use `18px` border radius
+- Button style standard: `default` and `outline` variants must use `80px` border radius
+- Button color standard: `default`/primary button background must be `#d52c5a` (hover `#cc0047`)
 
 ## Internationalization Rules
 

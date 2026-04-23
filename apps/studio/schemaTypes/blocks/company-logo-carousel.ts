@@ -5,14 +5,14 @@ import { backgroundColorField, sectionIdField } from "@/schemaTypes/common";
 
 export const companyLogoCarousel = defineType({
   name: "companyLogoCarousel",
-  title: "Company Logo Carousel",
+  title: "Company Carousel",
   type: "object",
   icon: GalleryHorizontalEnd,
   fields: [backgroundColorField, sectionIdField],
   preview: {
     prepare: () => ({
-      title: "Company Logo Carousel",
-      subtitle: "Logos come from Company Logo Carousel in the content list",
+      title: "Company Carousel",
+      subtitle: "Logos come from Company Carousel Config in the content list",
     }),
   },
 });

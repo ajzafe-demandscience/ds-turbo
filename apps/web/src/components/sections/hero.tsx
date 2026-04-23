@@ -62,10 +62,7 @@ export function HeroBlock({
 }: HeroBlockProps) {
   const containerClassName = isNested
     ? "w-full px-0 pt-10 pb-12 md:pt-14 md:pb-16 lg:pt-16 lg:pb-20"
-    : cn(
-        "hero-surface-container",
-        isHomePage && "pt-24 md:pt-28 lg:pt-32",
-      );
+    : "hero-surface-container pt-24 md:pt-28 lg:pt-32";
 
   const resolvedSectionId = sectionId?.trim() || "hero";
 

@@ -321,6 +321,10 @@
     opacity: 1;
     right: 10px;
   }
+
+  .navbar [data-slot="button"] {
+    border-radius: 80px !important;
+  }
 }
 
 @layer utilities {

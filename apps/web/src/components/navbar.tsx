@@ -520,7 +520,7 @@ function DesktopNavbarButtons({
                   }
                   return (
                     <Link
-                      className="rounded-lg px-3 py-2 text-[#403f3f] text-sm transition-colors hover:bg-[#f5f6fa]"
+                      className="rounded-lg px-3 py-2 text-[#d52c5a] text-sm transition-colors hover:bg-[#f5f6fa] hover:text-[#cc0047]"
                       href={item.href}
                       key={item._key || `${key}-${item.text}`}
                       rel={item.openInNewTab ? "noopener noreferrer" : undefined}

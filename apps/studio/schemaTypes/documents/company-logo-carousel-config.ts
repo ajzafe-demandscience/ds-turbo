@@ -39,11 +39,11 @@ const logoItem = defineField({
 
 export const companyLogoCarouselConfig = defineType({
   name: "companyLogoCarouselConfig",
-  title: "Company Logo Carousel Config",
+  title: "Company Carousel Config",
   type: "document",
   icon: GalleryHorizontalEnd,
   description:
-    "Shared logos for every Company Logo Carousel block on the site. " +
+    "Shared logos for every Company Carousel block on the site. " +
     "Publish this document after changes so the live website (including landing pages) shows the logos.",
   groups: GROUPS,
   fields: [
@@ -72,7 +72,7 @@ export const companyLogoCarouselConfig = defineType({
       logos: "logos",
     },
     prepare: ({ title, logos = [] }) => ({
-      title: title || "Company Logo Carousel Config",
+      title: title || "Company Carousel Config",
       subtitle: `${logos.length} logo${logos.length === 1 ? "" : "s"}`,
     }),
   },

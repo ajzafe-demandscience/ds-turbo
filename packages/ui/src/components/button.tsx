@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+          "bg-[#d52c5a] text-primary-foreground shadow-xs hover:bg-[#cc0047]",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40",
         outline:
@@ -30,7 +30,7 @@ const buttonVariants = cva(
     compoundVariants: [
       {
         variant: ["default", "outline"],
-        className: "rounded-[18px]",
+        className: "rounded-[80px]",
       },
     ],
     defaultVariants: {
