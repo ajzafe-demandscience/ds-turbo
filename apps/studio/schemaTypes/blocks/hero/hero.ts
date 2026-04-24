@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { defineArrayMember, defineField, defineType } from "sanity";
+
 import { backgroundColorField, sectionIdField } from "@/schemaTypes/common";
 
 const nestedBlockTypes = [

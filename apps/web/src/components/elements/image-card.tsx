@@ -21,6 +21,11 @@ type ImageCardProps = {
   style?: CSSProperties;
 };
 
+const PLACEHOLDER_IMAGE_URL =
+  "https://placehold.co/960x640/e5e7eb/64748b?text=Image+Placeholder";
+const PLACEHOLDER_ICON_URL =
+  "https://placehold.co/128x128/e2e8f0/475569?text=Icon";
+
 const VARIANT_LAYOUT_CLASS: Record<ImageCardVariant, string> = {
   top: "flex-col",
   left: "flex-col md:flex-row",
@@ -46,6 +51,13 @@ function resolveSanityImageSrc(imageId: string): string | null {
   return `${SANITY_BASE_URL}${assetPath}?auto=format`;
 }
 
+function resolvePlaceholderSrc(imageId?: string): string {
+  if (typeof imageId === "string" && imageId.startsWith("placeholder-icon")) {
+    return PLACEHOLDER_ICON_URL;
+  }
+  return PLACEHOLDER_IMAGE_URL;
+}
+
 export function ImageCard({
   title,
   description,
@@ -68,7 +80,7 @@ export function ImageCard({
 
   const cardContent = (
     <>
-      {image?.id && imageSrc && (
+      {image?.id && (
         <div
           className={cn(
             "overflow-visible md:flex-none",
@@ -80,7 +92,7 @@ export function ImageCard({
             alt={imageAlt ?? image.alt ?? "Card image"}
             decoding="async"
             loading="lazy"
-            src={imageSrc}
+            src={imageSrc ?? resolvePlaceholderSrc(image?.id)}
             style={imageStyle}
           />
         </div>

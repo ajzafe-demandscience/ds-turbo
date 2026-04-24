@@ -10,13 +10,21 @@ const COMPONENT_BLOCK_NAMES = new Set([
   "pardotForm",
 ]);
 
+const HERO_BLOCK_NAMES = new Set(["hero"]);
+
 const componentBlockTypes = pageBuilderBlocks
   .map(({ name }) => name)
   .filter((name) => COMPONENT_BLOCK_NAMES.has(name));
 
+const heroBlockTypes = pageBuilderBlocks
+  .map(({ name }) => name)
+  .filter((name) => HERO_BLOCK_NAMES.has(name));
+
 const sectionBlockTypes = pageBuilderBlocks
   .map(({ name }) => name)
-  .filter((name) => !COMPONENT_BLOCK_NAMES.has(name));
+  .filter(
+    (name) => !COMPONENT_BLOCK_NAMES.has(name) && !HERO_BLOCK_NAMES.has(name)
+  );
 
 export const pagebuilderBlockTypes = pageBuilderBlocks.map(({ name }) =>
   defineArrayMember({
@@ -31,6 +39,11 @@ export const pageBuilder = defineType({
   options: {
     insertMenu: {
       groups: [
+        {
+          name: "hero",
+          title: "Hero",
+          of: heroBlockTypes,
+        },
         {
           name: "sections",
           title: "Sections",
