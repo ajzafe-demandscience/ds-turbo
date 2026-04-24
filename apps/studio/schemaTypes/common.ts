@@ -7,7 +7,6 @@ import {
 
 import {
   BlogSlugFieldComponent,
-  PathnameFieldComponent,
 } from "@/components/slug-field-component";
 import { GROUP } from "@/utils/constant";
 import { isUnique } from "@/utils/slug";
@@ -124,8 +123,10 @@ export const documentSlugField = (
     title,
     description,
     group,
-    components: {
-      field: PathnameFieldComponent,
+    options: {
+      source: "title",
+      slugify: (input: string) => cleanSlug(input),
+      isUnique,
     },
     validation: (Rule) => {
       const config = getDocumentTypeConfig(documentType);

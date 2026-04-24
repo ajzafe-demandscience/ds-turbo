@@ -22,6 +22,7 @@ const presentationOriginUrl = process.env.SANITY_STUDIO_PRESENTATION_URL;
 const blogPublicPathPrefix = "/resources/blog";
 const webinarPublicPathPrefix = "/resources";
 const landingPagePublicPathPrefix = "/demand";
+const pressReleasePublicPathPrefix = "/press-releases";
 
 const monoStyle = { fontFamily: "monospace" } as const;
 
@@ -237,6 +238,8 @@ export function BlogSlugFieldComponent(props: ObjectFieldProps<SlugValue>) {
       ? webinarPublicPathPrefix
       : document?._type === "landingPage"
         ? landingPagePublicPathPrefix
+        : document?._type === "pressRelease"
+          ? pressReleasePublicPathPrefix
         : blogPublicPathPrefix);
   const currentSlug = (value?.current ?? "").trim();
   const segment = normalizeSingleSegmentSlug(currentSlug, publicPathPrefix);

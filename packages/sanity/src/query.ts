@@ -718,6 +718,40 @@ export const queryBlogPaths = defineQuery(`
   *[_type == "blog" && defined(slug.current)].slug.current
 `);
 
+export const queryPressReleaseSlugPageData = defineQuery(`
+  *[_type == "pressRelease" && (
+    slug.current == $slug ||
+    slug.current == "/press-releases/" + $slug
+  )][0]{
+    ...,
+    "slug": select(
+      !defined(slug.current) => "",
+      slug.current match "/press-releases/*" => "/press-releases/" + string::split(slug.current, "/")[-1],
+      "/press-releases/" + slug.current
+    ),
+    banner{
+      ${imageFields}
+    },
+    bannerDescription,
+    content[]{
+      ...,
+      _type == "block" => {
+        ...,
+        ${markDefsFragment}
+      },
+      _type == "image" => {
+        ${imageFields},
+        "caption": caption
+      }
+    },
+    ${pageBuilderFragment}
+  }
+`);
+
+export const queryPressReleasePaths = defineQuery(`
+  *[_type == "pressRelease" && defined(slug.current)].slug.current
+`);
+
 const ogFieldsFragment = /* groq */ `
   _id,
   _type,

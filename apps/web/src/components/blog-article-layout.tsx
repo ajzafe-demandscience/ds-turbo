@@ -72,7 +72,7 @@ export function BlogArticleLayout({ article }: BlogArticleLayoutProps) {
   return (
     <div className="blog-article-layout">
       <section className="article-hero-surface">
-        <div className="hero-surface-container">
+        <div className="hero-surface-container pt-24 md:pt-28 lg:pt-32">
           <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:gap-10">
             <div className="text-white">
               <div className="mb-6 inline-flex">

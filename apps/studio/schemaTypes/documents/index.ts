@@ -10,6 +10,7 @@ import { landingPage } from "@/schemaTypes/documents/landing-page";
 import { landingPageIndex } from "@/schemaTypes/documents/landing-page-index";
 import { navbar } from "@/schemaTypes/documents/navbar";
 import { page } from "@/schemaTypes/documents/page";
+import { pressRelease } from "@/schemaTypes/documents/press-release";
 import { redirect } from "@/schemaTypes/documents/redirect";
 import { settings } from "@/schemaTypes/documents/settings";
 import { webinar } from "@/schemaTypes/documents/webinar";
@@ -26,6 +27,7 @@ export const documents = [
   blog,
   webinar,
   landingPage,
+  pressRelease,
   category,
   page,
   faq,

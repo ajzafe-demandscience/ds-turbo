@@ -20,7 +20,6 @@ import type {
   StructureResolverContext,
 } from "sanity/structure";
 
-import { createSlugBasedStructure } from "@/components/nested-pages-structure";
 import type { SchemaType, SingletonType } from "@/schemaTypes/index";
 import { getTitleCase } from "@/utils/helper";
 
@@ -115,7 +114,7 @@ export const structure = (
     .items([
       createSingleTon({ S, type: "homePage", icon: HomeIcon }),
       S.divider(),
-      createSlugBasedStructure(S, "page"),
+      createList({ S, type: "page", title: "Pages", icon: FileText }),
       createIndexListWithOrderableItems({
         S,
         index: { type: "blogIndex", icon: BookMarked },
@@ -134,6 +133,12 @@ export const structure = (
         context,
         icon: Video,
         title: "Webinars",
+      }),
+      createList({
+        S,
+        type: "pressRelease",
+        title: "Press Releases",
+        icon: FileText,
       }),
       createIndexListWithOrderableItems({
         S,
