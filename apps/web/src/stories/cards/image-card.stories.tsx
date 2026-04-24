@@ -1,8 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { ImageCardBlock } from "@/components/sections/image-card";
+import type { SanityImageProps } from "@/types";
 
 import { mockImages } from "./mocks";
+
+function storyImage(partial: { id: string; alt: string }): SanityImageProps {
+  return {
+    id: partial.id,
+    alt: partial.alt,
+    preview: null,
+    hotspot: null,
+    crop: null,
+  };
+}
 
 const meta = {
   title: "Cards/Image Card",
@@ -31,10 +42,10 @@ export const TopImage: Story = {};
 
 export const SideBySide: Story = {
   args: {
-    image: {
+    image: storyImage({
       id: "placeholder-icon-side",
       alt: "Icon placeholder",
-    },
+    }),
     imageSize: 96,
     variant: "left",
     title: "Turn attention into pipeline",
@@ -45,10 +56,10 @@ export const SideBySide: Story = {
 
 export const RightAlignedBlock: Story = {
   args: {
-    image: {
+    image: storyImage({
       id: "placeholder-icon-right",
       alt: "Icon placeholder",
-    },
+    }),
     imageSize: 96,
     variant: "right",
     blockPosition: "right",

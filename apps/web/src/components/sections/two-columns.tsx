@@ -1,19 +1,26 @@
 import { cn } from "@workspace/ui/lib/utils";
 
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
-import type { PageBuilderBlock, PagebuilderType } from "@/types";
+import type { PagebuilderType, TwoColumnNestedBlock } from "@/types";
 import { ButtonLinkBlock } from "./button-link";
+import { CaseStudyStatsCardsBlock } from "./case-study-stats-cards";
 import { CaseStudyStatsCardBlock } from "./case-study-stats-card";
 import { CardStatBlock } from "./card-stat";
 import { CompanyLogoCarouselBlock } from "./company-logo-carousel";
-import { H1Block } from "./h1";
 import { ImageCardBlock } from "./image-card";
+import { ImageDescriptionCardsBlock } from "./image-description-cards";
 import { HeroBlock } from "./hero";
 import { ImageBlock } from "./image";
+import { InsightCardBlock } from "./cards/insight-card";
+import { InsightHeaderBlock } from "./insight-header";
 import { PBlock } from "./p";
 import { PardotFormBlock } from "./pardot-form";
 import { RichTextBlock } from "./rich-text-block";
+import { SpeakersBlock } from "./speakers";
 import { TitleIconBlock } from "./title-icon";
+import { SectionSplitBlock } from "./section-split";
+import { CtaWebinarFormBlock } from "./cta-webinar-form";
 
 type TwoColumnsBlockProps = PagebuilderType<"twoColumns"> & {
   isNested?: boolean;
@@ -42,21 +49,27 @@ function resolveColorValue(color: ColumnColorValue): string | undefined {
 
 const NESTED_COMPONENTS = {
   companyLogoCarousel: CompanyLogoCarouselBlock,
+  imageDescriptionCards: ImageDescriptionCardsBlock,
   hero: HeroBlock,
-  h1: H1Block,
   buttonLink: ButtonLinkBlock,
   cardStat: CardStatBlock,
+  insightCard: InsightCardBlock,
+  insightHeader: InsightHeaderBlock,
   caseStudyStatsCard: CaseStudyStatsCardBlock,
+  caseStudyStatsCards: CaseStudyStatsCardsBlock,
+  speakers: SpeakersBlock,
+  ctaWebinarForm: CtaWebinarFormBlock,
   imageBlock: ImageBlock,
   imageCard: ImageCardBlock,
   p: PBlock,
   pardotForm: PardotFormBlock,
   richTextBlock: RichTextBlock,
+  sectionSplit: SectionSplitBlock,
   titleIcon: TitleIconBlock,
   // biome-ignore lint/suspicious/noExplicitAny: dynamic block rendering
 } as const satisfies Record<string, React.ComponentType<any>>;
 
-function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
+function renderNestedBlocks(blocks: TwoColumnNestedBlock[] | null | undefined) {
   if (!blocks?.length) {
     return null;
   }
@@ -91,6 +104,7 @@ export function TwoColumnsBlock({
   _type,
   isNested = false,
 }: TwoColumnsBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const resolvedSectionId = sectionId?.trim() || undefined;
   const resolvedLeftColumnBackgroundColor = resolveColorValue(
     leftColumnBackgroundColor as ColumnColorValue
@@ -132,24 +146,41 @@ export function TwoColumnsBlock({
     </div>
   );
 
+  const header =
+    title || description ? (
+      <>
+        {title ? (
+          <div className="mx-auto w-full max-w-[1200px] px-6 text-center">
+            <h2 className="font-semibold text-3xl tracking-tight md:text-5xl">
+              {title}
+            </h2>
+          </div>
+        ) : null}
+        {description ? (
+          <div className="mx-auto mt-5 w-full max-w-[1200px] px-6 text-center">
+            <p className="text-lg text-muted-foreground md:text-xl">{description}</p>
+          </div>
+        ) : null}
+      </>
+    ) : null;
+
   return (
-    <section className={cn(camelCaseToKebabCase(_type), "py-10")} id={resolvedSectionId}>
-      {title ? (
-        <div className="mx-auto w-full max-w-[1200px] px-6 text-center">
-          <h2 className="font-semibold text-3xl tracking-tight md:text-5xl">
-            {title}
-          </h2>
-        </div>
-      ) : null}
-      {description ? (
-        <div className="mx-auto mt-5 w-full max-w-[1200px] px-6 text-center">
-          <p className="text-lg text-muted-foreground md:text-xl">{description}</p>
-        </div>
-      ) : null}
+    <section
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
+      id={resolvedSectionId}
+      style={surfaceStyle}
+    >
       {isNested ? (
-        grid
+        <>
+          {header}
+          {grid}
+        </>
       ) : (
-        <div className="container-wrapper">{grid}</div>
+        <div className="container-wrapper py-10">
+          {header}
+          {grid}
+        </div>
       )}
     </section>
   );

@@ -11,10 +11,17 @@ const nestedBlockTypes = [
   "richTextBlock",
   "companyLogoCarousel",
   "howItWorksCards",
+  "imageDescriptionCards",
+  "speakers",
+  "ctaWebinarForm",
   "whatYouCanRunCards",
   "whatWeDoCards",
   "statsCounter",
   "twoColumns",
+  "sectionSplit",
+  "insightCard",
+  "insightHeader",
+  "caseStudyStatsCards",
 ] as const;
 
 export const cta = defineType({

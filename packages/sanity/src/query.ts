@@ -140,7 +140,6 @@ const buttonLinkBlock = /* groq */ `
     linkType,
     "scrollToSectionId": scrollToSectionId,
     text,
-    variant,
     openInNewTab,
     "href": url
   }
@@ -178,8 +177,26 @@ const cardStatBlock = /* groq */ `
   }
 `;
 
+const insightCardBlock = /* groq */ `
+  _type == "insightCard" => {
+    ...,
+  }
+`;
+
+const insightHeaderBlock = /* groq */ `
+  _type == "insightHeader" => {
+    ...,
+  }
+`;
+
 const caseStudyStatsCardBlock = /* groq */ `
   _type == "caseStudyStatsCard" => {
+    ...,
+  }
+`;
+
+const caseStudyStatsCardsBlock = /* groq */ `
+  _type == "caseStudyStatsCards" => {
     ...,
   }
 `;
@@ -191,6 +208,41 @@ const howItWorksCardsBlock = /* groq */ `
       ...,
       ${imageFragment}
     })
+  }
+`;
+
+const imageDescriptionCardsBlock = /* groq */ `
+  _type == "imageDescriptionCards" => {
+    ...,
+    "items": array::compact(items[]{
+      ...,
+      ${imageFragment}
+    })
+  }
+`;
+
+const speakersBlock = /* groq */ `
+  _type == "speakers" => {
+    ...,
+    "speakers": array::compact(speakers[]{
+      ...,
+      photo {
+        ${imageFields}
+      }
+    })
+  }
+`;
+
+const ctaWebinarFormBlock = /* groq */ `
+  _type == "ctaWebinarForm" => {
+    ...,
+    description[]{
+      ...,
+      _type == "block" => {
+        ...,
+        ${markDefsFragment}
+      }
+    }
   }
 `;
 
@@ -290,33 +342,61 @@ const richTextBlockFragment = /* groq */ `
   }
 `;
 
+const heroDescriptionFragment = /* groq */ `
+  description[]{
+    ...,
+    _type == "block" => {
+      ...,
+      ${markDefsFragment}
+    },
+    _type == "image" => {
+      ${imageFields},
+      "caption": caption
+    }
+  }
+`;
+
 const heroBlock = /* groq */ `
   _type == "hero" => {
     ...,
-    leftColumn[]{
+    ${heroDescriptionFragment},
+    buttons[]{
       ...,
       _type,
-      ${h1Block},
-      ${titleIconBlock},
-      ${buttonLinkBlock},
-      ${imageBlock},
-      ${imageCardBlock},
-      ${pBlock},
-      ${pardotFormBlock},
-      ${richTextBlockFragment}
+      ${buttonLinkBlock}
     },
-    rightColumn[]{
+    mediaType,
+    mediaImage {
+      ${imageFields}
+    },
+    pardotFormUrl
+  }
+`;
+
+const heroWebinarBlock = /* groq */ `
+  _type == "heroWebinar" => {
+    ...,
+    description[]{
       ...,
-      _type,
-      ${h1Block},
-      ${titleIconBlock},
-      ${buttonLinkBlock},
-      ${imageBlock},
-      ${imageCardBlock},
-      ${pBlock},
-      ${pardotFormBlock},
-      ${richTextBlockFragment}
-    }
+      _type == "block" => {
+        ...,
+        ${markDefsFragment}
+      },
+      _type == "image" => {
+        ${imageFields},
+        "caption": caption
+      }
+    },
+    schedule {
+      date,
+      time,
+      duration
+    },
+    mediaType,
+    mediaImage {
+      ${imageFields}
+    },
+    pardotFormUrl
   }
 `;
 
@@ -327,51 +407,96 @@ const twoColumnsBlock = /* groq */ `
       ...,
       _type,
       ${heroBlock},
+      ${heroWebinarBlock},
       ${h1Block},
       ${titleIconBlock},
       ${buttonLinkBlock},
       ${cardStatBlock},
+      ${insightCardBlock},
+      ${insightHeaderBlock},
       ${caseStudyStatsCardBlock},
+      ${caseStudyStatsCardsBlock},
       ${companyLogoCarouselBlock},
       ${imageBlock},
       ${imageCardBlock},
       ${pBlock},
       ${pardotFormBlock},
-      ${richTextBlockFragment}
+      ${richTextBlockFragment},
+      ${imageDescriptionCardsBlock}
     },
     rightColumn[]{
       ...,
       _type,
       ${heroBlock},
+      ${heroWebinarBlock},
       ${h1Block},
       ${titleIconBlock},
       ${buttonLinkBlock},
       ${cardStatBlock},
+      ${insightCardBlock},
+      ${insightHeaderBlock},
       ${caseStudyStatsCardBlock},
+      ${caseStudyStatsCardsBlock},
       ${companyLogoCarouselBlock},
       ${imageBlock},
       ${imageCardBlock},
       ${pBlock},
       ${pardotFormBlock},
-      ${richTextBlockFragment}
+      ${richTextBlockFragment},
+      ${imageDescriptionCardsBlock}
     }
   }
 `;
 
-const ctaBlock = /* groq */ `
-  _type == "cta" => {
+const sectionSplitBlock = /* groq */ `
+  _type == "sectionSplit" => {
     ...,
-    pageBuilder[]{
+    leftColumn[]{
       ...,
       _type,
-      ${heroBlock},
       ${howItWorksCardsBlock},
+      ${imageDescriptionCardsBlock},
+      ${speakersBlock},
+      ${ctaWebinarFormBlock},
       ${statsCounterBlock},
       ${whatYouCanRunCardsBlock},
       ${whatWeDoCardsBlock},
       ${newsletterBlock},
       ${h1Block},
+      ${titleIconBlock},
       ${buttonLinkBlock},
+      ${cardStatBlock},
+      ${insightCardBlock},
+      ${insightHeaderBlock},
+      ${caseStudyStatsCardBlock},
+      ${caseStudyStatsCardsBlock},
+      ${companyLogoCarouselBlock},
+      ${imageBlock},
+      ${imageCardBlock},
+      ${pBlock},
+      ${pardotFormBlock},
+      ${richTextBlockFragment},
+      ${twoColumnsBlock}
+    },
+    rightColumn[]{
+      ...,
+      _type,
+      ${howItWorksCardsBlock},
+      ${imageDescriptionCardsBlock},
+      ${speakersBlock},
+      ${ctaWebinarFormBlock},
+      ${statsCounterBlock},
+      ${whatYouCanRunCardsBlock},
+      ${whatWeDoCardsBlock},
+      ${newsletterBlock},
+      ${h1Block},
+      ${titleIconBlock},
+      ${buttonLinkBlock},
+      ${cardStatBlock},
+      ${insightCardBlock},
+      ${insightHeaderBlock},
+      ${caseStudyStatsCardBlock},
+      ${caseStudyStatsCardsBlock},
       ${companyLogoCarouselBlock},
       ${imageBlock},
       ${imageCardBlock},
@@ -383,12 +508,84 @@ const ctaBlock = /* groq */ `
   }
 `;
 
+const sectionBlock = /* groq */ `
+  _type == "section" => {
+    ...,
+    blocks[]{
+      ...,
+      _type,
+      ${howItWorksCardsBlock},
+      ${imageDescriptionCardsBlock},
+      ${speakersBlock},
+      ${ctaWebinarFormBlock},
+      ${statsCounterBlock},
+      ${whatYouCanRunCardsBlock},
+      ${whatWeDoCardsBlock},
+      ${newsletterBlock},
+      ${h1Block},
+      ${titleIconBlock},
+      ${buttonLinkBlock},
+      ${cardStatBlock},
+      ${insightCardBlock},
+      ${insightHeaderBlock},
+      ${caseStudyStatsCardBlock},
+      ${caseStudyStatsCardsBlock},
+      ${companyLogoCarouselBlock},
+      ${imageBlock},
+      ${imageCardBlock},
+      ${pBlock},
+      ${pardotFormBlock},
+      ${richTextBlockFragment},
+      ${twoColumnsBlock},
+      ${sectionSplitBlock}
+    }
+  }
+`;
+
+const ctaBlock = /* groq */ `
+  _type == "cta" => {
+    ...,
+    pageBuilder[]{
+      ...,
+      _type,
+      ${heroBlock},
+      ${heroWebinarBlock},
+      ${howItWorksCardsBlock},
+      ${imageDescriptionCardsBlock},
+      ${speakersBlock},
+      ${ctaWebinarFormBlock},
+      ${statsCounterBlock},
+      ${whatYouCanRunCardsBlock},
+      ${whatWeDoCardsBlock},
+      ${newsletterBlock},
+      ${h1Block},
+      ${buttonLinkBlock},
+      ${insightCardBlock},
+      ${insightHeaderBlock},
+      ${caseStudyStatsCardBlock},
+      ${caseStudyStatsCardsBlock},
+      ${companyLogoCarouselBlock},
+      ${imageBlock},
+      ${imageCardBlock},
+      ${pBlock},
+      ${pardotFormBlock},
+      ${richTextBlockFragment},
+      ${twoColumnsBlock},
+      ${sectionSplitBlock}
+    }
+  }
+`;
+
 const pageBuilderFragment = /* groq */ `
   pageBuilder[]{
     ...,
     _type,
     ${heroBlock},
+    ${heroWebinarBlock},
     ${howItWorksCardsBlock},
+    ${imageDescriptionCardsBlock},
+    ${speakersBlock},
+    ${ctaWebinarFormBlock},
     ${ctaBlock},
     ${statsCounterBlock},
     ${whatYouCanRunCardsBlock},
@@ -396,16 +593,20 @@ const pageBuilderFragment = /* groq */ `
     ${newsletterBlock},
     ${h1Block},
     ${titleIconBlock},
-    ${buttonLinkBlock},
     ${cardStatBlock},
+    ${insightCardBlock},
+    ${insightHeaderBlock},
     ${caseStudyStatsCardBlock},
+    ${caseStudyStatsCardsBlock},
     ${companyLogoCarouselBlock},
     ${imageBlock},
     ${imageCardBlock},
     ${pBlock},
     ${pardotFormBlock},
     ${richTextBlockFragment},
-    ${twoColumnsBlock}
+    ${twoColumnsBlock},
+    ${sectionSplitBlock},
+    ${sectionBlock}
   }
 `;
 
@@ -436,12 +637,17 @@ export const querySlugPageData = defineQuery(`
       (_type == "landingPage" && (
         slug.current == $slug ||
         "/demand/" + slug.current == $slug
+      )) ||
+      (_type == "webinar" && (
+        slug.current == $slug ||
+        "/resources/" + slug.current == $slug
       ))
     )
   ][0]{
     ...,
     "slug": select(
       _type == "landingPage" => "/demand/" + slug.current,
+      _type == "webinar" => "/resources/" + slug.current,
       slug.current
     ),
     ${pageBuilderFragment}
@@ -449,9 +655,10 @@ export const querySlugPageData = defineQuery(`
   `);
 
 export const querySlugPagePaths = defineQuery(`
-  *[_type in ["page", "landingPage"] && defined(slug.current)]{
+  *[_type in ["page", "landingPage", "webinar"] && defined(slug.current)]{
     "slug": select(
       _type == "landingPage" => "/demand/" + slug.current,
+      _type == "webinar" => "/resources/" + slug.current,
       slug.current
     )
   }.slug

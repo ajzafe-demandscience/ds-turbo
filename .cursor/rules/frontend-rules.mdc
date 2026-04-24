@@ -3,6 +3,11 @@ description:
 globs: apps/web/**.*
 alwaysApply: false
 ---
+### Page builder blocks (`apps/web/src/components/sections/`)
+
+- Each block’s root `<section>` carries CMS background (`style` from `usePageBuilderBlockRoot()`), `data-sanity` for Presentation, and the kebab-case `_type` class only — **do not** put `container-wrapper` or `py-*` padding on that `<section>`.
+- Wrap non-nested content in `<div className="container-wrapper …">` (plus block-specific `py-*` as needed). Skip that wrapper when `isNested` is true (blocks inside `twoColumns`, `section`, `cta`, etc.).
+
 ### Component Structure
 
 - Prefer `grid` over `flex` unless working with two sibling tags

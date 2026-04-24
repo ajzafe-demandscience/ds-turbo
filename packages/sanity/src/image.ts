@@ -34,6 +34,29 @@ export type SanityImageProps = {
 export const SANITY_BASE_URL =
   `https://cdn.sanity.io/images/${env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${env.NEXT_PUBLIC_SANITY_DATASET}/` as const;
 
+/**
+ * CDN URL for a Sanity image asset ref (e.g. `image-abc-1200x800-png`).
+ * Returns null if `imageRef` is not a standard `image-*` id.
+ */
+export function buildSanityImageCdnUrlFromRef(imageRef: string): string | null {
+  if (!imageRef.startsWith("image-")) {
+    return null;
+  }
+
+  const parts = imageRef.split("-");
+  if (parts.length < 3) {
+    return null;
+  }
+
+  const extension = parts.at(-1);
+  if (!extension) {
+    return null;
+  }
+
+  const assetPath = `${parts.slice(1, -1).join("-")}.${extension}`;
+  return `${SANITY_BASE_URL}${assetPath}?auto=format`;
+}
+
 // Type guards
 function isValidNumber(value: unknown): value is number {
   return typeof value === "number" && !Number.isNaN(value);

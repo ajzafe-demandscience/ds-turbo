@@ -1,5 +1,5 @@
 import { cn } from "@workspace/ui/lib/utils";
-import { SANITY_BASE_URL } from "@workspace/sanity/image";
+import { buildSanityImageCdnUrlFromRef } from "@workspace/sanity/image";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -32,25 +32,6 @@ const VARIANT_LAYOUT_CLASS: Record<ImageCardVariant, string> = {
   right: "flex-col md:flex-row-reverse",
 };
 
-function resolveSanityImageSrc(imageId: string): string | null {
-  if (!imageId.startsWith("image-")) {
-    return null;
-  }
-
-  const parts = imageId.split("-");
-  if (parts.length < 3) {
-    return null;
-  }
-
-  const extension = parts.at(-1);
-  if (!extension) {
-    return null;
-  }
-
-  const assetPath = `${parts.slice(1, -1).join("-")}.${extension}`;
-  return `${SANITY_BASE_URL}${assetPath}?auto=format`;
-}
-
 function resolvePlaceholderSrc(imageId?: string): string {
   if (typeof imageId === "string" && imageId.startsWith("placeholder-icon")) {
     return PLACEHOLDER_ICON_URL;
@@ -76,7 +57,7 @@ export function ImageCard({
   const imageStyle = resolvedImageSize
     ? { maxWidth: `${resolvedImageSize}px` }
     : undefined;
-  const imageSrc = image?.id ? resolveSanityImageSrc(image.id) : null;
+  const imageSrc = image?.id ? buildSanityImageCdnUrlFromRef(image.id) : null;
 
   const cardContent = (
     <>

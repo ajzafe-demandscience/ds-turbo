@@ -1,8 +1,7 @@
 "use client";
 
-import { cn } from "@workspace/ui/lib/utils";
-
 import { SanityImage } from "@/components/elements/sanity-image";
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { useResponsiveChunkColumns } from "@/hooks/use-responsive-chunk-columns";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PagebuilderType } from "@/types";
@@ -33,6 +32,7 @@ export function HowItWorksCardsBlock({
   _type,
   isNested = false,
 }: HowItWorksCardsBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const resolvedItems = Array.isArray(items) ? items : [];
   const resolvedSectionId = sectionId?.trim() || undefined;
   const chunkSize = useResponsiveChunkColumns(columnsPerRow);
@@ -45,22 +45,16 @@ export function HowItWorksCardsBlock({
 
   const rows = chunkItems(validItems, chunkSize);
 
-  return (
-    <section
-      className={cn(
-        camelCaseToKebabCase(_type),
-        isNested ? undefined : "container-wrapper py-10 md:py-14",
-      )}
-      id={resolvedSectionId}
-    >
-      <div className="mx-auto max-w-5xl text-center">
+  const inner = (
+    <>
+      <div className="text-center">
         {title ? (
           <h2 className="font-semibold text-3xl tracking-tight md:text-5xl">
             {title}
           </h2>
         ) : null}
         {description ? (
-          <p className="mx-auto mt-5 max-w-4xl text-lg text-muted-foreground md:text-xl">
+          <p className="mt-5 text-lg text-muted-foreground md:text-xl">
             {description}
           </p>
         ) : null}
@@ -104,6 +98,19 @@ export function HowItWorksCardsBlock({
           </div>
         ))}
       </div>
+    </>
+  );
+
+  return (
+    <section
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
+      id={resolvedSectionId}
+      style={surfaceStyle}
+    >
+      {isNested ? inner : (
+        <div className="container-wrapper py-10 md:py-14">{inner}</div>
+      )}
     </section>
   );
 }

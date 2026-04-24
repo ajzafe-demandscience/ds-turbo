@@ -13,6 +13,7 @@ import {
   Tag,
   TrendingUpDown,
   User,
+  Video,
 } from "lucide-react";
 import type {
   StructureBuilder,
@@ -126,6 +127,13 @@ export const structure = (
             .title("Categories")
             .icon(Tag),
         ],
+      }),
+      orderableDocumentListDeskItem({
+        type: "webinar",
+        S,
+        context,
+        icon: Video,
+        title: "Webinars",
       }),
       createIndexListWithOrderableItems({
         S,

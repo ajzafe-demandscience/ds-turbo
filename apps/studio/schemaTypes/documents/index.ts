@@ -12,6 +12,7 @@ import { navbar } from "@/schemaTypes/documents/navbar";
 import { page } from "@/schemaTypes/documents/page";
 import { redirect } from "@/schemaTypes/documents/redirect";
 import { settings } from "@/schemaTypes/documents/settings";
+import { webinar } from "@/schemaTypes/documents/webinar";
 
 export const singletons = [
   homePage,
@@ -23,6 +24,7 @@ export const singletons = [
 
 export const documents = [
   blog,
+  webinar,
   landingPage,
   category,
   page,

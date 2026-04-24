@@ -22,15 +22,14 @@ export const locations = {
       ],
     }),
   }),
-  home: defineLocations({
+  homePage: defineLocations({
     select: {
-      title: "title",
-      slug: "slug.current",
+      seoTitle: "seoTitle",
     },
-    resolve: () => ({
+    resolve: (doc) => ({
       locations: [
         {
-          title: "Home",
+          title: doc?.seoTitle?.trim() ? String(doc.seoTitle) : "Home",
           href: "/",
         },
       ],

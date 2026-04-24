@@ -1,5 +1,5 @@
 import { GalleryHorizontalEnd } from "lucide-react";
-import { defineField, defineType } from "sanity";
+import { defineType } from "sanity";
 
 import { backgroundColorField, sectionIdField } from "@/schemaTypes/common";
 

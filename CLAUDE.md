@@ -64,12 +64,18 @@ packages/
 
 The core content model is a **page builder** — an array of typed blocks:
 
-- **Studio side**: `apps/studio/schemaTypes/blocks/` — each block is a `defineType({ type: 'object' })`. Registered in `blocks/index.ts` → fed to `definitions/pagebuilder.ts`
-- **Frontend side**: `apps/web/src/components/pagebuilder.tsx` — maps `_type` to React component via `BLOCK_COMPONENTS` record. Includes Sanity visual editing data attributes and optimistic updates
+- **Studio side**: `apps/studio/schemaTypes/blocks/` — folders match the page builder insert menu: `hero/`, `sections/`. Each top-level block is a `defineType({ type: 'object' })`, registered in `blocks/index.ts` → `definitions/pagebuilder.ts`. Embeddable-only objects (`h1`, `imageBlock`, `p`, `pardotForm`) live in `schemaTypes/objects/` and are registered in `schemaTypes/index.ts` (not pickable in the page builder).
+- **Frontend side**: `apps/web/src/components/pagebuilder.tsx` — maps `_type` to React component via `BLOCK_COMPONENTS` record. Each block is wrapped in `PageBuilderBlockRootProvider` (`apps/web/src/components/page-builder-block-root-context.tsx`) so the block’s root `<section>` receives CMS `backgroundColor` as inline `style` and the Sanity `data-sanity` attribute for Presentation / visual editing
 - **Block components**: `apps/web/src/components/sections/` — one file per block type (hero, cta, faq-accordion, etc.)
 
+**Page builder block DOM (required):** the root `<section>` must not use `container-wrapper` or section padding classes. Layout is always:
+
+1. `<section>` — block type class (`camelCaseToKebabCase(_type)`), optional `id`, `style` / `data-sanity` from `usePageBuilderBlockRoot()` (CMS surface + click-to-edit)
+2. `<div class="container-wrapper …">` — horizontal containment and block-specific vertical padding (`py-*`), omitted when `isNested` (content inside columns / parent sections)
+3. Block content
+
 To add a new page builder block:
-1. Create schema in `apps/studio/schemaTypes/blocks/new-block.ts`
+1. Create schema in `blocks/hero/` or `blocks/sections/` as `kebab-case.ts` (use `schemaTypes/objects/` only for types that must not appear as top-level page builder rows)
 2. Add to `apps/studio/schemaTypes/blocks/index.ts` array
 3. Run `pnpm type` in studio
 4. Add GROQ fragment in `packages/sanity/src/query.ts` and include in `pageBuilderFragment`

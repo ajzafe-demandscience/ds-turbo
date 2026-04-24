@@ -1,8 +1,8 @@
 "use client";
 
-import { cn } from "@workspace/ui/lib/utils";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock } from "@/types";
 
@@ -82,6 +82,7 @@ export function StatsCounterBlock({
   _type,
   isNested = false,
 }: StatsCounterBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const sectionRef = useRef<HTMLElement | null>(null);
   const [hasBecomeVisible, setHasBecomeVisible] = useState(false);
   const resolvedSectionId = sectionId?.trim() || undefined;
@@ -123,28 +124,20 @@ export function StatsCounterBlock({
     return null;
   }
 
-  return (
-    <section
-      className={cn(
-        camelCaseToKebabCase(_type),
-        isNested ? undefined : "container-wrapper py-10 md:py-14"
-      )}
-      id={resolvedSectionId}
-      ref={sectionRef}
-    >
-      <div className="mx-auto max-w-5xl">
-        <div className="text-center">
-          {title ? (
-            <h2 className="font-semibold text-3xl tracking-tight md:text-5xl">
-              {title}
-            </h2>
-          ) : null}
-          {description ? (
-            <p className="mx-auto mt-5 max-w-3xl text-lg text-muted-foreground md:text-xl">
-              {description}
-            </p>
-          ) : null}
-        </div>
+  const inner = (
+    <div>
+      <div className="text-center">
+        {title ? (
+          <h2 className="font-semibold text-3xl tracking-tight md:text-5xl">
+            {title}
+          </h2>
+        ) : null}
+        {description ? (
+          <p className="mt-5 text-lg text-muted-foreground md:text-xl">
+            {description}
+          </p>
+        ) : null}
+      </div>
 
         <div className="mt-10 grid grid-cols-1 divide-y md:grid-cols-3 md:divide-y-0">
           {resolvedItems.map((item, index) => (
@@ -189,7 +182,20 @@ export function StatsCounterBlock({
             {footerText}
           </p>
         ) : null}
-      </div>
+    </div>
+  );
+
+  return (
+    <section
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
+      id={resolvedSectionId}
+      ref={sectionRef}
+      style={surfaceStyle}
+    >
+      {isNested ? inner : (
+        <div className="container-wrapper py-10 md:py-14">{inner}</div>
+      )}
     </section>
   );
 }

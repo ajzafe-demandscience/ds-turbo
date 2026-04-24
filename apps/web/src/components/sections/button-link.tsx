@@ -4,12 +4,11 @@ import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
 
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
-import type { PageBuilderBlock } from "@/types";
 
 type ButtonLinkBlockProps = {
   text?: string | null;
-  variant?: "default" | "secondary" | "outline" | "link" | null;
   href?: string | null;
   openInNewTab?: boolean | null;
   style?: "primary" | "whiteOutline" | null;
@@ -17,11 +16,11 @@ type ButtonLinkBlockProps = {
   scrollToSectionId?: string | null;
   sectionId?: string | null;
   isNested?: boolean;
-} & Pick<PageBuilderBlock, "_type">;
+  _type: "buttonLink";
+};
 
 export function ButtonLinkBlock({
   text,
-  variant,
   href,
   openInNewTab,
   style = "primary",
@@ -31,6 +30,7 @@ export function ButtonLinkBlock({
   _type,
   isNested = false,
 }: ButtonLinkBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const normalizedSectionId = scrollToSectionId?.trim().replace(/^#/, "") || "";
   const resolvedHref =
     linkType === "scrollToSection"
@@ -45,8 +45,7 @@ export function ButtonLinkBlock({
 
   const containerClassName = isNested ? undefined : "container-wrapper";
   const isWhiteOutline = style === "whiteOutline";
-  const effectiveVariant = variant ?? "default";
-  const useDefaultButtonLinkStyle = !isWhiteOutline && effectiveVariant === "default";
+  const useDefaultButtonLinkStyle = !isWhiteOutline;
   const resolvedSectionId = sectionId?.trim() || undefined;
 
   const handleScrollClick = () => {
@@ -64,7 +63,12 @@ export function ButtonLinkBlock({
   };
 
   return (
-    <section className={cn(camelCaseToKebabCase(_type))} id={resolvedSectionId}>
+    <section
+      className={cn(camelCaseToKebabCase(_type))}
+      data-sanity={dataSanity}
+      id={resolvedSectionId}
+      style={surfaceStyle}
+    >
       <div className={containerClassName}>
         {linkType === "scrollToSection" ? (
           <Button
@@ -77,7 +81,7 @@ export function ButtonLinkBlock({
             )}
             onClick={handleScrollClick}
             type="button"
-            variant={isWhiteOutline ? "outline" : effectiveVariant}
+            variant={isWhiteOutline ? "outline" : "default"}
           >
             {text}
           </Button>
@@ -91,7 +95,7 @@ export function ButtonLinkBlock({
               isWhiteOutline &&
                 "border border-white bg-transparent text-white hover:bg-white/10 hover:text-white"
             )}
-            variant={isWhiteOutline ? "outline" : effectiveVariant}
+            variant={isWhiteOutline ? "outline" : "default"}
           >
             <Link
               aria-label={`Navigate to ${text}`}

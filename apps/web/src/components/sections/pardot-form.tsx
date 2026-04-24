@@ -1,14 +1,16 @@
 import { cn } from "@workspace/ui/lib/utils";
+import type { PardotForm } from "@workspace/sanity/types";
 import Script from "next/script";
 
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
-import type { PagebuilderType } from "@/types";
 
 type PardotResizerWindow = Window & {
   iFrameResize?: () => void;
 };
 
-export type PardotFormBlockProps = PagebuilderType<"pardotForm"> & {
+export type PardotFormBlockProps = PardotForm & {
+  _key?: string;
   pardotUrl?: string | null;
   compact?: boolean;
   transparent?: boolean;
@@ -25,7 +27,9 @@ export function PardotFormBlock({
   compact = false,
   transparent = false,
 }: PardotFormBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const iframeUrl = pardotUrl ?? url;
+
   if (!iframeUrl) {
     return null;
   }
@@ -36,10 +40,18 @@ export function PardotFormBlock({
       ? "overflow-hidden rounded-2xl border border-white/20 bg-background/95 p-6 shadow-sm"
       : "overflow-hidden rounded-2xl border bg-background p-6 shadow-sm";
 
-  const sectionClassName = compact
-    ? undefined
-    : "container-wrapper";
   const resolvedSectionId = sectionId?.trim() || undefined;
+
+  const iframeBlock = (
+    <div className={wrapperClassName}>
+      <iframe
+        className="min-h-[302px] w-full"
+        loading="lazy"
+        src={iframeUrl}
+        title="Pardot Form"
+      />
+    </div>
+  );
 
   return (
     <div className={cn(camelCaseToKebabCase(_type), "contents")}>
@@ -49,15 +61,17 @@ export function PardotFormBlock({
         }}
         src={IFRAME_RESIZER_SRC}
       />
-      <section className={sectionClassName} id={resolvedSectionId}>
-        <div className={wrapperClassName}>
-          <iframe
-            className="min-h-[302px] w-full"
-            loading="lazy"
-            src={iframeUrl}
-            title="Pardot Form"
-          />
-        </div>
+      <section
+        className={camelCaseToKebabCase(_type)}
+        data-sanity={dataSanity}
+        id={resolvedSectionId}
+        style={surfaceStyle}
+      >
+        {compact ? (
+          iframeBlock
+        ) : (
+          <div className="container-wrapper">{iframeBlock}</div>
+        )}
       </section>
     </div>
   );

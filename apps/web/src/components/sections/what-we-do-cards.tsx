@@ -1,6 +1,5 @@
-import { cn } from "@workspace/ui/lib/utils";
-
 import { SanityImage } from "@/components/elements/sanity-image";
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock, SanityImageProps } from "@/types";
 
@@ -33,6 +32,7 @@ export function WhatWeDoCardsBlock({
   _type,
   isNested = false,
 }: WhatWeDoCardsBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const resolvedCards = Array.isArray(cards) ? cards : [];
   const resolvedSectionId = sectionId?.trim() || undefined;
 
@@ -40,20 +40,14 @@ export function WhatWeDoCardsBlock({
     return null;
   }
 
-  return (
-    <section
-      className={cn(
-        camelCaseToKebabCase(_type),
-        isNested ? undefined : "container-wrapper py-10 md:py-14"
-      )}
-      id={resolvedSectionId}
-    >
-      <div className="mx-auto max-w-4xl text-center">
+  const inner = (
+    <>
+      <div className="text-center">
         {title ? (
           <h2 className="font-semibold text-3xl tracking-tight md:text-5xl">{title}</h2>
         ) : null}
         {description ? (
-          <p className="mx-auto mt-5 max-w-3xl text-lg text-muted-foreground md:text-xl">
+          <p className="mt-5 text-lg text-muted-foreground md:text-xl">
             {description}
           </p>
         ) : null}
@@ -117,6 +111,19 @@ export function WhatWeDoCardsBlock({
           </article>
         </div>
       </div>
+    </>
+  );
+
+  return (
+    <section
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
+      id={resolvedSectionId}
+      style={surfaceStyle}
+    >
+      {isNested ? inner : (
+        <div className="container-wrapper py-10 md:py-14">{inner}</div>
+      )}
     </section>
   );
 }

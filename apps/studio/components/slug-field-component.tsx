@@ -20,6 +20,8 @@ import {
 const presentationOriginUrl = process.env.SANITY_STUDIO_PRESENTATION_URL;
 
 const blogPublicPathPrefix = "/resources/blog";
+const webinarPublicPathPrefix = "/resources";
+const landingPagePublicPathPrefix = "/demand";
 
 const monoStyle = { fontFamily: "monospace" } as const;
 
@@ -218,9 +220,6 @@ function normalizeSingleSegmentSlug(raw: string, publicPathPrefix: string): stri
 
 /** Blog post slug: single segment; preview URL {origin}/resources/blog/{slug} */
 export function BlogSlugFieldComponent(props: ObjectFieldProps<SlugValue>) {
-  const publicPathPrefix =
-    (props as ObjectFieldProps<SlugValue> & { publicPathPrefix?: string })
-      .publicPathPrefix ?? blogPublicPathPrefix;
   const {
     inputProps: { onChange, value, readOnly },
     title,
@@ -229,6 +228,16 @@ export function BlogSlugFieldComponent(props: ObjectFieldProps<SlugValue>) {
   } = props;
 
   const document = useFormValue([]) as SanityDocument;
+  const publicPathPrefixFromProps = (
+    props as ObjectFieldProps<SlugValue> & { publicPathPrefix?: string }
+  ).publicPathPrefix;
+  const publicPathPrefix =
+    publicPathPrefixFromProps ??
+    (document?._type === "webinar"
+      ? webinarPublicPathPrefix
+      : document?._type === "landingPage"
+        ? landingPagePublicPathPrefix
+        : blogPublicPathPrefix);
   const currentSlug = (value?.current ?? "").trim();
   const segment = normalizeSingleSegmentSlug(currentSlug, publicPathPrefix);
 

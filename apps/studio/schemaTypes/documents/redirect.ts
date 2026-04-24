@@ -1,5 +1,5 @@
 import { TrendingUpDown } from "lucide-react";
-import type { SanityClient, SlugValue } from "sanity";
+import type { SlugValue } from "sanity";
 import { defineField, defineType, getDraftId, getPublishedId } from "sanity";
 
 import { API_VERSION } from "@/utils/constant";
@@ -12,7 +12,15 @@ type Redirect = {
 };
 
 async function validateRedirectLoop(
-  client: SanityClient,
+  client: {
+    fetch: (
+      query: string,
+      params: {
+        slug: string;
+        ids: string[];
+      }
+    ) => Promise<unknown>;
+  },
   {
     slug,
     _id,
@@ -27,7 +35,7 @@ async function validateRedirectLoop(
     `*[_type == "redirect" && !(_id in $ids) && (source.current == $slug ||  destination.current == $slug)]`,
     { slug, ids: [id, draftId] }
   );
-  return existingRedirect.length !== 0;
+  return Array.isArray(existingRedirect) && existingRedirect.length !== 0;
 }
 
 export const redirect = defineType({

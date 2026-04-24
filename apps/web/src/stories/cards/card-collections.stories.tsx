@@ -38,24 +38,28 @@ export const Overview: Story = {
       </section>
 
       <HowItWorksCardsBlock
+        _key="story-how-it-works"
         _type="howItWorksCards"
         columnsPerRow={3}
         description="A simple three-step structure for launch execution."
         items={[
           {
             _key: "how-1",
+            _type: "item",
             title: "Plan",
             description: "Align message, audience, and conversion goals.",
             image: mockImages.iconA,
           },
           {
             _key: "how-2",
+            _type: "item",
             title: "Launch",
             description: "Ship pages and campaigns with reusable blocks.",
             image: mockImages.iconB,
           },
           {
             _key: "how-3",
+            _type: "item",
             title: "Optimize",
             description: "Track performance and iterate weekly.",
             image: mockImages.iconC,
@@ -65,30 +69,35 @@ export const Overview: Story = {
       />
 
       <WhatYouCanRunCardsBlock
+        _key="story-what-you-can-run"
         _type="whatYouCanRunCards"
         columnsPerRow={4}
         description="Use-case oriented cards to show capability breadth."
         items={[
           {
             _key: "run-1",
+            _type: "item",
             title: "Product Launches",
             description: "Coordinate GTM pages for new releases.",
             image: mockImages.iconA,
           },
           {
             _key: "run-2",
+            _type: "item",
             title: "ABM Campaigns",
             description: "Create targeted page experiences by segment.",
             image: mockImages.iconB,
           },
           {
             _key: "run-3",
+            _type: "item",
             title: "Event Journeys",
             description: "Build pre and post-event conversion funnels.",
             image: mockImages.iconC,
           },
           {
             _key: "run-4",
+            _type: "item",
             title: "Partner Growth",
             description: "Launch co-branded pages at scale.",
             image: mockImages.iconA,

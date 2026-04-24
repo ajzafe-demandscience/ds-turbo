@@ -1,7 +1,6 @@
-import { cn } from "@workspace/ui/lib/utils";
-
 import { TitleIcon as TitleIconElement } from "@/components/elements/title-icon";
 import { SanityIcon } from "@/components/elements/sanity-icon";
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PagebuilderType } from "@/types";
 
@@ -17,7 +16,9 @@ export function TitleIconBlock({
   _type,
   isNested = false,
 }: TitleIconBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const resolvedTitle = title?.trim();
+
   if (!resolvedTitle) {
     return null;
   }
@@ -30,27 +31,33 @@ export function TitleIconBlock({
       ? { color: resolvedTextColor.trim() }
       : undefined;
 
+  const inner = (
+    <div style={textStyle}>
+      <TitleIconElement
+        icon={
+          <SanityIcon
+            alt={resolvedTitle}
+            className="size-5"
+            icon={icon}
+            style={textStyle}
+          />
+        }
+        titleClassName={textStyle ? "text-inherit" : undefined}
+        title={resolvedTitle}
+        className={textStyle ? "text-inherit" : undefined}
+        iconClassName={textStyle ? "text-inherit" : undefined}
+      />
+    </div>
+  );
+
   return (
     <section
-      className={cn(camelCaseToKebabCase(_type), isNested ? undefined : "container-wrapper")}
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
       id={resolvedSectionId}
+      style={surfaceStyle}
     >
-      <div style={textStyle}>
-        <TitleIconElement
-          icon={
-            <SanityIcon
-              alt={resolvedTitle}
-              className="size-5"
-              icon={icon}
-              style={textStyle}
-            />
-          }
-          titleClassName={textStyle ? "text-inherit" : undefined}
-          title={resolvedTitle}
-          className={textStyle ? "text-inherit" : undefined}
-          iconClassName={textStyle ? "text-inherit" : undefined}
-        />
-      </div>
+      {isNested ? inner : <div className="container-wrapper">{inner}</div>}
     </section>
   );
 }

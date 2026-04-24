@@ -1,9 +1,10 @@
 import { LinkIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-import { backgroundColorField, sectionIdField } from "@/schemaTypes/common";
+import { sectionIdField } from "@/schemaTypes/common";
 import { createRadioListLayout } from "@/utils/helper";
 
+/** Reusable link button (hero, split content, CTA, etc.) — not a top-level page block. */
 export const buttonLink = defineType({
   name: "buttonLink",
   title: "Button Link",
@@ -69,23 +70,6 @@ export const buttonLink = defineType({
       validation: (Rule) => Rule.required().error("Button text is required"),
     }),
     defineField({
-      name: "variant",
-      title: "Button Variant",
-      type: "string",
-      initialValue: "default",
-      options: createRadioListLayout(
-        [
-          { title: "Default", value: "default" },
-          { title: "Secondary", value: "secondary" },
-          { title: "Outline", value: "outline" },
-          { title: "Link", value: "link" },
-        ],
-        {
-          direction: "horizontal",
-        }
-      ),
-    }),
-    defineField({
       name: "url",
       title: "URL",
       type: "url",
@@ -113,21 +97,19 @@ export const buttonLink = defineType({
       initialValue: false,
       hidden: ({ parent }) => parent?.linkType !== "url",
     }),
-    backgroundColorField,
     sectionIdField,
   ],
   preview: {
     select: {
       text: "text",
-      variant: "variant",
       style: "style",
       linkType: "linkType",
       sectionId: "scrollToSectionId",
       openInNewTab: "openInNewTab",
     },
-    prepare: ({ text, variant, style, linkType, sectionId, openInNewTab }) => ({
+    prepare: ({ text, style, linkType, sectionId, openInNewTab }) => ({
       title: text || "Untitled Button Link",
-      subtitle: `Button Link • ${style ?? variant ?? "primary"} • ${
+      subtitle: `Button Link • ${style ?? "primary"} • ${
         linkType === "scrollToSection" ? `#${sectionId || "missing-id"}` : "URL"
       }${openInNewTab ? " ↗" : ""}`,
     }),

@@ -1,6 +1,5 @@
-import { cn } from "@workspace/ui/lib/utils";
-
 import { SanityIcon } from "@/components/elements/sanity-icon";
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PagebuilderType } from "@/types";
 
@@ -28,6 +27,7 @@ export function CaseStudyStatsCardBlock({
   _type,
   isNested = false,
 }: CaseStudyStatsCardProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const resolvedTitle = title?.trim();
   const resolvedDescription = description?.trim();
   const resolvedSectionId = sectionId?.trim() || undefined;
@@ -44,15 +44,8 @@ export function CaseStudyStatsCardBlock({
     color: resolvedTextColor ?? "#FFFFFF",
   };
 
-  return (
-    <section
-      className={cn(
-        camelCaseToKebabCase(_type),
-        isNested ? undefined : "container-wrapper py-8 md:py-10"
-      )}
-      id={resolvedSectionId}
-    >
-      <article
+  const inner = (
+    <article
         className="mx-auto w-full max-w-5xl rounded-[28px] px-8 py-9 md:px-10 md:py-11"
         style={wrapperStyle}
       >
@@ -126,7 +119,21 @@ export function CaseStudyStatsCardBlock({
             })}
           </div>
         ) : null}
-      </article>
+    </article>
+  );
+
+  return (
+    <section
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
+      id={resolvedSectionId}
+      style={surfaceStyle}
+    >
+      {isNested ? (
+        inner
+      ) : (
+        <div className="container-wrapper py-8 md:py-10">{inner}</div>
+      )}
     </section>
   );
 }

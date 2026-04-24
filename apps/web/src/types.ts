@@ -21,6 +21,26 @@ export type PagebuilderType<T extends PageBuilderBlockTypes> = FilterByType<
   T
 >;
 
+/** Blocks allowed inside split content columns (includes embedded objects). */
+export type TwoColumnNestedBlock = NonNullable<
+  NonNullable<PagebuilderType<"twoColumns">["leftColumn"]>
+>[number];
+
+/** Blocks allowed inside a CTA section (includes embedded objects). */
+export type CtaNestedBlock = NonNullable<
+  NonNullable<PagebuilderType<"cta">["pageBuilder"]>
+>[number];
+
+/** Blocks allowed inside a Section block (includes embedded objects). */
+export type SectionNestedBlock = NonNullable<
+  NonNullable<PagebuilderType<"section">["blocks"]>
+>[number];
+
+/** Blocks allowed inside a Section Split block (includes embedded objects). */
+export type SectionSplitNestedBlock = NonNullable<
+  NonNullable<PagebuilderType<"sectionSplit">["leftColumn"]>
+>[number];
+
 export type SanityButtonProps = Get<QueryNavbarDataResult, "buttons", number>;
 
 export type SanityImageProps = NonNullable<QueryImageTypeResult>;

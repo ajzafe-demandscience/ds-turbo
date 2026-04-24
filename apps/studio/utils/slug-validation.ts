@@ -61,6 +61,12 @@ const CONFIGS: Record<string, SlugValidationOptions> = {
     segmentCount: 1,
     sanityDocumentType: "blog",
   },
+  webinar: {
+    documentType: "Webinar",
+    requireSlash: false,
+    segmentCount: 1,
+    sanityDocumentType: "webinar",
+  },
   blogIndex: {
     documentType: "Blog index",
     requireSlash: true,

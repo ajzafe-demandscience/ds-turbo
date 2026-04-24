@@ -1,4 +1,5 @@
 import { HomeIcon } from "@sanity/icons";
+import { uuid } from "@sanity/uuid";
 import { defineType } from "sanity";
 
 import { pageBuilderField } from "@/schemaTypes/common";
@@ -13,6 +14,16 @@ export const homePage = defineType({
   icon: HomeIcon,
   description:
     "This is where you build the main page visitors see when they first come to your website. Use page builder sections and SEO/Open Graph settings to control content and sharing metadata.",
+  initialValue: () => ({
+    pageBuilder: [
+      {
+        _key: uuid(),
+        _type: "hero",
+        title: "Headline goes here",
+        mediaType: "image",
+      },
+    ],
+  }),
   groups: GROUPS,
   fields: [
     pageBuilderField,

@@ -2,19 +2,7 @@ import { defineArrayMember, defineType } from "sanity";
 
 import { pageBuilderBlocks } from "@/schemaTypes/blocks/index";
 
-const COMPONENT_BLOCK_NAMES = new Set([
-  "buttonLink",
-  "h1",
-  "imageBlock",
-  "p",
-  "pardotForm",
-]);
-
-const HERO_BLOCK_NAMES = new Set(["hero"]);
-
-const componentBlockTypes = pageBuilderBlocks
-  .map(({ name }) => name)
-  .filter((name) => COMPONENT_BLOCK_NAMES.has(name));
+const HERO_BLOCK_NAMES = new Set(["hero", "heroWebinar"]);
 
 const heroBlockTypes = pageBuilderBlocks
   .map(({ name }) => name)
@@ -22,9 +10,7 @@ const heroBlockTypes = pageBuilderBlocks
 
 const sectionBlockTypes = pageBuilderBlocks
   .map(({ name }) => name)
-  .filter(
-    (name) => !COMPONENT_BLOCK_NAMES.has(name) && !HERO_BLOCK_NAMES.has(name)
-  );
+  .filter((name) => !HERO_BLOCK_NAMES.has(name));
 
 export const pagebuilderBlockTypes = pageBuilderBlocks.map(({ name }) =>
   defineArrayMember({
@@ -48,11 +34,6 @@ export const pageBuilder = defineType({
           name: "sections",
           title: "Sections",
           of: sectionBlockTypes,
-        },
-        {
-          name: "components",
-          title: "Components",
-          of: componentBlockTypes,
         },
       ],
       views: [

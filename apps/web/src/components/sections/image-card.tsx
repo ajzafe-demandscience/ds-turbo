@@ -1,5 +1,6 @@
 import { cn } from "@workspace/ui/lib/utils";
 
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock, SanityImageProps } from "@/types";
 import { ImageCard } from "../elements/image-card";
@@ -34,6 +35,7 @@ export function ImageCardBlock({
   _type,
   isNested = false,
 }: ImageCardBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const resolvedSectionId = sectionId?.trim() || undefined;
   const resolvedHref = href?.trim() || undefined;
   const resolvedBackgroundColor =
@@ -50,25 +52,28 @@ export function ImageCardBlock({
     blockPosition === "right" && "ml-auto max-w-4xl",
   );
 
+  const card = (
+    <div className={cardWrapperClassName}>
+      <ImageCard
+        description={description ?? undefined}
+        href={resolvedHref}
+        image={image}
+        imageSize={imageSize ?? undefined}
+        style={cardStyle}
+        title={title ?? undefined}
+        variant={variant ?? "top"}
+      />
+    </div>
+  );
+
   return (
     <section
-      className={cn(
-        camelCaseToKebabCase(_type),
-        isNested ? undefined : "container-wrapper"
-      )}
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
       id={resolvedSectionId}
+      style={surfaceStyle}
     >
-      <div className={cardWrapperClassName}>
-        <ImageCard
-          description={description ?? undefined}
-          href={resolvedHref}
-          image={image}
-          imageSize={imageSize ?? undefined}
-          style={cardStyle}
-          title={title ?? undefined}
-          variant={variant ?? "top"}
-        />
-      </div>
+      {isNested ? card : <div className="container-wrapper">{card}</div>}
     </section>
   );
 }

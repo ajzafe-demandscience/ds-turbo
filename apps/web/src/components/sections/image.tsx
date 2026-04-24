@@ -1,17 +1,18 @@
-import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
 
 import { SanityImage } from "@/components/elements/sanity-image";
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
-import type { PageBuilderBlock, SanityImageProps } from "@/types";
+import type { SanityImageProps } from "@/types";
 
 export type ImageBlockProps = {
+  readonly _type: "imageBlock";
   image?: SanityImageProps | null;
   href?: string | null;
   openInNewTab?: boolean | null;
   sectionId?: string | null;
   isNested?: boolean;
-} & Pick<PageBuilderBlock, "_type">;
+};
 
 export function ImageBlock({
   image,
@@ -21,11 +22,12 @@ export function ImageBlock({
   _type,
   isNested = false,
 }: ImageBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
+
   if (!image?.id) {
     return null;
   }
 
-  const sectionClassName = isNested ? undefined : "container-wrapper";
   const resolvedSectionId = sectionId?.trim() || undefined;
   const resolvedHref = href?.trim() || undefined;
   const imageClassName = [
@@ -65,25 +67,31 @@ export function ImageBlock({
     "group-hover:-translate-y-[2px] group-hover:shadow-[0_10px_25px_rgba(0,0,0,0.2)]",
   ].join(" ");
 
+  const frame = (
+    <div className={frameClassName}>
+      {resolvedHref ? (
+        <Link
+          className={linkClassName}
+          href={resolvedHref}
+          rel={openInNewTab ? "noopener noreferrer" : undefined}
+          target={openInNewTab ? "_blank" : "_self"}
+        >
+          <div className={linkHoverFrameClassName}>{imageElement}</div>
+        </Link>
+      ) : (
+        imageElement
+      )}
+    </div>
+  );
+
   return (
     <section
-      className={cn(camelCaseToKebabCase(_type), sectionClassName)}
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
       id={resolvedSectionId}
+      style={surfaceStyle}
     >
-      <div className={frameClassName}>
-        {resolvedHref ? (
-          <Link
-            className={linkClassName}
-            href={resolvedHref}
-            rel={openInNewTab ? "noopener noreferrer" : undefined}
-            target={openInNewTab ? "_blank" : "_self"}
-          >
-            <div className={linkHoverFrameClassName}>{imageElement}</div>
-          </Link>
-        ) : (
-          imageElement
-        )}
-      </div>
+      {isNested ? frame : <div className="container-wrapper">{frame}</div>}
     </section>
   );
 }

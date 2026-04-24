@@ -7,6 +7,7 @@ import {
   LinkedinIcon,
   XIcon,
 } from "@/components/social-icons";
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PagebuilderType } from "@/types";
 
@@ -25,20 +26,14 @@ export function NewsletterBlock({
   _type,
   isNested = false,
 }: NewsletterBlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
   const resolvedSectionId = sectionId?.trim() || undefined;
   const hasSocialLinks = Boolean(
     socialLinks?.linkedin || socialLinks?.twitter || socialLinks?.facebook,
   );
 
-  return (
-    <section
-      className={cn(
-        camelCaseToKebabCase(_type),
-        isNested ? "w-full" : "container-wrapper py-10 md:py-14",
-      )}
-      id={resolvedSectionId}
-    >
-      <div className="max-w-[320px] rounded-2xl border border-white/30 bg-[#13206e] p-5 text-white">
+  const inner = (
+    <div className="max-w-[320px] rounded-2xl border border-white/30 bg-[#13206e] p-5 text-white">
         {logo?.id ? (
           <div className="mb-4">
             <SanityImage
@@ -111,7 +106,19 @@ export function NewsletterBlock({
             ) : null}
           </div>
         ) : null}
-      </div>
+    </div>
+  );
+
+  return (
+    <section
+      className={cn(camelCaseToKebabCase(_type), isNested ? "w-full" : undefined)}
+      data-sanity={dataSanity}
+      id={resolvedSectionId}
+      style={surfaceStyle}
+    >
+      {isNested ? inner : (
+        <div className="container-wrapper py-10 md:py-14">{inner}</div>
+      )}
     </section>
   );
 }

@@ -37,7 +37,6 @@ export const landingPage = defineType({
       group: GROUP.MAIN_CONTENT,
       description:
         "URL segment for this landing page (shown at /demand/{slug} on the site).",
-      publicPathPrefix: "/demand",
     }),
     pageBuilderField,
     ...seoFields.filter((field) => field.name !== "seoHideFromLists"),

@@ -20,7 +20,7 @@ export const imageBlock = defineType({
     defineField({
       name: "url",
       title: "Link URL",
-      type: "customUrl",
+      type: "customUrlOptional",
       description:
         "Optional link for this image. If set, clicking the image navigates to this destination.",
     }),

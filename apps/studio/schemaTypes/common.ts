@@ -79,7 +79,6 @@ export const blogPostSlugField = (
     group?: string;
     title?: string;
     description?: string;
-    publicPathPrefix?: string;
   } = {}
 ) =>
   defineField({
@@ -91,11 +90,7 @@ export const blogPostSlugField = (
       "URL segment for this post (shown at /resources/blog/{slug} on the site).",
     group: options.group,
     components: {
-      field: (props) =>
-        BlogSlugFieldComponent({
-          ...props,
-          publicPathPrefix: options.publicPathPrefix ?? "/resources/blog",
-        }),
+      field: (props) => BlogSlugFieldComponent(props),
     },
     options: {
       source: "title",

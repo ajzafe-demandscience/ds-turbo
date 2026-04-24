@@ -1,46 +1,54 @@
-import { cn } from "@workspace/ui/lib/utils";
-
+import { usePageBuilderBlockRoot } from "@/components/page-builder-block-root-context";
 import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
-import type { PageBuilderBlock } from "@/types";
+import type { CtaNestedBlock, PagebuilderType } from "@/types";
 import { ButtonLinkBlock } from "./button-link";
+import { CaseStudyStatsCardsBlock } from "./case-study-stats-cards";
 import { CompanyLogoCarouselBlock } from "./company-logo-carousel";
-import { H1Block } from "./h1";
 import { HowItWorksCardsBlock } from "./how-it-works-cards";
+import { ImageDescriptionCardsBlock } from "./image-description-cards";
 import { ImageCardBlock } from "./image-card";
 import { ImageBlock } from "./image";
+import { InsightCardBlock } from "./cards/insight-card";
+import { InsightHeaderBlock } from "./insight-header";
 import { NewsletterBlock } from "./newsletter";
 import { PBlock } from "./p";
 import { PardotFormBlock } from "./pardot-form";
 import { RichTextBlock } from "./rich-text-block";
+import { SpeakersBlock } from "./speakers";
 import { StatsCounterBlock } from "./stats-counter";
 import { TwoColumnsBlock } from "./two-columns";
+import { CtaWebinarFormBlock } from "./cta-webinar-form";
+import { SectionSplitBlock } from "./section-split";
 import { WhatWeDoCardsBlock } from "./what-we-do-cards";
 import { WhatYouCanRunCardsBlock } from "./what-you-can-run-cards";
 
-type CTABlockProps = {
-  title?: string | null;
-  pageBuilder?: PageBuilderBlock[] | null;
-} & Pick<PageBuilderBlock, "_type">;
+type CTABlockProps = PagebuilderType<"cta">;
 
 const NESTED_COMPONENTS = {
   buttonLink: ButtonLinkBlock,
   companyLogoCarousel: CompanyLogoCarouselBlock,
-  h1: H1Block,
   howItWorksCards: HowItWorksCardsBlock,
+  imageDescriptionCards: ImageDescriptionCardsBlock,
   imageBlock: ImageBlock,
   imageCard: ImageCardBlock,
+  insightCard: InsightCardBlock,
+  insightHeader: InsightHeaderBlock,
+  caseStudyStatsCards: CaseStudyStatsCardsBlock,
+  speakers: SpeakersBlock,
+  ctaWebinarForm: CtaWebinarFormBlock,
   newsletter: NewsletterBlock,
   p: PBlock,
   pardotForm: PardotFormBlock,
   richTextBlock: RichTextBlock,
   statsCounter: StatsCounterBlock,
   twoColumns: TwoColumnsBlock,
+  sectionSplit: SectionSplitBlock,
   whatWeDoCards: WhatWeDoCardsBlock,
   whatYouCanRunCards: WhatYouCanRunCardsBlock,
   // biome-ignore lint/suspicious/noExplicitAny: dynamic block rendering
 } as const satisfies Record<string, React.ComponentType<any>>;
 
-function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
+function renderNestedBlocks(blocks: CtaNestedBlock[] | null | undefined) {
   if (!blocks?.length) {
     return null;
   }
@@ -67,24 +75,27 @@ function renderNestedBlocks(blocks: PageBuilderBlock[] | null | undefined) {
 }
 
 export function CTABlock({ title, pageBuilder, _type }: CTABlockProps) {
+  const { dataSanity, surfaceStyle } = usePageBuilderBlockRoot();
+
   if (!title?.trim() && !pageBuilder?.length) {
     return null;
   }
 
   return (
     <section
-      className={cn(
-        camelCaseToKebabCase(_type),
-        "container-wrapper py-10 md:py-14"
-      )}
+      className={camelCaseToKebabCase(_type)}
+      data-sanity={dataSanity}
+      style={surfaceStyle}
     >
-      <div className="rounded-[28px] bg-gradient-to-b from-[#101f80] to-[#2f25b0] px-8 py-10 md:px-14 md:py-12 lg:px-20">
-        {title ? (
-          <h2 className="mb-8 text-center font-semibold text-3xl text-white tracking-tight md:text-5xl">
-            {title}
-          </h2>
-        ) : null}
-        <div className="mx-auto max-w-4xl">{renderNestedBlocks(pageBuilder)}</div>
+      <div className="container-wrapper py-10 md:py-14">
+        <div className="rounded-[28px] bg-gradient-to-b from-[#101f80] to-[#2f25b0] px-8 py-10 md:px-14 md:py-12 lg:px-20">
+          {title ? (
+            <h2 className="mb-8 text-center font-semibold text-3xl text-white tracking-tight md:text-5xl">
+              {title}
+            </h2>
+          ) : null}
+          <div>{renderNestedBlocks(pageBuilder)}</div>
+        </div>
       </div>
     </section>
   );

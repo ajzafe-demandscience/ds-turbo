@@ -6,21 +6,28 @@ import { cn } from "@workspace/ui/lib/utils";
 import { createDataAttribute } from "next-sanity";
 import { useCallback, useMemo } from "react";
 
-import { camelCaseToKebabCase } from "@/lib/camel-case-to-kebab-case";
 import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
-import { ButtonLinkBlock } from "./sections/button-link";
+import { PageBuilderBlockRootProvider } from "./page-builder-block-root-context";
+import { CaseStudyStatsCardsBlock } from "./sections/case-study-stats-cards";
 import { CaseStudyStatsCardBlock } from "./sections/case-study-stats-card";
 import { CardStatBlock } from "./sections/card-stat";
 import { CompanyLogoCarouselBlock } from "./sections/company-logo-carousel";
-import { H1Block } from "./sections/h1";
+import { CtaWebinarFormBlock } from "./sections/cta-webinar-form";
 import { HowItWorksCardsBlock } from "./sections/how-it-works-cards";
+import { ImageDescriptionCardsBlock } from "./sections/image-description-cards";
 import { HeroBlock } from "./sections/hero";
+import { HeroWebinarBlock } from "./sections/hero-webinar";
 import { CTABlock } from "./sections/cta";
 import { ImageCardBlock } from "./sections/image-card";
 import { ImageBlock } from "./sections/image";
+import { InsightCardBlock } from "./sections/cards/insight-card";
+import { InsightHeaderBlock } from "./sections/insight-header";
 import { PBlock } from "./sections/p";
 import { PardotFormBlock } from "./sections/pardot-form";
 import { RichTextBlock } from "./sections/rich-text-block";
+import { SpeakersBlock } from "./sections/speakers";
+import { SectionBlock } from "./sections/section";
+import { SectionSplitBlock } from "./sections/section-split";
 import { StatsCounterBlock } from "./sections/stats-counter";
 import { TitleIconBlock } from "./sections/title-icon";
 import { TwoColumnsBlock } from "./sections/two-columns";
@@ -38,17 +45,27 @@ type ExtendedPageBuilderBlockTypes =
   | PageBuilderBlockTypes
   | "imageBlock"
   | "imageCard"
-  | "buttonLink"
+  | "p"
+  | "pardotForm"
   | "cardStat"
+  | "insightCard"
+  | "insightHeader"
   | "caseStudyStatsCard"
+  | "caseStudyStatsCards"
   | "companyLogoCarousel"
+  | "ctaWebinarForm"
+  | "speakers"
   | "cta"
   | "howItWorksCards"
+  | "imageDescriptionCards"
   | "statsCounter"
   | "titleIcon"
   | "newsletter"
   | "whatWeDoCards"
-  | "whatYouCanRunCards";
+  | "whatYouCanRunCards"
+  | "section"
+  | "sectionSplit"
+  | "heroWebinar";
 
 type SanityDataAttributeConfig = {
   readonly id: string;
@@ -64,22 +81,29 @@ type SanityColorValue = {
 const BLOCK_COMPONENTS = {
   companyLogoCarousel: CompanyLogoCarouselBlock,
   cardStat: CardStatBlock,
+  insightCard: InsightCardBlock,
+  insightHeader: InsightHeaderBlock,
   caseStudyStatsCard: CaseStudyStatsCardBlock,
+  caseStudyStatsCards: CaseStudyStatsCardsBlock,
+  ctaWebinarForm: CtaWebinarFormBlock,
+  speakers: SpeakersBlock,
   cta: CTABlock,
   howItWorksCards: HowItWorksCardsBlock,
+  imageDescriptionCards: ImageDescriptionCardsBlock,
   statsCounter: StatsCounterBlock,
   titleIcon: TitleIconBlock,
   newsletter: NewsletterBlock,
   whatYouCanRunCards: WhatYouCanRunCardsBlock,
   whatWeDoCards: WhatWeDoCardsBlock,
-  buttonLink: ButtonLinkBlock,
   hero: HeroBlock,
-  h1: H1Block,
+  heroWebinar: HeroWebinarBlock,
   imageBlock: ImageBlock,
   imageCard: ImageCardBlock,
   p: PBlock,
   pardotForm: PardotFormBlock,
   richTextBlock: RichTextBlock,
+  section: SectionBlock,
+  sectionSplit: SectionSplitBlock,
   twoColumns: TwoColumnsBlock,
   // biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering>
 } as const satisfies Record<ExtendedPageBuilderBlockTypes, React.ComponentType<any>>;
@@ -192,25 +216,26 @@ function useBlockRenderer(id: string, type: string) {
           ? { backgroundColor: resolvedBackgroundColor.trim() }
           : undefined;
 
+      // biome-ignore lint/suspicious/noExplicitAny: dynamic page builder block props
+      const blockProps = block as any;
+
       return (
-        <div
-          className={cn(
-            "page-builder-block",
-            camelCaseToKebabCase(block._type)
-          )}
-          data-sanity={createBlockDataAttribute(block._key)}
+        <PageBuilderBlockRootProvider
+          dataSanity={createBlockDataAttribute(block._key)}
           key={`${block._type}-${block._key}`}
-          style={blockStyle}
+          surfaceStyle={blockStyle}
         >
-          {/** biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering> */}
           <Component
-            {...(block as any)}
+            {...blockProps}
             {...(block._type === "hero" ? { isHomePage: type === "homePage" } : {})}
+            {...(["section", "sectionSplit"].includes(block._type)
+              ? { isWebinarPage: type === "webinar" }
+              : {})}
           />
-        </div>
+        </PageBuilderBlockRootProvider>
       );
     },
-    [createBlockDataAttribute]
+    [createBlockDataAttribute, type]
   );
 
   return { renderBlock };
